@@ -33,61 +33,101 @@ section{margin-top:80px}
 @media(max-width:820px){.g3,.g2{grid-template-columns:1fr}.lock{font-size:48px}.sw{grid-template-columns:1fr 1fr}}
 </style></head><body>
 <script>/* =========================================================================
-   Logo Pyxis — une seule géométrie, utilisée partout et à toutes les tailles.
-
-   Le signe : les trois étoiles principales de la constellation de la Boussole
-   (β, α, γ Pyxidis) placées d'après leurs positions réelles dans le ciel,
-   légèrement agrandies autour du centre pour respirer, dans un cercle.
-   Un seul trait relie γ à α. Cercle et trait ont la même épaisseur.
-
-   Le logotype : le signe + « Pyxis », toujours dans les mêmes proportions,
-   construites à partir du diamètre D du signe :
-     - horizontal : texte de hauteur 0,62 D, espace 0,32 D ;
-     - vertical (rail) : texte de hauteur 0,74 D, espace 0,36 D, axes centrés.
-   Version de référence : pêche sur encre. Sur fond clair : encre pleine.
+   Logo Pyxis — dessiné d'après la vraie constellation de la Boussole.
+   Les trois étoiles principales (β, α, γ Pyxidis) sont presque alignées :
+   placées à leurs positions réelles dans le ciel, elles forment une aiguille
+   légèrement inclinée. Le cercle autour est le boîtier de la boussole.
+   Taille de chaque étoile = son éclat (α est la plus brillante).
    ========================================================================= */
 (function () {
-  const C = [50, 50], K = 1.15; // agrandissement autour du centre
-  const at = (x, y) => [C[0] + (x - C[0]) * K, C[1] + (y - C[1]) * K];
-  // Positions réelles (β = origine), voir la planche d'identité.
+  // Positions réelles (ascension droite × cos(déclinaison), déclinaison), ramenées à β = origine.
+  // β Pyx : 8h40m, −35,3° ; α Pyx : 8h43m, −33,2° ; γ Pyx : 8h50m, −27,7°.
   const STARS = [
-    { id: "β", p: at(58.4, 78.9), r: 6.4, mag: 3.97 },
-    { id: "α", p: at(52.3, 62.9), r: 8.6, mag: 3.68 },
-    { id: "γ", p: at(41.7, 21.1), r: 6.2, mag: 4.01 },
-  ].map((s) => ({ ...s, x: +s.p[0].toFixed(2), y: +s.p[1].toFixed(2) }));
-  const STROKE = 4.6, GAP = 5;
+    { id: "β", x: 58.4, y: 78.9, r: 4.6, mag: 3.97 },
+    { id: "α", x: 52.3, y: 62.9, r: 6.2, mag: 3.68 },
+    { id: "γ", x: 41.7, y: 21.1, r: 4.4, mag: 4.01 },
+  ];
 
-  function line(a, b) {
-    const dx = b.x - a.x, dy = b.y - a.y, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
-    const s = a.r + GAP, e = b.r + GAP;
+  /* Segment entre deux étoiles, avec un petit vide autour de chacune.
+     Si les étoiles sont trop proches pour qu'un trait lisible tienne entre elles, on n'en dessine pas. */
+  function seg(a, b, gap) {
+    const dx = b.x - a.x, dy = b.y - a.y, L = Math.hypot(dx, dy);
+    const ux = dx / L, uy = dy / L;
+    const s = a.r + gap, e = b.r + gap;
+    if (L - s - e < 12) return "";
     return `M${(a.x + ux * s).toFixed(2)} ${(a.y + uy * s).toFixed(2)}L${(b.x - ux * e).toFixed(2)} ${(b.y - uy * e).toFixed(2)}`;
   }
 
-  /** Le signe seul. */
-  function mark({ size = 48, color = "currentColor", title = "" } = {}) {
-    const [b, a, g] = STARS;
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="${size}" height="${size}"${title ? ` role="img" aria-label="${title}"` : ' aria-hidden="true"'} style="display:block;flex:none">
-      <circle cx="50" cy="50" r="${(50 - STROKE / 2).toFixed(2)}" fill="none" stroke="${color}" stroke-width="${STROKE}"/>
-      <path d="${line(g, a)}" stroke="${color}" stroke-width="${STROKE}" stroke-linecap="round" fill="none"/>
-      ${[b, a, g].map((s) => `<circle cx="${s.x}" cy="${s.y}" r="${s.r}" fill="${color}"/>`).join("")}
+  /**
+   * Le signe Pyxis.
+   * size : taille en pixels ; small : version simplifiée pour les petites tailles (favicon) ;
+   * ring : dessiner le boîtier de boussole (un cercle simple, sans repère) ; color : couleur du trait.
+   */
+  function mark({ size = 48, small = size < 28, ring = true, color = "currentColor", title = "Pyxis" } = {}) {
+    const sw = small ? 5 : 2.2, lw = small ? 4 : 1.4, gap = small ? 3 : 3.2;
+    const k = small ? 1.25 : 1;
+    const lines = [seg(STARS[0], STARS[1], gap), seg(STARS[1], STARS[2], gap)].join("");
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="${size}" height="${size}" role="img" aria-label="${title}">
+      ${ring ? `<circle cx="50" cy="50" r="${48 - sw / 2}" fill="none" stroke="${color}" stroke-width="${sw}"/>
+` : ""}
+      <path d="${lines}" fill="none" stroke="${color}" stroke-width="${lw}" stroke-linecap="round"/>
+      ${STARS.map((s) => `<circle cx="${s.x}" cy="${s.y}" r="${(s.r * k).toFixed(2)}" fill="${color}"/>`).join("")}
     </svg>`;
   }
 
-  /** Le logotype complet (signe + nom), toujours dans les mêmes proportions. */
-  function lockup({ size = 48, color = "currentColor", vertical = false } = {}) {
-    const fs = (vertical ? 0.74 : 0.62) * size, gap = (vertical ? 0.36 : 0.32) * size;
-    const text = `<span style="font:500 ${fs.toFixed(1)}px/1 'Instrument Sans','Helvetica Neue',Arial,sans-serif;letter-spacing:-0.035em;color:${color};${vertical ? "writing-mode:vertical-rl;transform:rotate(180deg);" : ""}white-space:nowrap">Pyxis</span>`;
-    return `<span class="lockup" style="display:inline-flex;${vertical ? "flex-direction:column;" : ""}align-items:center;gap:${gap.toFixed(1)}px">${mark({ size, color })}${text}</span>`;
-  }
-
-  /** Icône d'application : le signe pêche sur un carré encre arrondi. */
+  /** Icône d'application : le signe sur un carré encre arrondi (identique à la première version). */
   function appIcon() {
-    const inner = mark({ size: 100, color: "#f3cebb" }).replace(/^<svg[^>]*>|<\/svg>$/g, "");
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#1e1b1a"/><g transform="translate(16 16) scale(.68)">${inner}</g></svg>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#1e1b1a"/><g transform="translate(9 9) scale(.82)">${mark({ size: 100, small: true, color: "#f3cebb" }).replace(/^<svg[^>]*>|<\/svg>$/g, "")}</g></svg>`;
   }
   const favicon = () => "data:image/svg+xml," + encodeURIComponent(appIcon());
 
-  window.Logo = { mark, lockup, appIcon, favicon, STARS };
+  /* ------------------------------------------------------------------
+     Logotype : signe + « Pyxis », mêmes proportions partout, à partir du
+     diamètre D du signe :
+       - le nom a une hauteur de capitale égale à 0,52 D ;
+       - il est placé à 0,28 D du cercle ;
+       - le centre des capitales est aligné sur le centre du cercle
+         (à l'horizontale comme à la verticale).
+     Les mesures exactes de la police sont relevées une fois chargée.
+     ------------------------------------------------------------------ */
+  const CAP = 0.52, GAPR = 0.28, FONT = "'Instrument Sans','Helvetica Neue',Arial,sans-serif";
+  let metrics = { cap: 0.7, width: 2.25 }; // estimation avant chargement de la police (en em)
+
+  function geometry(D, vertical) {
+    const fs = (CAP * D) / metrics.cap, capH = CAP * D, gap = GAPR * D, tw = metrics.width * fs;
+    return vertical
+      ? { fs, w: D, h: D + gap + tw, tx: D / 2 + capH / 2, ty: D + gap, rot: true }
+      : { fs, w: D + gap + tw, h: D, tx: D + gap, ty: D / 2 + capH / 2, rot: false };
+  }
+  function lockup({ size = 48, color = "currentColor", vertical = false } = {}) {
+    const g = geometry(size, vertical);
+    const inner = mark({ size: 100, color, title: "" }).replace(/^<svg[^>]*>|<\/svg>$/g, "");
+    return `<svg class="lockup" data-d="${size}" data-v="${vertical ? 1 : 0}" xmlns="http://www.w3.org/2000/svg" width="${g.w.toFixed(1)}" height="${g.h.toFixed(1)}" viewBox="0 0 ${g.w.toFixed(1)} ${g.h.toFixed(1)}" role="img" aria-label="Pyxis" style="display:block;overflow:visible">
+      <svg x="0" y="0" width="${size}" height="${size}" viewBox="0 0 100 100" overflow="visible">${inner}</svg>
+      <text x="${g.tx.toFixed(2)}" y="${g.ty.toFixed(2)}" ${g.rot ? `text-anchor="end" transform="rotate(-90 ${g.tx.toFixed(2)} ${g.ty.toFixed(2)})"` : ""} fill="${color}" font-family="${FONT.replace(/"/g, "")}" font-weight="500" font-size="${g.fs.toFixed(2)}" letter-spacing="${(-0.035 * g.fs).toFixed(2)}">Pyxis</text>
+    </svg>`;
+  }
+  /** Recalcule l'alignement avec les vraies mesures de la police, une fois chargée. */
+  function align(root = document) {
+    try {
+      const c = document.createElement("canvas").getContext("2d");
+      c.font = `500 100px ${FONT}`;
+      if ("letterSpacing" in c) c.letterSpacing = "-3.5px";
+      const m = c.measureText("Pyxis"), h = c.measureText("H");
+      if (h.actualBoundingBoxAscent > 40) metrics = { cap: h.actualBoundingBoxAscent / 100, width: m.width / 100 };
+    } catch { return; }
+    root.querySelectorAll("svg.lockup").forEach((el) => {
+      const D = +el.dataset.d, v = el.dataset.v === "1", g = geometry(D, v), t = el.querySelector("text");
+      el.setAttribute("width", g.w.toFixed(1)); el.setAttribute("height", g.h.toFixed(1));
+      el.setAttribute("viewBox", `0 0 ${g.w.toFixed(1)} ${g.h.toFixed(1)}`);
+      t.setAttribute("x", g.tx.toFixed(2)); t.setAttribute("y", g.ty.toFixed(2));
+      t.setAttribute("font-size", g.fs.toFixed(2)); t.setAttribute("letter-spacing", (-0.035 * g.fs).toFixed(2));
+      if (v) t.setAttribute("transform", `rotate(-90 ${g.tx.toFixed(2)} ${g.ty.toFixed(2)})`);
+    });
+  }
+  if (typeof document !== "undefined" && document.fonts) document.fonts.ready.then(() => align());
+
+  window.Logo = { mark, lockup, align, appIcon, favicon, STARS };
 })();
 </script>
 <div class="page">
@@ -111,7 +151,7 @@ section{margin-top:80px}
 </section>
 
 <section>
-<span class="lbl">Petites tailles : une seule géométrie, de 16 px à l'affiche</span>
+<span class="lbl">Petites tailles : au-dessous de 28 px, la version simplifiée épaissit les traits</span>
 <div class="sizes" id="sizes"></div>
 </section>
 
@@ -120,9 +160,9 @@ section{margin-top:80px}
 <div class="grid g2">
   <div class="sky" id="sky"></div>
   <div class="note">
-    <p>Les trois étoiles sont reportées à leur position réelle (l'est à gauche, comme quand on regarde le ciel), puis légèrement écartées du centre pour respirer. L'aiguille qu'elles forment penche naturellement d'environ 16° : on ne l'a pas redressée.</p>
+    <p>Les trois étoiles sont reportées à leur position réelle : l'est à gauche, comme quand on regarde le ciel. L'aiguille qu'elles forment penche naturellement d'environ 16° : on ne l'a pas redressée.</p>
     <p>La taille de chaque point suit l'éclat de l'étoile. α, la plus brillante, est au centre de l'aiguille et sert de pivot.</p>
-    <p>Un seul trait relie γ à α ; il a exactement l'épaisseur du cercle et s'arrête avant de toucher les étoiles. Une seule géométrie sert à toutes les tailles, du favicon à l'affiche. Le logotype se construit à partir du diamètre D du signe : nom haut de 0,62 D à 0,32 D du signe à l'horizontale ; 0,74 D et 0,36 D à la verticale.</p>
+    <p>Un seul trait relie γ à α, et il s'arrête avant de toucher les étoiles. α et β sont trop proches pour qu'un trait lisible tienne entre elles : elles restent côte à côte.</p><p>Le logotype se construit à partir du diamètre D du cercle, identique à l'horizontale et à la verticale : hauteur des capitales du nom = 0,52 D ; espace entre le cercle et le nom = 0,28 D ; le centre des capitales est aligné sur le centre du cercle.</p>
     <table><thead><tr><th>Étoile</th><th>Ascension droite</th><th>Déclinaison</th><th>Magnitude</th></tr></thead>
     <tbody><tr><td>α Pyxidis</td><td>8 h 43 min</td><td>−33,2°</td><td>3,68</td></tr>
     <tr><td>β Pyxidis</td><td>8 h 40 min</td><td>−35,3°</td><td>3,97</td></tr>
@@ -162,6 +202,7 @@ document.getElementById("v2").innerHTML = L.lockup({ size: 72, color: "#1e1b1a",
 document.getElementById("sizes").innerHTML = [128, 64, 40, 28, 20, 16].map((s) =>
   `<figure>${L.mark({ size: s, color: "#1e1b1a" })}${s} px</figure>`).join("") +
   `<figure><img src="${L.favicon()}" width="64" height="64" alt="Icône d'application">icône</figure>`;
+setTimeout(() => L.align(), 0);
 const S = L.STARS;
 document.getElementById("sky").innerHTML = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono" font-size="3.2" fill="#f3cebb">
   ${[20, 35, 50, 65, 80].map((v) => `<path d="M${v} 2V98M2 ${v}H98" stroke="#f3cebb" stroke-opacity=".12" stroke-width=".25"/>`).join("")}

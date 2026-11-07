@@ -848,6 +848,7 @@
     const main = $("#main");
     if (stopPulse) { stopPulse(); stopPulse = null; }
     main.innerHTML = `<div class="view">${html}</div>`;
+    window.Logo && Logo.align();
     const inAccount = ACCOUNT.some(([k]) => k === r);
     document.querySelectorAll("[data-route]").forEach((a) => {
       const k = a.dataset.route;
@@ -949,7 +950,7 @@
     if (mac) M.macro = mac;
     if (hist) M.history = hist;
   }
-  shell(); bind();
+  shell(); bind(); window.Logo && Logo.align();
   loadData().finally(go);
   if (!store.get("onboarded", false)) setTimeout(() => onboarding(0), 400);
 })();
