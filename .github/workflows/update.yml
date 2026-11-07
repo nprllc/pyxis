@@ -9,8 +9,11 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths-ignore:
-      - "site/data/**"
+    paths-ignore:   # les fichiers produits par la mise à jour elle-même (la veille, elle, republie le site)
+      - "site/data/universe.json"
+      - "site/data/macro.json"
+      - "site/data/meta.json"
+      - "site/data/history.json"
       - "pipeline/cache/**"
 
 permissions:
