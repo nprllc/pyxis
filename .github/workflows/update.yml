@@ -61,6 +61,7 @@ jobs:
             echo "Aucune nouvelle donnée."
           else
             git commit -m "Données du $(date -u +%Y-%m-%d)"
+            git pull --rebase   # au cas où la veille du matin a été enregistrée entre-temps
             git push
           fi
 
