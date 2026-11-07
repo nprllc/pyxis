@@ -1,0 +1,793 @@
+/* =========================================================================
+   Pyxis — application (navigation + écrans)
+   Une seule page, navigation par l'adresse (#scanner, #fiche-ASML…).
+   ========================================================================= */
+(function () {
+  const M = window.MOCK, G = window.GLOSSARY, C = window.Charts;
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const eur = (v, d = 0) => (v ?? 0).toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }) + " €";
+  const pct = (v, d = 1) => v == null || isNaN(v) ? "—" : (v > 0 ? "+" : "") + v.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }) + " %";
+  const CUR = { EUR: "€", USD: "$", GBp: "p", GBP: "£", CHF: "CHF", DKK: "DKK" };
+  const money = (v, cur = "EUR", d = 2) => v == null ? "—" : v.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }) + " " + (CUR[cur] || cur || "€");
+  const num = (v, d = 1) => v == null ? "—" : v.toLocaleString("fr-FR", { maximumFractionDigits: d });
+  const ex = (key, text) => `<span data-explain="${key}" tabindex="0">${text}</span>`;
+
+  /* ---------- Stockage local (navigateur), toujours protégé ---------- */
+  const store = {
+    get(k, fallback) { try { const v = localStorage.getItem("investlab." + k); return v ? JSON.parse(v) : fallback; } catch { return fallback; } },
+    set(k, v) { try { localStorage.setItem("investlab." + k, JSON.stringify(v)); } catch { /* stockage indisponible : on garde en mémoire */ } },
+  };
+  const state = {
+    profile: store.get("profile", { ...M.profile }),
+    journal: store.get("journal", M.journal.slice()),
+    book: "real",
+    filter: "tout",
+    query: "",
+    scanView: window.innerWidth < 700 ? "liste" : "cercles",
+    explain: store.get("explain", false),
+    sim: { monthly: M.profile.monthly, years: M.profile.horizon },
+  };
+
+  /* ---------- Icônes ---------- */
+  const I = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+  const ICON = {
+    home: I('<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>'),
+    scan: I('<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M8 11h6M11 8v6"/>'),
+    macro: I('<path d="M3 17c3-6 5-6 7-3s4 3 5-1 3-6 6-4"/><path d="M3 21h18"/>'),
+    wallet: I('<rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10h18"/><circle cx="16" cy="15" r="1.2"/>'),
+    journal: I('<path d="M6 3h11a2 2 0 0 1 2 2v16l-4-2-4 2-4-2-3 2V5a2 2 0 0 1 2-2z"/><path d="M9 8h7M9 12h7"/>'),
+    broker: I('<path d="M4 7h16M4 12h10M4 17h7"/><circle cx="18" cy="16" r="3"/>'),
+    learn: I('<path d="M3 8l9-4 9 4-9 4-9-4z"/><path d="M7 10v5c3 2 7 2 10 0v-5"/>'),
+    settings: I('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'),
+    more: I('<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>'),
+  };
+  const NAME = "Pyxis";
+  const TOP = [["", "Aujourd'hui"], ["scanner", "Scanner"], ["macro", "Macro"], ["apprendre", "Apprendre"]];
+  const ACCOUNT = [["portefeuille", "Portefeuille"], ["journal", "Journal"], ["courtiers", "Courtiers"], ["reglages", "Réglages"]];
+
+  /* ---------- Calculs du profil ---------- */
+  function planSplit(p) {
+    const core = Math.round((p.monthly * p.core) / 100);
+    return { core, sat: p.monthly - core };
+  }
+  function book(kind) {
+    const rows = M.portfolio[kind].map((r) => {
+      const live = M.universe.find((u) => u.ticker === r.ticker);
+      const price = live && live.price != null ? live.price : r.price;
+      return { ...r, price, value: r.qty * price, invested: r.qty * r.cost };
+    });
+    const value = rows.reduce((a, r) => a + r.value, 0), invested = rows.reduce((a, r) => a + r.invested, 0);
+    const core = rows.filter((r) => r.bucket === "coeur").reduce((a, r) => a + r.value, 0);
+    const biggestSat = Math.max(0, ...rows.filter((r) => r.bucket !== "coeur").map((r) => r.value));
+    return { rows, value, invested, pnl: value - invested, corePct: value ? (core / value) * 100 : 0, maxLinePct: value ? (biggestSat / value) * 100 : 0 };
+  }
+
+  /* ---------- Ossature : rail noir à gauche, onglets en haut (charte Syndicate) ---------- */
+  const SEARCH_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7"/><path d="M15.5 15.5L21 21"/></svg>`;
+  function shell() {
+    document.body.innerHTML = `
+      <div class="mbar"><a class="wm" href="#accueil">${window.Logo ? Logo.mark({ size: 28 }) : ""}${NAME}</a><button type="button" id="menuBtn" aria-expanded="false" aria-controls="mmenu">Menu</button></div>
+      <nav class="mmenu" id="mmenu" aria-label="Menu">
+        ${[...TOP, ...ACCOUNT].map(([r, l]) => `<a href="#${r || "accueil"}" data-route="${r}">${l}</a>`).join("")}
+        ${explainToggle()}
+      </nav>
+      <div class="shell">
+        <aside class="rail" aria-label="Mon compte">
+          <div class="wordmark"><a href="#accueil" aria-label="${NAME}, accueil">${window.Logo ? Logo.mark({ size: 46, title: "" }) : ""}<span>${NAME}</span></a></div>
+          <div class="rail-label"><span class="label">Mon compte</span></div>
+          <nav>${ACCOUNT.map(([r, l]) => `<a href="#${r}" data-route="${r}">${l}</a>`).join("")}</nav>
+          <div class="rail-foot">${explainToggle()}<p class="label" style="margin-top:14px;color:var(--on-ink-mute)">Souligne et explique chaque mot technique.</p></div>
+        </aside>
+        <div class="col">
+          <nav class="tabs" aria-label="Navigation principale">
+            ${TOP.map(([r, l]) => `<a href="#${r || "accueil"}" data-route="${r}">${l}</a>`).join("")}
+            <span class="spacer"></span>
+            <a class="account" href="#portefeuille" data-route="@account">Mon compte</a>
+          </nav>
+          <form class="searchrow" role="search" id="searchForm">
+            <input type="text" id="globalSearch" placeholder="Trouver une entreprise, un ETF, un mot du lexique" aria-label="Rechercher">
+            <button type="submit" style="background:none;border:0;padding:0;cursor:pointer;color:inherit" aria-label="Lancer la recherche">${SEARCH_ICON}</button>
+          </form>
+          <main class="main" id="main" tabindex="-1"></main>
+          <footer class="footer">
+            <div class="wm" aria-hidden="true">${window.Logo ? Logo.mark({ size: 72, title: "" }) : ""}<span>${NAME}</span></div>
+            <div><span class="label">À lire</span>
+              <p>Analyses automatisées à but éducatif. Ce n'est pas un conseil en investissement personnalisé au sens réglementaire. Les performances passées ne préjugent pas des performances futures. Pour les décisions fiscales importantes, consulte un professionnel (gestor ou asesor fiscal).</p></div>
+          </footer>
+        </div>
+      </div>
+      <div class="curtain" aria-hidden="true"></div>`;
+    document.body.classList.toggle("explain-on", state.explain);
+    $("#menuBtn").onclick = () => { const m = $("#mmenu"); m.classList.toggle("open"); $("#menuBtn").setAttribute("aria-expanded", m.classList.contains("open")); $("#menuBtn").textContent = m.classList.contains("open") ? "Fermer" : "Menu"; };
+    $("#searchForm").onsubmit = (e) => { e.preventDefault(); state.query = $("#globalSearch").value; state.filter = "tout"; state.scanView = "liste"; if (location.hash === "#scanner") render(); else location.hash = "#scanner"; };
+  }
+  function explainToggle() {
+    return `<button type="button" class="toggle" data-action="explain" aria-pressed="${state.explain}"><span class="sw"></span>Explique-moi</button>`;
+  }
+  function head(title, lede, extra = "", crumb = "") {
+    return `${crumb ? `<div class="crumb label">${crumb}</div>` : ""}<header class="topbar"><div><h1>${title}</h1>${lede ? `<p class="lede">${lede}</p>` : ""}</div>
+      <div class="row wrap">${extra}${dataChip()}</div></header>`;
+  }
+  const disclaimer = "";
+  /* Pastille d'état des données : fictives, à jour, anciennes ou en échec. */
+  function dataStatus() {
+    if (M.isMock) return { text: "Données fictives", tone: "warn", tip: "Le site n'a pas trouvé les vraies données : il affiche un exemple." };
+    const d = new Date(M.asOf + "T12:00:00");
+    const days = Math.floor((Date.now() - d) / 864e5);
+    const label = d.toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
+    if (M.meta?.status === "echec") return { text: `Mise à jour échouée, données du ${label}`, tone: "loss", tip: M.meta.message };
+    if (days > 4) return { text: `Données anciennes (${label})`, tone: "warn", tip: "La mise à jour automatique n'a pas tourné depuis plusieurs jours." };
+    return { text: `Cours du ${label}`, tone: "gain", tip: `${M.meta?.ok ?? "?"} titres sur ${M.meta?.total ?? "?"} mis à jour. Sources : Yahoo Finance, FRED.` };
+  }
+  function dataChip(dark = false) {
+    const st = dataStatus();
+    return `<span class="mock-flag tone-${st.tone}" title="${esc(st.tip)}"${dark ? ' style="color:var(--on-ink);border-color:rgba(243,206,187,.4)"' : ""}>${esc(st.text)}</span>`;
+  }
+
+  /* ======================= ÉCRANS ======================= */
+
+  function viewHome() {
+    const p = state.profile, sp = planSplit(p), b = book("real");
+    const next = M.lessons.find((l) => !l.done);
+    const satPot = 40; // cagnotte satellite fictive
+    const mood = { expansion: "Le marché accélère.", surchauffe: "Le marché s'emballe.", ralentissement: "Le marché ralentit.", reprise: "Le marché repart." }[M.macro.phase];
+    const day = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+    return `
+    <section class="pulse" aria-labelledby="pulse-t">
+      <canvas id="pulseCanvas" aria-hidden="true"></canvas>
+      <div class="pulse-inner">
+        <div class="row between wrap"><span class="label">Bonjour ${esc(p.name)}, nous sommes ${day}</span>
+          ${dataChip(true)}</div>
+        <h1 class="pulse-title" id="pulse-t"><span>${mood}</span><span>Ton plan, lui, ne change pas.</span></h1>
+        <div class="pulse-foot">
+          <div class="pulse-amount num">${p.monthly} €<small>chaque mois</small></div>
+          <div>
+            <div class="split" role="img" aria-label="${sp.core} € en cœur, ${sp.sat} € en satellite"><span style="width:${p.core}%"></span><span style="width:${100 - p.core}%"></span></div>
+            <div class="legend">
+              <span><i style="background:var(--on-ink)"></i>${sp.core} € dans l'${ex("etfMonde", "ETF monde")}, via un ${ex("dca", "plan programmé")}</span>
+              <span><i style="background:var(--gain)"></i>${sp.sat} € de côté pour le ${ex("coeur", "satellite")}</span>
+            </div>
+            <p class="pulse-note">Cagnotte satellite : ${satPot} €. Attends environ 100 € avant d'acheter une ${ex("action", "action")} seule : avec 1 € de ${ex("frais", "frais")}, un achat de 20 € coûte déjà 5 %.</p>
+          </div>
+          <a class="btn" href="#portefeuille" style="color:var(--on-ink);border-color:var(--on-ink)">Voir la projection</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid g-home" style="margin-top:64px">
+      <section class="panel" aria-labelledby="top-t">
+        <div class="panel-head"><span class="label">Idées du jour</span><a class="label" href="#scanner">Tout le scanner</a></div>
+        <h2 id="top-t" class="serif" style="font-size:34px;letter-spacing:-.02em;margin-bottom:8px">5 idées à étudier</h2>
+        <p class="muted" style="margin-bottom:22px">Des pistes pour apprendre, pas des ordres d'achat. Le cercle montre le ${ex("score", "score et sa fourchette")}.</p>
+        <ul class="opps">${M.opportunities.length ? M.opportunities.map(oppRow).join("") : `<li class="empty">Aucun signal net aujourd'hui. C'est aussi une information : rien ne presse.</li>`}</ul>
+      </section>
+
+      <div class="stack">
+        <section class="panel" aria-labelledby="health-t">
+          <div class="panel-head"><span class="label" id="health-t">Santé du portefeuille (exemple, aux cours réels)</span><a class="label" href="#portefeuille">Détail</a></div>
+          <div class="num" style="font-size:52px;letter-spacing:-.04em;line-height:1">${eur(b.value, 2)}</div>
+          <p class="${b.pnl >= 0 ? "gain" : "loss"}" style="margin-top:8px">${b.pnl >= 0 ? "+" : ""}${eur(b.pnl, 2)} depuis tes achats (${pct((b.pnl / b.invested) * 100)})</p>
+          <p class="muted small" style="margin-top:4px">Ce que tes positions valent aujourd'hui, comparé à ce que tu as payé.</p>
+          <div style="margin-top:22px">
+            ${ruleLine(b.corePct >= p.core - 10, `Cœur à ${Math.round(b.corePct)} % (objectif ${p.core} %)`, "La base diversifiée protège contre l'erreur sur une seule entreprise.")}
+            ${ruleLine(b.maxLinePct <= p.maxLine, `Plus grosse action seule : ${Math.round(b.maxLinePct)} % (max ${p.maxLine} %)`, b.maxLinePct > p.maxLine ? "Une seule action pèse trop : si elle chute, tout ton portefeuille le sent." : "Aucune action seule ne peut faire trop de dégâts.")}
+          </div>
+        </section>
+
+        <section class="hero" aria-labelledby="lesson-t">
+          <div class="row between"><span class="label">À apprendre ensuite</span><span class="label">${next.minutes} min</span></div>
+          <h3 id="lesson-t" class="serif" style="font-size:30px;line-height:1.08;font-weight:400;letter-spacing:-.02em;margin:22px 0 12px">${esc(next.title)}</h3>
+          <p class="muted" style="margin-bottom:22px">Les quelques mots qui reviennent partout, expliqués avec des exemples du quotidien.</p>
+          <a class="btn" href="#apprendre-${next.id}">Commencer la leçon</a>
+        </section>
+      </div>
+    </div>`;
+  }
+  function ruleLine(ok, title, meaning) {
+    return `<div class="row" style="align-items:flex-start;padding:12px 0;border-top:1px solid var(--rule-soft)">
+      <span style="flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;${ok ? "background:var(--gain);color:var(--paper-2)" : "background:var(--warn);color:var(--paper-2)"}">${ok ? "✓" : "!"}</span>
+      <div><div style="font-weight:500">${title}</div><div class="muted small">${meaning}</div></div></div>`;
+  }
+  const TYPE_LABEL = { valeur: "Valeur", contrarian: "Contrarian", momentum: "Momentum", anomalie: "Anomalie", coeur: "Cœur", neutre: "Neutre", couteau: "Couteau qui tombe" };
+  function oppRow(o) {
+    return `<li><a class="opp" href="#fiche-${o.ticker}">
+      ${C.orb(o.score, o.low, o.high, 60)}
+      <div><div class="t"><b>${esc(o.name)}</b><span class="tag ${o.type}">${TYPE_LABEL[o.type]}</span></div><p>${esc(o.thesis)}</p></div>
+      ${C.sparkline(o.spark, { w: 110, h: 34 })}</a></li>`;
+  }
+
+  /* Constellation : chaque titre est un cercle, sa taille suit le score.
+     Placement en spirale autour du centre, sans chevauchement. */
+  function constellation(items) {
+    const placed = [];
+    const W = 1000;
+    items.forEach((o, i) => {
+      const r = Math.max(30, Math.min(130, 22 * Math.exp((o.score - 40) / 18)));
+      if (!i) { placed.push({ o, r, x: W / 2, y: 0 }); return; }
+      for (let k = 0; k < 4000; k++) {
+        const a = k * 0.35, d = 4 * a;
+        const x = W / 2 + d * Math.cos(a) * 1.6, y = d * Math.sin(a);
+        if (x - r < 0 || x + r > W) continue;
+        if (placed.every((p) => Math.hypot(p.x - x, p.y - y) > p.r + r + 10)) { placed.push({ o, r, x, y }); return; }
+      }
+    });
+    const minY = Math.min(...placed.map((p) => p.y - p.r)) - 4, maxY = Math.max(...placed.map((p) => p.y + p.r)) + 4;
+    return `<svg class="constellation" viewBox="0 ${minY.toFixed(0)} ${W} ${(maxY - minY).toFixed(0)}" role="list" aria-label="Titres classés par score, en cercles">
+      ${placed.map(({ o, r, x, y }) => {
+        // Le nom complet s'il tient dans le cercle, sinon le code du titre.
+        let fs = Math.min(30, r / 3.4), name = o.name;
+        while (name.length * fs * 0.56 > r * 1.7 && fs > 13) fs -= 1;
+        if (name.length * fs * 0.56 > r * 1.7) { name = o.ticker; fs = Math.min(26, r / 3); }
+        return `<a href="#fiche-${o.ticker}" role="listitem" aria-label="${esc(o.name)}, score ${o.score}">
+          <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" class="${o.chg1m >= 0 ? "pos" : "neg"}"/>
+          <text class="c-name" x="${x.toFixed(1)}" y="${(y + fs * 0.1).toFixed(1)}" font-size="${fs.toFixed(1)}">${esc(name)}</text>
+          <text class="c-score" x="${x.toFixed(1)}" y="${(y + fs * 0.1 + 18).toFixed(1)}" font-size="11">${r < 48 ? o.score : `${o.score} [${o.low}–${o.high}]`}</text></a>`;
+      }).join("")}</svg>`;
+  }
+
+  function viewScanner() {
+    const types = ["tout", "valeur", "contrarian", "momentum", "anomalie"];
+    const q = state.query.toLowerCase();
+    const rows = M.universe
+      .filter((o) => state.filter === "tout" || o.type === state.filter)
+      .filter((o) => !q || (o.name + o.ticker + o.sector).toLowerCase().includes(q))
+      .sort((a, b) => b.score - a.score);
+    const empty = `<div class="empty">Aucun titre ne correspond. Essaie un autre filtre ou une autre recherche.</div>`;
+    return head("Scanner", "Tout l'univers surveillé. Plus un cercle est grand, plus le score est élevé. Un contour pointillé signale un titre en baisse sur un mois.", "", `Marchés <span aria-hidden="true">/</span> Scanner`) + `
+    <div class="row between wrap" style="margin-bottom:34px;gap:16px">
+      <div class="chips" role="group" aria-label="Filtrer par type de signal">
+        ${types.map((t) => `<button class="chip" data-filter="${t}" aria-pressed="${state.filter === t}">${t === "tout" ? "Tout" : TYPE_LABEL[t]}</button>`).join("")}
+      </div>
+      <div class="chips" role="group" aria-label="Choisir l'affichage">
+        <button class="chip" data-scanview="cercles" aria-pressed="${state.scanView === "cercles"}">Cercles</button>
+        <button class="chip" data-scanview="liste" aria-pressed="${state.scanView === "liste"}">Liste</button>
+      </div>
+    </div>
+    ${q ? `<p style="margin:-14px 0 24px">Recherche : <b>${esc(state.query)}</b> · <button class="btn small" data-action="clear-search">Effacer</button></p>` : ""}
+    ${!rows.length ? empty : state.scanView === "cercles" ? constellation(rows) : `
+    <div class="table-scroll"><table class="table">
+      <thead><tr><th>Titre</th><th class="hide-m">Tendance 3 mois</th><th class="r">1 mois</th><th class="r hide-m">${ex("rsi", "RSI")}</th><th class="r">${ex("score", "Score")}</th></tr></thead>
+      <tbody>${rows.map((o) => `<tr data-go="#fiche-${o.ticker}" tabindex="0">
+        <td class="who"><b>${esc(o.name)}</b><span>${esc(o.ticker)} / ${esc(o.sector)}</span></td>
+        <td class="hide-m">${C.sparkline(o.spark, { w: 120, h: 30 })}</td>
+        <td class="r num ${o.chg1m >= 0 ? "gain" : "loss"}">${pct(o.chg1m)}</td>
+        <td class="r num hide-m ${o.rsi < 30 ? "warn" : ""}">${o.rsi}</td>
+        <td class="r"><span class="num serif" style="font-size:22px">${o.score}</span> <span class="label">[${o.low}–${o.high}]</span></td>
+      </tr>`).join("")}</tbody>
+    </table></div>`}
+    <p class="label" style="margin-top:28px">${M.isMock ? `Univers de démonstration de ${M.universe.length} titres.` : `${M.universe.length} titres suivis, mis à jour chaque soir de semaine. La liste se modifie dans pipeline/config.yaml.`}</p>`;
+  }
+
+  const FACTORS = [
+    ["valuation", "Valorisation", 25, "pe", "Est-ce bon marché par rapport aux autres titres et à son secteur ? {peText}"],
+    ["quality", "Qualité", 25, null, "L'entreprise est-elle solide ? Marges, rentabilité, dette et régularité des bénéfices."],
+    ["momentum", "Tendance", 20, "momentum", "Le prix monte-t-il sur 12 mois ? Une tendance faible n'interdit pas d'acheter, mais demande plus de patience."],
+    ["risk", "Stabilité", 15, "volatilite", "Plus c'est haut, moins le prix est agité. Volatilité actuelle : {vol} % par an."],
+    ["macro", "Contexte économique", 15, "phase", "Le secteur profite-t-il de la phase actuelle du cycle ?"],
+  ];
+  function viewFiche(ticker) {
+    const any = M.universe.find((x) => x.ticker === ticker) || M.opportunities.find((x) => x.ticker === ticker);
+    const o = any && any.factors ? any : null;
+    const lite = !o ? any : null;
+    if (!o && !lite) return head("Titre introuvable") + `<div class="empty">Ce titre n'est pas dans l'univers surveillé. <a href="#scanner">Retour au scanner</a></div>`;
+    if (lite) return head(esc(lite.name), `${esc(lite.ticker)} / ${esc(lite.sector)}`, "", `<a href="#scanner">Scanner</a> / ${esc(lite.name)}`) + `
+      <section class="panel"><div class="fiche-head">${C.orb(lite.score, lite.low, lite.high, 150)}
+      <p class="muted">La fiche complète (score détaillé, scénarios, backtest) sera générée pour chaque titre à l'étape 4. Pour voir à quoi elle ressemblera, ouvre l'une des 5 idées du jour.</p></div></section>`;
+
+    const p = state.profile, b = book("real");
+    const total = Math.max(b.value, p.capital);
+    const maxAmount = Math.floor((total * p.maxLine) / 100);
+    const amount = o.type === "coeur" ? planSplit(p).core : Math.min(maxAmount, 50);
+    const limit = (o.price * 0.99).toFixed(2).replace(".", ",");
+    const scen = (arr, label) => `<div style="margin-bottom:14px"><div class="row between small" style="margin-bottom:6px"><span>${label}</span><span class="dim">vs ETF monde</span></div>
+      <div class="scen" role="img" aria-label="${arr[0]} % mieux, ${arr[1]} % pareil, ${arr[2]} % moins bien">
+      <span class="up" style="width:${arr[0]}%">${arr[0]} %</span><span class="flat" style="width:${arr[1]}%">${arr[1]} %</span><span class="down" style="width:${arr[2]}%">${arr[2]} %</span></div></div>`;
+
+    return `${head(esc(o.name), `${esc(o.ticker)} / ${esc(o.sector)} / ${esc(o.country)}`, "", `<a href="#scanner">Scanner</a> / ${esc(o.name)}`)}
+    <div class="stack">
+      <section><div class="fiche-head">
+        ${C.orb(o.score, o.low, o.high, 170)}
+        <div>
+          <span class="tag ${o.type}">${TYPE_LABEL[o.type]}</span>
+          <p class="thesis">${esc(o.thesis)}</p>
+          <p class="muted" style="max-width:60ch">Score de ${o.score} sur 100, probablement entre ${o.low} et ${o.high}. ${o.backtest ? (o.high - o.low > 20 ? "La fourchette est large : les cas passés similaires sont peu nombreux et assez dispersés." : "La fourchette est étroite : les données sont complètes et les cas passés cohérents.") : (o.high - o.low > 20 ? "La fourchette est large : des données manquent ou les facteurs se contredisent." : "La fourchette est assez étroite : les facteurs vont plutôt dans le même sens.") + " Elle reste provisoire tant que le backtest (étape 4) ne l'a pas calibrée."}</p>
+          <div class="facts">
+            <div><div class="label">Cours actuel</div><div class="v num">${money(o.price, o.currency)}</div></div>
+            <div><div class="label">Sur 1 mois</div><div class="v num ${o.chg1m >= 0 ? "gain" : "loss"}">${pct(o.chg1m)}</div></div>
+            <div><div class="label">${ex("rsi", "RSI")}</div><div class="v num">${num(o.rsi, 0)}</div></div>
+            <div><div class="label">${ex("pe", "PER")}</div><div class="v num">${num(o.pe)}</div></div>
+          </div>
+        </div></div>
+      </section>
+
+      <div class="grid g-2">
+        <section class="panel">
+          <div class="panel-head"><h2>D'où vient le score</h2><p>Clique sur un facteur</p></div>
+          ${FACTORS.map(([k, label, w, gk, why]) => `<details class="fx"><summary>
+              <span>${gk ? ex(gk, label) : label} <span class="dim small">${w} %</span></span>
+              <span class="bar ${k === "risk" ? "risk" : ""}"><span style="width:${o.factors[k]}%"></span></span>
+              <span class="num" style="text-align:right">${o.factors[k]}</span></summary>
+            <p class="why">${why.replace("{peText}", o.pe ? `PER de ${num(o.pe)}${o.pe_sector ? `, contre ${num(o.pe_sector)} en médiane dans son secteur.` : "."}` : o.kind === "ETF" ? "Pour un ETF, la valorisation compte peu : il contient tout le marché." : "PER indisponible pour ce titre.").replace("{vol}", num(o.vol, 0))}</p></details>`).join("")}
+        </section>
+        ${o.scenarios ? `<section class="panel">
+          <div class="panel-head"><h2>Scénarios</h2></div>
+          <p class="muted small" style="margin-bottom:16px">Parmi les cas passés qui ressemblaient à celui-ci, combien ont fait mieux que l'ETF monde (de plus de 5 %), à peu près pareil, ou moins bien. Ce n'est pas une prédiction.</p>
+          ${scen(o.scenarios.m3, "Dans 3 mois")}${scen(o.scenarios.m12, "Dans 12 mois")}
+          <div class="legend small"><span><i style="background:var(--gain)"></i>Mieux</span><span><i style="border:1px solid var(--ink)"></i>Pareil</span><span><i style="background:var(--ink)"></i>Moins bien</span></div>
+        </section>` : `<section class="panel">
+          <div class="panel-head"><h2>Le titre en chiffres</h2><p>Faits, pas prévisions</p></div>
+          ${C.sparkline(o.spark, { w: 520, h: 90 }).replace('class="spark"', 'class="spark" style="width:100%;height:auto;margin-bottom:14px"')}
+          ${[["Sur 3 mois", pct(o.chg3m)], ["Sur 12 mois", pct(o.chg12m)], [ex("volatilite", "Volatilité sur un an"), o.vol != null ? num(o.vol, 0) + " %" : "—"],
+             [ex("drawdown", "Pire baisse sur un an"), pct(o.maxdd_1y)], ["Écart avec son plus haut sur un an", pct(o.dist_52w_high)]]
+            .map(([l, v]) => `<div class="row between" style="padding:9px 0;border-bottom:1px solid var(--rule-soft)"><span>${l}</span><span class="num">${v}</span></div>`).join("")}
+          <p class="muted small" style="margin-top:14px">Les scénarios (probabilité de faire mieux ou moins bien que l'ETF monde) arrivent à l'étape 4, avec le backtest.</p>
+        </section>`}
+      </div>
+
+      <section class="panel wrong">
+        <div class="panel-head"><h2>Pourquoi je pourrais avoir tort</h2></div>
+        <ul>${o.wrong.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>
+        <p style="margin-top:14px"><b>Ce qui invaliderait la thèse :</b> <span class="muted">${esc(o.invalidation)}</span></p>
+      </section>
+
+      ${o.backtest ? `<section class="panel">
+        <div class="panel-head"><h2>Ce que ce signal a donné par le passé</h2><p>${ex("backtest", "Backtest")} ${o.backtest.years}</p></div>
+        <div class="kpis">
+          <div class="kpi"><div class="v num">${o.backtest.cases}</div><div class="l">cas similaires trouvés</div></div>
+          <div class="kpi"><div class="v num">${o.backtest.hit} %</div><div class="l">ont battu l'ETF monde à 12 mois</div></div>
+          <div class="kpi"><div class="v num ${o.backtest.avg >= 0 ? "gain" : "loss"}">${pct(o.backtest.avg)}</div><div class="l">d'écart moyen avec l'ETF</div></div>
+          <div class="kpi"><div class="v num loss">${o.backtest.maxdd} %</div><div class="l">${ex("drawdown", "pire baisse")} subie en route</div></div>
+        </div>
+        ${o.backtest.flags.map((f) => `<div class="flag">${{
+          "peu de cas": "Moins de 30 cas : le résultat peut être dû au hasard. Prends-le comme un indice, pas une preuve.",
+          "survivant": "Biais du survivant : seules les entreprises encore cotées aujourd'hui sont testées, ce qui embellit les chiffres.",
+          "période favorable": "La période testée est surtout haussière : le signal n'a pas été éprouvé dans une vraie crise.",
+        }[f]}</div>`).join("")}
+      </section>` : `<section class="panel"><div class="panel-head"><h2>Ce que ce signal a donné par le passé</h2><p>${ex("backtest", "Backtest")}</p></div><div class="empty">Le backtest de chaque signal arrive à l'étape 4. D'ici là, le score n'est pas vérifié sur le passé.</div></section>`}
+
+      <section class="panel">
+        <div class="panel-head"><h2>Si tu veux passer à l'action</h2><p>Adapté à ton profil</p></div>
+        <ol class="steps">
+          <li><div><b>Montant : ${amount} €</b><div class="muted small">${o.type === "coeur" ? "C'est ta part mensuelle pour le cœur de portefeuille." : `Au maximum ${p.maxLine} % de ton portefeuille sur une seule action, soit ${maxAmount} €. On reste en dessous pour commencer.`}</div></div></li>
+          <li><div><b>${o.type === "coeur" ? "Plan d'investissement programmé" : `${ex("ordreLimite", "Ordre à cours limité")} à ${limit} €`}</b><div class="muted small">${o.type === "coeur" ? "Le même jour chaque mois, sans regarder le cours. C'est souvent gratuit chez les courtiers en ligne." : "Environ 1 % sous le cours actuel : tu n'achètes pas plus cher que prévu si le prix s'agite à l'ouverture."}</div></div></li>
+          <li><div><b>Horizon : ${o.type === "coeur" ? "10 ans et plus" : "12 mois, puis revue"}</b><div class="muted small">${o.type === "coeur" ? "On ne vend pas dans les baisses : c'est là que le plan achète le moins cher." : "Une date de revue est ajoutée au journal pour vérifier si la thèse s'est réalisée."}</div></div></li>
+          <li><div><b>Sortie</b><div class="muted small">${esc(o.invalidation)}</div></div></li>
+        </ol>
+        ${o.type !== "coeur" && 1 / amount > 0.01 ? `<div class="flag">Avec environ 1 € de frais, un achat de ${amount} € coûte ${((1 / amount) * 100).toLocaleString("fr-FR", { maximumFractionDigits: 1 })} % d'entrée. Ton capital est encore petit pour une action seule : teste d'abord cette idée en simulé, ou attends que ta cagnotte satellite atteigne 100 €.</div>` : ""}
+        <div class="row wrap" style="margin-top:16px">
+          <button class="btn primary" data-action="journal-new" data-ticker="${o.ticker}" data-amount="${amount}" data-thesis="${esc(o.thesis)}">Noter dans le journal</button>
+          <button class="btn" disabled title="Disponible à l'étape 5">Tester en simulé</button>
+        </div>
+      </section>
+    </div>` + disclaimer;
+  }
+
+  function viewMacro() {
+    const m = M.macro;
+    return head("Contexte économique", "Où en est l'économie, et quels secteurs ont tendance à mieux résister dans cette phase.") + `
+    <div class="grid g-2">
+      <section class="panel">
+        <div class="panel-head"><h2>${ex("phase", "Phase du cycle")}</h2></div>
+        ${C.cycleDial(m.phase)}
+        <p class="muted" style="margin-top:10px">Nous serions en <b style="color:var(--ink)">${m.phase}</b>. ${esc(m.phase_text || "La croissance continue mais perd de la vitesse.")} C'est une estimation à partir de quelques indicateurs publics${m.confidence ? `, avec une confiance ${esc(m.confidence)}` : ""} : les phases ne se lisent clairement qu'après coup.</p>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Les indicateurs</h2></div>
+        <div class="stack" style="gap:14px">${m.indicators.map((i) => `<div>
+          <div class="row between"><span>${esc(i.label)}</span><span class="num" style="font-weight:600">${esc(i.value)} <span class="dim small">${esc(i.trend)}</span></span></div>
+          <p class="muted small">${esc(i.meaning)}</p></div>`).join("")}</div>
+      </section>
+    </div>
+    <section class="panel" style="margin-top:18px">
+      <div class="panel-head"><h2>Secteurs adaptés à cette phase</h2><p>Historiquement, en moyenne</p></div>
+      ${m.sectors.map((s) => `<div class="factor"><span>${esc(s.name)}</span><span class="bar"><span style="width:${s.fit}%"></span></span><span class="num" style="text-align:right">${s.fit}</span><p class="why" style="padding-top:0">${esc(s.note)}</p></div>`).join("")}
+    </section>` + disclaimer;
+  }
+
+  function viewPortfolio() {
+    const p = state.profile, b = book(state.book);
+    const proj = C.project({ monthly: state.sim.monthly, initial: b.value, years: state.sim.years });
+    const end = proj[proj.length - 1];
+    return head("Portefeuille", "Tes positions, tes règles de risque et ce que ton plan pourrait donner. Les positions affichées sont un exemple : l'import de tes relevés arrive à l'étape 5. Les cours, eux, sont réels.") + `
+    <div class="chips" role="group" aria-label="Choisir le portefeuille" style="margin-bottom:18px">
+      <button class="chip" data-book="real" aria-pressed="${state.book === "real"}">Réel</button>
+      <button class="chip" data-book="simulated" aria-pressed="${state.book === "simulated"}">Simulé (argent fictif)</button>
+    </div>
+    <div class="kpis" style="margin-bottom:18px">
+      <div class="kpi"><div class="v num">${eur(b.value, 2)}</div><div class="l">Valeur actuelle</div></div>
+      <div class="kpi"><div class="v num">${eur(b.invested, 2)}</div><div class="l">Montant investi</div></div>
+      <div class="kpi"><div class="v num ${b.pnl >= 0 ? "gain" : "loss"}">${b.pnl >= 0 ? "+" : ""}${eur(b.pnl, 2)}</div><div class="l">${ex("latent", "Gain ou perte latente")}</div></div>
+      <div class="kpi"><div class="v num">${Math.round(b.corePct)} %</div><div class="l">Part du cœur (objectif ${p.core} %)</div></div>
+    </div>
+    <div class="grid g-2">
+      <section class="panel">
+        <div class="panel-head"><h2>Positions</h2></div>
+        <div class="table-scroll"><table class="table"><thead><tr><th>Titre</th><th class="r">Valeur</th><th class="r">Résultat</th></tr></thead><tbody>
+          ${b.rows.map((r) => `<tr data-go="#fiche-${r.ticker}" tabindex="0"><td class="who"><b>${esc(r.name)}</b><span>${r.qty.toLocaleString("fr-FR")} part(s) · ${r.bucket === "coeur" ? "cœur" : "satellite"}</span></td>
+          <td class="r num">${eur(r.value, 2)}</td><td class="r num ${r.value >= r.invested ? "gain" : "loss"}">${pct(((r.value - r.invested) / r.invested) * 100)}</td></tr>`).join("")}
+        </tbody></table></div>
+        <p class="muted small" style="margin-top:12px">Un ${ex("latent", "gain latent")} n'existe que sur le papier tant que tu ne vends pas.</p>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Tes règles</h2><a class="btn small" href="#reglages">Modifier</a></div>
+        <div>
+          ${ruleLine(b.corePct >= p.core - 10, `Cœur ETF ≥ ${p.core - 10} %`, `Actuellement ${Math.round(b.corePct)} %.`)}
+          ${ruleLine(b.maxLinePct <= p.maxLine, `Aucune action seule au-dessus de ${p.maxLine} %`, `La plus grosse pèse ${Math.round(b.maxLinePct)} %.`)}
+          ${ruleLine(true, "Frais sous 1 % par achat", "Vérifié automatiquement à chaque ordre à partir de l'étape 5.")}
+        </div>
+        <div class="empty" style="margin-top:18px">Import des relevés Revolut et Trade Republic (CSV) : disponible à l'étape 5.</div>
+      </section>
+    </div>
+    <section class="panel" style="margin-top:18px">
+      <div class="panel-head"><h2>Que pourrait donner ton plan ?</h2><p>${ex("interets", "Intérêts composés")}</p></div>
+      <div class="grid g-2" style="margin-bottom:10px">
+        <label class="field">Versement mensuel : <b class="num" style="color:var(--ink)" id="mOut">${state.sim.monthly} €</b><input type="range" min="25" max="1000" step="25" value="${state.sim.monthly}" data-sim="monthly"></label>
+        <label class="field">Durée : <b class="num" style="color:var(--ink)" id="yOut">${state.sim.years} ans</b><input type="range" min="5" max="40" step="1" value="${state.sim.years}" data-sim="years"></label>
+      </div>
+      <div id="fan">${C.fanChart(proj)}</div>
+      <div class="kpis" id="fanK" style="margin-top:14px">${fanKpis(end)}</div>
+      <p class="muted small" style="margin-top:12px">600 trajectoires simulées avec un rendement moyen de 7 % par an et une volatilité de 15 %, proches de l'historique des actions mondiales. La bande foncée contient 8 trajectoires sur 10. La ligne pointillée, c'est ce que tu as versé. Rien de tout cela n'est garanti.</p>
+    </section>` + disclaimer;
+  }
+  function fanKpis(end) {
+    return `<div class="kpi"><div class="v num">${eur(end.paid)}</div><div class="l">Versé au total</div></div>
+      <div class="kpi"><div class="v num warn">${eur(end.p10)}</div><div class="l">Cas défavorable (1 chance sur 10 de faire moins)</div></div>
+      <div class="kpi"><div class="v num gain">${eur(end.p50)}</div><div class="l">Cas médian</div></div>
+      <div class="kpi"><div class="v num">${eur(end.p90)}</div><div class="l">Cas favorable (1 chance sur 10 de faire mieux)</div></div>`;
+  }
+
+  /* Performance d'un titre depuis une date, d'après l'historique hebdomadaire. */
+  function perfSince(ticker, date) {
+    const h = M.history && M.history[ticker];
+    if (!h || !h.closes?.length) return null;
+    const weeks = Math.floor((new Date(date) - new Date(h.start)) / (7 * 864e5));
+    if (weeks < 0 || weeks >= h.closes.length - 1) return null;
+    return (h.closes[h.closes.length - 1] / h.closes[Math.max(0, weeks)] - 1) * 100;
+  }
+  function compareToBenchmark(entries) {
+    const bench = M.benchmark || "EUNL.DE", pairs = [];
+    entries.filter((e) => e.action === "achat").forEach((e) => {
+      const t = M.universe.find((u) => u.ticker === e.ticker || u.ticker.split(".")[0] === e.ticker);
+      const a = t && perfSince(t.ticker, e.date), b = perfSince(bench, e.date);
+      if (a != null && b != null) pairs.push([a, b]);
+    });
+    if (!pairs.length) return null;
+    const avg = (i) => pairs.reduce((s, p) => s + p[i], 0) / pairs.length;
+    return { mine: avg(0), bench: avg(1), n: pairs.length };
+  }
+  function viewJournal() {
+    const j = state.journal.slice().sort((a, b) => b.date.localeCompare(a.date));
+    const n = j.length, need = 20;
+    return head("Journal de décisions", "Chaque achat ou vente, avec ta raison du moment. C'est ce qui te permettra de savoir si ta méthode marche vraiment.",
+      `<button class="btn primary" data-action="journal-new">Nouvelle décision</button>`) + `
+    <section class="hero" style="margin-bottom:18px">
+      <h2>Est-ce que ça marche ?</h2>
+      <p class="muted" style="margin:6px 0 18px;max-width:62ch">Sur quelques mois, le hasard pèse plus que la méthode. Ce tableau te dira quand tu as assez de recul pour conclure.</p>
+      <div class="grid g-3">
+        <div><div class="num" style="font-size:30px;font-weight:600">${n} <span class="dim" style="font-size:16px">/ ${need}</span></div><div class="muted small">décisions notées. Il en faut une vingtaine pour commencer à juger.</div>
+          <div class="bar" style="margin-top:10px"><span style="width:${Math.min(100, (n / need) * 100)}%"></span></div></div>
+        ${(() => { const c = compareToBenchmark(j); return c
+          ? `<div><div class="num" style="font-size:30px;font-weight:600">${pct(c.mine)} <span class="dim" style="font-size:16px">vs ${pct(c.bench)}</span></div><div class="muted small">Tes ${c.n} décision(s) comparées à l'ETF monde sur les mêmes dates, d'après les cours de clôture hebdomadaires.</div></div>`
+          : `<div><div class="num" style="font-size:30px;font-weight:600">—</div><div class="muted small">Tes choix comparés à l'ETF monde sur les mêmes dates. Apparaît dès qu'une décision porte sur un titre suivi.</div></div>`; })()}
+        <div><div class="num" style="font-size:30px;font-weight:600">—</div><div class="muted small">Thèses réalisées pour les raisons prévues. Rempli au fil des revues.</div></div>
+      </div>
+      <p style="margin-top:18px"><b>Verdict : pas encore assez de données.</b> <span class="muted">Continue de tout noter.</span></p>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>Décisions</h2></div>
+      ${n ? `<div class="stack" style="gap:0">${j.map((e) => `<article style="padding:14px 0;border-top:1px solid var(--line)">
+        <div class="row between wrap"><div class="row"><b class="num">${esc(e.ticker)}</b><span class="tag ${e.action === "achat" ? "valeur" : "risk"}">${esc(e.action)}</span><span class="num">${eur(+e.amount)}</span></div>
+        <span class="dim small">${new Date(e.date).toLocaleDateString("fr-FR")}${e.review ? ` · revue le ${new Date(e.review).toLocaleDateString("fr-FR")}` : ""}</span></div>
+        <p class="muted" style="margin-top:6px">${esc(e.thesis)}</p></article>`).join("")}</div>`
+        : `<div class="empty">Ton journal est vide. Note ta première décision, même un simple achat d'ETF.</div>`}
+    </section>` + disclaimer;
+  }
+
+  function viewBrokers() {
+    const crit = [
+      ["Frais par ordre", "Vérifié à l'étape 5", "Vérifié à l'étape 5"],
+      ["Plans programmés sur ETF", "Vérifié à l'étape 5", "Vérifié à l'étape 5"],
+      ["Actions fractionnées", "Vérifié à l'étape 5", "Vérifié à l'étape 5"],
+      ["Frais de change (USD)", "Vérifié à l'étape 5", "Vérifié à l'étape 5"],
+      ["Documents fiscaux pour l'Espagne", "Vérifié à l'étape 5", "Vérifié à l'étape 5"],
+      ["Garantie des titres et dépôts", "Vérifié à l'étape 5", "Vérifié à l'étape 5"],
+    ];
+    return head("Courtiers et exécution", "Où et comment acheter, au coût le plus bas pour un résident fiscal en Espagne.") + `
+    <div class="grid g-2">
+      <section class="panel">
+        <div class="panel-head"><h2>Combien coûte un achat ?</h2></div>
+        <div class="grid g-2" style="gap:12px">
+          <label class="field">Montant de l'achat (€)<input type="number" min="1" value="50" id="feeAmt"></label>
+          <label class="field">Frais fixes (€)<input type="number" min="0" step="0.5" value="1" id="feeFix"></label>
+        </div>
+        <div id="feeOut" style="margin-top:16px"></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Passer un ordre, simplement</h2></div>
+        <ol class="steps">
+          <li><div><b>Cherche le titre par son ${ex("isin", "code ISIN")}</b><div class="muted small">Le code à 12 caractères (ex. IE00B4L5Y983) évite de confondre deux produits au nom proche.</div></div></li>
+          <li><div><b>Choisis « ordre à cours limité »</b><div class="muted small">Tu fixes ton prix maximum. Évite l'ordre « au marché » sur les petites valeurs.</div></div></li>
+          <li><div><b>Achète pendant les heures de bourse</b><div class="muted small">Entre 9 h et 17 h 30 pour les places européennes : l'écart entre prix d'achat et de vente y est plus faible.</div></div></li>
+          <li><div><b>Note la décision dans le journal</b><div class="muted small">Avec ta raison du moment. Tu remercieras ton toi futur.</div></div></li>
+        </ol>
+      </section>
+    </div>
+    <section class="panel" style="margin-top:18px">
+      <div class="panel-head"><h2>Revolut ou Trade Republic</h2><p>Comparatif à jour à l'étape 5</p></div>
+      <div class="table-scroll"><table class="table" style="cursor:default"><thead><tr><th>Critère</th><th>Revolut</th><th>Trade Republic</th></tr></thead>
+      <tbody>${crit.map(([c, a, b]) => `<tr style="cursor:default"><td>${c}</td><td class="dim">${a}</td><td class="dim">${b}</td></tr>`).join("")}</tbody></table></div>
+      <p class="muted small" style="margin-top:12px">Les tarifs changent souvent : ils seront relevés à la source et datés, plutôt que de mémoire. Le PEA ne s'applique pas : il est réservé aux résidents fiscaux français.</p>
+    </section>` + disclaimer;
+  }
+  function feeVerdict() {
+    const a = +($("#feeAmt")?.value || 0), f = +($("#feeFix")?.value || 0);
+    const out = $("#feeOut"); if (!out) return;
+    if (a <= 0) { out.innerHTML = `<p class="muted">Indique un montant supérieur à 0.</p>`; return; }
+    const c = (f / a) * 100;
+    const [cls, msg] = c <= 1 ? ["gain", "Coût raisonnable."] : c <= 2 ? ["warn", "Acceptable de temps en temps, mais regroupe tes achats si tu peux."] : ["loss", "Trop cher : attends d'avoir un montant plus gros, ou utilise un plan programmé."];
+    const minOk = Math.ceil(f * 100);
+    out.innerHTML = `<div class="num ${cls}" style="font-size:34px;font-weight:600">${c.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} %</div>
+      <p>${msg}</p><p class="muted small" style="margin-top:6px">Tu perds ce pourcentage dès l'achat : le titre doit monter d'autant pour que tu retrouves ta mise. Avec ${eur(f, 2)} de frais, il faut acheter au moins ${eur(minOk)} pour rester sous 1 %.</p>`;
+  }
+
+  function viewLearn() {
+    const nextIdx = M.lessons.findIndex((l) => !l.done);
+    return head("Apprendre", "Un parcours dans l'ordre, une notion à la fois. Chaque leçon prend quelques minutes.") + `
+    <div class="stack">
+      <section class="panel">
+        <div class="panel-head"><h2>Ton parcours</h2><p>${M.lessons.filter((l) => l.done).length} sur ${M.lessons.length} terminées</p></div>
+        <ol class="path">${M.lessons.map((l, i) => `<li class="${l.done ? "done" : i === nextIdx ? "next" : ""}"><div><b>${esc(l.title)}</b><div class="dim small">${l.minutes} min</div></div>
+          ${i === nextIdx ? `<a class="btn small primary" href="#apprendre-${l.id}">Commencer</a>` : l.done ? `<span class="gain small">Terminée</span>` : ""}</li>`).join("")}</ol>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><span class="label">Lexique du débutant</span></div><p class="muted small" style="margin:-6px 0 14px">Les mots soulignés en pointillé, partout dans l'app, s'expliquent quand tu passes dessus ou que tu les touches.</p>
+        <div class="lexique">${Object.entries(G).map(([k, [t, d, e]]) => `<div id="mot-${k}"><b>${esc(t)}</b><p class="muted small">${esc(d)}</p>${e ? `<p class="small" style="font-style:italic;color:var(--mute);margin-top:4px">${esc(e)}</p>` : ""}</div>`).join("")}</div>
+      </section>
+    </div>` + disclaimer;
+  }
+  const LESSONS = {
+    bases: `
+      <p>Investir en bourse, c'est acheter des morceaux d'entreprises en espérant qu'ils prennent de la valeur avec le temps. Cinq mots suffisent pour démarrer.</p>
+      <h3>Une action</h3>
+      <p>Un tout petit morceau d'une entreprise. Si tu achètes une action Inditex, tu possèdes une minuscule part de Zara. Quand l'entreprise gagne plus d'argent, ta part vaut en général plus cher. Quand elle va mal, elle perd de la valeur, et elle peut même tomber à zéro si l'entreprise fait faillite.</p>
+      <h3>La bourse</h3>
+      <p>Le marché où ces morceaux s'achètent et se vendent. Le prix change toute la journée : plus il y a de gens qui veulent acheter, plus il monte.</p>
+      <h3>Un courtier</h3>
+      <p>Tu ne peux pas aller acheter toi-même à la bourse : tu passes par un intermédiaire, le courtier. Aujourd'hui c'est simplement une application, comme Revolut ou Trade Republic.</p>
+      <h3>Un ETF</h3>
+      <p>Choisir les bonnes entreprises est difficile, même pour les professionnels. Un ETF règle le problème : c'est un panier tout prêt qui contient des centaines d'actions. Tu achètes une seule « part du panier » et tu possèdes un petit bout de chaque entreprise dedans. Si l'une s'effondre, ça ne pèse presque rien sur le total.</p>
+      <h3>Un ETF monde</h3>
+      <p>Le panier le plus large : environ 1 400 grandes entreprises d'une vingtaine de pays riches. Avec 80 €, tu deviens un tout petit actionnaire d'une grande partie de l'économie mondiale. Tu n'as pas à deviner qui va gagner : tu les as presque toutes.</p>
+      <div class="flag" style="background:rgba(91,140,255,0.1);color:var(--ink)">À retenir : une action, c'est parier sur une entreprise. Un ETF monde, c'est parier sur l'économie mondiale dans son ensemble. C'est beaucoup moins risqué, et c'est pour ça qu'il sert de base.</div>`,
+    etf: `
+      <p>Un ${ex("etfMonde", "ETF monde")} ne choisit rien lui-même. Il achète automatiquement les grandes entreprises de 23 pays développés, chacune selon sa taille : plus une entreprise est grosse, plus elle pèse dans le panier.</p>
+      <p>Conséquence : les entreprises américaines font environ 70 % du panier, et la dizaine de plus grosses (Apple, Microsoft, Nvidia…) en pèse à elle seule près d'un quart. « Monde » ne veut donc pas dire « réparti également ».</p>
+      <p>Ce qu'il n'y a pas dedans : les pays émergents (Chine, Inde, Brésil…) et les petites entreprises. Un ETF « All-World » ajoute les pays émergents.</p>
+      <div class="flag" style="background:rgba(91,140,255,0.1);color:var(--ink)">À retenir : un ETF monde contient énormément d'entreprises, mais il dépend beaucoup des États-Unis et des géants de la technologie.</div>`,
+  };
+  function viewLesson(id) {
+    const l = M.lessons.find((x) => x.id === id);
+    if (!l) return viewLearn();
+    const i = M.lessons.indexOf(l), nxt = M.lessons[i + 1];
+    return head(esc(l.title), `Leçon ${i + 1} sur ${M.lessons.length}, ${l.minutes} minutes`, "", `<a href="#apprendre">Apprendre</a> / Leçon ${i + 1}`) + `
+    <article class="lesson">
+      <div class="stack" style="gap:14px">
+        ${LESSONS[id] || `<div class="empty">Cette leçon sera écrite à l'étape 5.</div>`}
+        <p class="dim small">Le parcours complet, avec un petit quiz à la fin de chaque leçon, arrive à l'étape 5.</p>
+        ${nxt ? `<div><a class="btn primary" href="#apprendre-${nxt.id}">Leçon suivante : ${esc(nxt.title)}</a></div>` : ""}
+      </div>
+    </article>`;
+  }
+
+  function viewSettings() {
+    const p = state.profile;
+    return head("Réglages", "Ton profil et tes règles. Elles servent à calculer les montants suggérés et les alertes.") + `
+    <section class="panel" style="max-width:640px">
+      <form id="profileForm" class="stack">
+        <label class="field">Prénom<input type="text" name="name" value="${esc(p.name)}"></label>
+        <div class="grid g-2">
+          <label class="field">Capital investi (€)<input type="number" min="0" name="capital" value="${p.capital}"></label>
+          <label class="field">Versement mensuel (€)<input type="number" min="0" name="monthly" value="${p.monthly}"></label>
+          <label class="field">Part du cœur ETF (%)<input type="number" min="0" max="100" name="core" value="${p.core}"></label>
+          <label class="field">Maximum par action seule (%)<input type="number" min="1" max="100" name="maxLine" value="${p.maxLine}"></label>
+        </div>
+        <div class="row wrap"><button class="btn primary" type="submit">Enregistrer</button>
+          <button class="btn" type="button" data-action="onboard">Refaire mon profil</button></div>
+        <p class="muted small" id="saved" aria-live="polite"></p>
+      </form>
+    </section>`;
+  }
+
+  /* ======================= ONBOARDING ======================= */
+  const ONB = [
+    { key: "goal", q: "Qu'attends-tu d'abord de cette application ?", opts: [["apprendre", "Apprendre comment fonctionnent les marchés", "Le rendement viendra ensuite"], ["rendement", "Faire fructifier mon épargne", "En comprenant ce que je fais"]] },
+    { key: "capital", q: "Combien as-tu investi ou comptes-tu investir au départ ?", opts: [[450, "Moins de 500 €"], [1500, "500 à 2 000 €"], [5000, "2 000 à 10 000 €"], [15000, "Plus de 10 000 €"]] },
+    { key: "monthly", q: "Combien peux-tu investir chaque mois, sans te priver ?", opts: [[50, "Environ 50 €"], [100, "Environ 100 €"], [250, "Environ 250 €"], [500, "500 € ou plus"]] },
+    { key: "risk", q: "Ton portefeuille perd 25 % en 3 mois. Tu fais quoi ?", opts: [["faible", "Je vends pour arrêter les pertes"], ["moyenne", "J'attends, stressé"], ["élevée", "Je continue mes achats"]] },
+  ];
+  function onboarding(step = 0, draft = { ...state.profile }) {
+    const s = ONB[step];
+    const back = document.createElement("div");
+    back.className = "modal-back";
+    back.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="onbq">
+      <div class="row between"><div class="dots">${ONB.map((_, i) => `<i class="${i <= step ? "on" : ""}"></i>`).join("")}</div>
+      <button class="btn small" data-close>Passer</button></div>
+      <h2 id="onbq" style="margin-top:22px;font-size:22px">${s.q}</h2>
+      <div class="opts">${s.opts.map(([v, l, d]) => `<button class="opt" data-v="${v}" aria-pressed="${String(draft[s.key]) === String(v)}">${l}${d ? `<span>${d}</span>` : ""}</button>`).join("")}</div>
+      <p class="dim small">Question ${step + 1} sur ${ONB.length}. Tu pourras tout modifier dans les réglages.</p></div>`;
+    document.body.appendChild(back);
+    const close = () => back.remove();
+    back.querySelector("[data-close]").onclick = () => { close(); store.set("onboarded", true); };
+    back.querySelectorAll(".opt").forEach((b) => (b.onclick = () => {
+      const v = b.dataset.v; draft[s.key] = isNaN(+v) ? v : +v; close();
+      if (step + 1 < ONB.length) onboarding(step + 1, draft);
+      else {
+        if (draft.risk === "faible") { draft.core = 90; draft.maxLine = 5; } else if (draft.risk === "moyenne") { draft.core = 80; draft.maxLine = 8; } else { draft.core = 80; draft.maxLine = 10; }
+        state.profile = draft; state.sim.monthly = draft.monthly; store.set("profile", draft); store.set("onboarded", true); render();
+      }
+    }));
+    back.querySelector(".opt").focus();
+  }
+
+  /* ======================= JOURNAL : saisie ======================= */
+  function journalModal(prefill = {}) {
+    const today = new Date().toISOString().slice(0, 10);
+    const review = new Date(Date.now() + 365 * 864e5).toISOString().slice(0, 10);
+    const back = document.createElement("div");
+    back.className = "modal-back";
+    back.innerHTML = `<form class="modal stack" role="dialog" aria-modal="true" aria-labelledby="jt">
+      <h2 id="jt">Nouvelle décision</h2>
+      <div class="grid g-2" style="gap:12px">
+        <label class="field">Titre<input type="text" name="ticker" required value="${esc(prefill.ticker || "")}"></label>
+        <label class="field">Action<select name="action"><option>achat</option><option>vente</option></select></label>
+        <label class="field">Montant (€)<input type="number" name="amount" min="1" required value="${esc(prefill.amount || "")}"></label>
+        <label class="field">Date<input type="date" name="date" value="${today}"></label>
+      </div>
+      <label class="field">Pourquoi je le fais (ma thèse)<textarea name="thesis" required>${esc(prefill.thesis || "")}</textarea></label>
+      <label class="field">Ce qui me prouverait que j'ai tort<textarea name="wrong" placeholder="Ex. : si les ventes baissent deux trimestres de suite"></textarea></label>
+      <label class="field">Date de revue<input type="date" name="review" value="${review}"></label>
+      <div class="row"><button class="btn primary" type="submit">Enregistrer la décision</button><button class="btn" type="button" data-close>Annuler</button></div>
+    </form>`;
+    document.body.appendChild(back);
+    back.querySelector("[data-close]").onclick = () => back.remove();
+    back.querySelector("form").onsubmit = (e) => {
+      e.preventDefault();
+      const d = Object.fromEntries(new FormData(e.target));
+      state.journal.push({ id: Date.now(), ...d, ticker: d.ticker.toUpperCase().trim(), amount: +d.amount });
+      store.set("journal", state.journal); back.remove(); location.hash = "#journal"; render();
+    };
+    back.querySelector("input").focus();
+  }
+
+  /* ======================= Explique-moi ======================= */
+  let pop;
+  function showPop(el) {
+    const g = G[el.dataset.explain]; if (!g) return;
+    hidePop();
+    pop = document.createElement("div"); pop.className = "pop"; pop.setAttribute("role", "tooltip");
+    pop.innerHTML = `<b>${esc(g[0])}</b>${esc(g[1])}${g[2] ? `<em>${esc(g[2])}</em>` : ""}`;
+    document.body.appendChild(pop);
+    const r = el.getBoundingClientRect(), pw = pop.offsetWidth, ph = pop.offsetHeight;
+    let x = Math.min(Math.max(10, r.left), innerWidth - pw - 10);
+    let y = r.bottom + 8; if (y + ph > innerHeight - 10) y = r.top - ph - 8;
+    pop.style.left = x + "px"; pop.style.top = y + "px";
+  }
+  function hidePop() { if (pop) { pop.remove(); pop = null; } }
+
+  /* ======================= Routeur ======================= */
+  let stopPulse = null, firstRender = true;
+  /* Change d'écran derrière un rideau d'encre (désactivé si « réduire les animations »). */
+  function go() {
+    const c = $(".curtain");
+    const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (firstRender || calm || !c) { firstRender = false; render(); window.scrollTo(0, 0); return; }
+    c.classList.remove("go"); void c.offsetWidth; c.classList.add("go");
+    setTimeout(() => { render(); window.scrollTo(0, 0); }, 300);
+  }
+  function render() {
+    // Adresses simples : #scanner, #fiche-ASML, #apprendre-bases (compatibles avec les liens partagés).
+    const h = decodeURIComponent(location.hash.replace(/^#\/?/, ""));
+    const cut = h.indexOf("-");
+    const parts = cut > 0 && ["fiche", "apprendre"].includes(h.slice(0, cut)) ? [h.slice(0, cut), h.slice(cut + 1)] : [h];
+    let r = parts[0] || "";
+    if (r === "accueil") r = "";
+    const views = { "": viewHome, scanner: viewScanner, macro: viewMacro, portefeuille: viewPortfolio, journal: viewJournal, courtiers: viewBrokers, reglages: viewSettings };
+    let html;
+    if (r === "fiche") html = viewFiche(parts[1] || "");
+    else if (r === "apprendre") html = parts[1] ? viewLesson(parts[1]) : viewLearn();
+    else html = (views[r] || viewHome)();
+    const main = $("#main");
+    if (stopPulse) { stopPulse(); stopPulse = null; }
+    main.innerHTML = `<div class="view">${html}</div>`;
+    const inAccount = ACCOUNT.some(([k]) => k === r);
+    document.querySelectorAll("[data-route]").forEach((a) => {
+      const k = a.dataset.route;
+      const active = k === r || (r === "fiche" && k === "scanner") || (k === "@account" && inAccount);
+      a.removeAttribute("aria-current"); if (active) a.setAttribute("aria-current", "page");
+    });
+    const mm = $("#mmenu"); if (mm?.classList.contains("open")) { mm.classList.remove("open"); $("#menuBtn").textContent = "Menu"; $("#menuBtn").setAttribute("aria-expanded", "false"); }
+    const cv = $("#pulseCanvas");
+    if (cv && window.Pulse) {
+      // Volatilité moyenne des idées du jour (fictive pour l'instant) : elle règle l'agitation du relief.
+      const pool = M.universe.filter((o) => o.vol != null);
+      const vol = pool.length ? Math.min(1, pool.reduce((a, o) => a + o.vol, 0) / pool.length / 40) : 0.5;
+      const trend = pool.length ? Math.max(-1, Math.min(1, pool.reduce((a, o) => a + (o.chg1m || 0), 0) / pool.length / 10)) : 0;
+      stopPulse = window.Pulse.mount(cv, { vol, trend });
+    }
+    hidePop();
+    if (r === "courtiers") feeVerdict();
+    const titles = { "": "Aujourd'hui", scanner: "Scanner", macro: "Macro", portefeuille: "Portefeuille", journal: "Journal", courtiers: "Courtiers", apprendre: "Apprendre", reglages: "Réglages", fiche: parts[1] || "" };
+    document.title = (titles[r] ?? NAME) + " · " + NAME;
+  }
+
+  function bind() {
+    document.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-action],[data-filter],[data-book],[data-go],[data-scanview]");
+      if (!t) { if (!e.target.closest("[data-explain]")) hidePop(); return; }
+      if (t.dataset.go) { location.hash = t.dataset.go; return; }
+      if (t.dataset.filter) { state.filter = t.dataset.filter; render(); return; }
+      if (t.dataset.book) { state.book = t.dataset.book; render(); return; }
+      if (t.dataset.scanview) { state.scanView = t.dataset.scanview; render(); return; }
+      const a = t.dataset.action;
+      if (a === "explain") {
+        state.explain = !state.explain; store.set("explain", state.explain);
+        document.body.classList.toggle("explain-on", state.explain);
+        document.querySelectorAll('[data-action="explain"]').forEach((b) => b.setAttribute("aria-pressed", state.explain));
+      }
+      if (a === "journal-new") journalModal({ ticker: t.dataset.ticker, amount: t.dataset.amount, thesis: t.dataset.thesis });
+      if (a === "onboard") onboarding(0);
+      if (a === "clear-search") { state.query = ""; const g = $("#globalSearch"); if (g) g.value = ""; render(); }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && e.target.dataset?.go) location.hash = e.target.dataset.go;
+      if (e.key === "Escape") { hidePop(); document.querySelector(".modal-back")?.remove(); }
+    });
+    document.addEventListener("mouseover", (e) => { const el = e.target.closest("[data-explain]"); if (el) showPop(el); });
+    document.addEventListener("mouseout", (e) => { if (e.target.closest("[data-explain]")) hidePop(); });
+    document.addEventListener("focusin", (e) => { const el = e.target.closest("[data-explain]"); if (el) showPop(el); });
+    document.addEventListener("input", (e) => {
+      if (e.target.id === "q") {
+        state.query = e.target.value; const pos = e.target.selectionStart; render();
+        const q = $("#q"); q.focus(); q.setSelectionRange(pos, pos);
+      }
+      if (e.target.id === "feeAmt" || e.target.id === "feeFix") feeVerdict();
+      if (e.target.dataset.sim) {
+        state.sim[e.target.dataset.sim] = +e.target.value;
+        $("#mOut").textContent = state.sim.monthly + " €"; $("#yOut").textContent = state.sim.years + " ans";
+        const proj = C.project({ monthly: state.sim.monthly, initial: book(state.book).value, years: state.sim.years });
+        $("#fan").innerHTML = C.fanChart(proj); $("#fanK").innerHTML = fanKpis(proj[proj.length - 1]);
+      }
+    });
+    document.addEventListener("submit", (e) => {
+      if (e.target.id !== "profileForm") return;
+      e.preventDefault();
+      const d = Object.fromEntries(new FormData(e.target));
+      ["capital", "monthly", "core", "maxLine"].forEach((k) => (d[k] = +d[k]));
+      state.profile = { ...state.profile, ...d }; state.sim.monthly = d.monthly; store.set("profile", state.profile);
+      $("#saved").textContent = "Profil enregistré.";
+    });
+    window.addEventListener("hashchange", go);
+  }
+
+  /* ======================= Démarrage ======================= */
+  /* Charge les vraies données produites chaque soir par GitHub Actions (site/data/*.json).
+     Si elles manquent (fichier ouvert en local, premier déploiement…), on garde l'exemple fictif. */
+  async function loadData() {
+    if (location.protocol === "file:") return;
+    const get = (f) => fetch(`data/${f}?v=${Date.now() / 36e5 | 0}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const [uni, mac, meta, hist] = await Promise.all([get("universe.json"), get("macro.json"), get("meta.json"), get("history.json")]);
+    if (meta) M.meta = meta;
+    if (!uni || !uni.items?.length) return;
+    M.isMock = false;
+    M.asOf = uni.as_of;
+    M.benchmark = uni.benchmark;
+    M.universe = uni.items;
+    M.opportunities = (uni.ideas || []).map((t) => uni.items.find((i) => i.ticker === t)).filter(Boolean);
+    if (mac) M.macro = mac;
+    if (hist) M.history = hist;
+  }
+  shell(); bind();
+  loadData().finally(go);
+  if (!store.get("onboarded", false)) setTimeout(() => onboarding(0), 400);
+})();

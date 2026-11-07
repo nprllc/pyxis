@@ -1,0 +1,139 @@
+# =========================================================================
+# Pyxis — réglages du pipeline de données.
+# Tu peux modifier ce fichier directement sur GitHub (icône crayon) :
+# la prochaine mise à jour automatique en tiendra compte.
+# =========================================================================
+
+# ETF de référence : tout est comparé à lui.
+benchmark: EUNL.DE   # iShares Core MSCI World, cotation en euros (Xetra)
+
+# Univers surveillé. Codes Yahoo Finance : suffixe = place de cotation
+# (.AS Amsterdam, .PA Paris, .DE Francfort, .MC Madrid, .MI Milan, .L Londres,
+#  .SW Zurich, .CO Copenhague ; sans suffixe = États-Unis).
+universe:
+  etf:            # le cœur de portefeuille possible
+    # Cotations en euros (Xetra), comme chez la plupart des courtiers européens.
+    - EUNL.DE     # iShares Core MSCI World (ISIN IE00B4L5Y983, aussi appelé IWDA)
+    - VWCE.DE     # Vanguard FTSE All-World (ISIN IE00BK5BQT80)
+    - SXR8.DE     # iShares Core S&P 500 (ISIN IE00B5BMR087)
+    - IS3N.DE     # iShares Core MSCI Emerging Markets IMI (ISIN IE00BKM4GZ66)
+    - EXSA.DE     # iShares STOXX Europe 600 (ISIN DE0002635307)
+    - IUSN.DE     # iShares MSCI World Small Cap (ISIN IE00BF4RFH31)
+  europe:
+    - ASML.AS
+    - SAP.DE
+    - SIE.DE
+    - ALV.DE
+    - DTE.DE
+    - MBG.DE
+    - IFX.DE
+    - MC.PA
+    - OR.PA
+    - RMS.PA
+    - TTE.PA
+    - SAN.PA      # Sanofi
+    - AI.PA
+    - SU.PA
+    - AIR.PA
+    - BNP.PA
+    - EL.PA
+    - DG.PA
+    - NOVO-B.CO
+    - NESN.SW
+    - ROG.SW
+    - NOVN.SW
+    - UBSG.SW
+    - ULVR.L
+    - AZN.L
+    - SHEL.L
+    - HSBA.L
+    - RIO.L
+    - ENEL.MI
+    - ISP.MI
+    - RACE.MI
+  espagne:
+    - ITX.MC
+    - SAN.MC      # Banco Santander
+    - BBVA.MC
+    - IBE.MC
+    - TEF.MC
+    - REP.MC
+    - AENA.MC
+    - FER.MC
+    - CABK.MC
+    - AMS.MC
+    - CLNX.MC
+    - ACS.MC
+    - GRF.MC
+    - MAP.MC
+  etats_unis:
+    - AAPL
+    - MSFT
+    - NVDA
+    - AMZN
+    - GOOGL
+    - META
+    - BRK-B
+    - JPM
+    - V
+    - MA
+    - JNJ
+    - PG
+    - KO
+    - PEP
+    - XOM
+    - CVX
+    - UNH
+    - LLY
+    - ABBV
+    - MRK
+    - PFE
+    - COST
+    - WMT
+    - HD
+    - MCD
+    - NKE
+    - DIS
+    - NFLX
+    - ADBE
+    - CRM
+    - ORCL
+    - AMD
+    - AVGO
+    - INTC
+    - TSM
+    - CAT
+    - GE
+    - BA
+    - IBM
+    - TXN
+    - QCOM
+    - LOW
+    - SBUX
+    - BKNG
+    - PYPL
+    - TSLA
+
+# Ta liste de surveillance : toujours affichée, même si le score est faible.
+watchlist: [EUNL.DE, ASML.AS, SAP.DE, ITX.MC, NOVO-B.CO, AI.PA]
+
+# Indicateurs macro (séries FRED, téléchargées sans clé).
+macro:
+  ecb_rate: ECBDFR                     # taux de dépôt BCE
+  eu_inflation_index: CP0000EZ19M086NEST  # indice des prix zone euro (on calcule le glissement sur 12 mois)
+  eu_unemployment: LRHUTTTTEZM156S     # chômage zone euro
+  us_curve: T10Y2Y                     # écart taux 10 ans - 2 ans (États-Unis)
+  us_unemployment: UNRATE              # chômage États-Unis
+
+# Mise à jour des fondamentaux (PER, marges…) : ils bougent peu,
+# on ne les rafraîchit qu'au-delà de cet âge, pour ménager Yahoo.
+fundamentals_max_age_days: 7
+
+# Noms lisibles pour les ETF (Yahoo donne parfois des noms tronqués).
+names:
+  EUNL.DE: iShares Core MSCI World
+  VWCE.DE: Vanguard FTSE All-World
+  SXR8.DE: iShares Core S&P 500
+  IS3N.DE: iShares Core MSCI Emerging Markets
+  EXSA.DE: iShares STOXX Europe 600
+  IUSN.DE: iShares MSCI World Small Cap
