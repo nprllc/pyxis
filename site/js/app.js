@@ -70,14 +70,14 @@
   const SEARCH_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7"/><path d="M15.5 15.5L21 21"/></svg>`;
   function shell() {
     document.body.innerHTML = `
-      <div class="mbar"><a class="wm" href="#accueil">${window.Logo ? Logo.mark({ size: 28 }) : ""}${NAME}</a><button type="button" id="menuBtn" aria-expanded="false" aria-controls="mmenu">Menu</button></div>
+      <div class="mbar"><a class="wm" href="#accueil" aria-label="${NAME}, accueil">${Logo.lockup({ size: 30, color: "#f3cebb" })}</a><button type="button" id="menuBtn" aria-expanded="false" aria-controls="mmenu">Menu</button></div>
       <nav class="mmenu" id="mmenu" aria-label="Menu">
         ${[...TOP, ...ACCOUNT].map(([r, l]) => `<a href="#${r || "accueil"}" data-route="${r}">${l}</a>`).join("")}
         ${explainToggle()}
       </nav>
       <div class="shell">
         <aside class="rail" aria-label="Mon compte">
-          <div class="wordmark"><a href="#accueil" aria-label="${NAME}, accueil">${window.Logo ? Logo.mark({ size: 46, title: "" }) : ""}<span>${NAME}</span></a></div>
+          <div class="wordmark"><a href="#accueil" aria-label="${NAME}, accueil">${Logo.lockup({ size: 48, color: "#f3cebb", vertical: true })}</a></div>
           <div class="rail-label"><span class="label">Mon compte</span></div>
           <nav>${ACCOUNT.map(([r, l]) => `<a href="#${r}" data-route="${r}">${l}</a>`).join("")}</nav>
           <div class="rail-foot">${explainToggle()}<p class="label" style="margin-top:14px;color:var(--on-ink-mute)">Souligne et explique chaque mot technique.</p></div>
@@ -94,7 +94,7 @@
           </form>
           <main class="main" id="main" tabindex="-1"></main>
           <footer class="footer">
-            <div class="wm" aria-hidden="true">${window.Logo ? Logo.mark({ size: 72, title: "" }) : ""}<span>${NAME}</span></div>
+            <div class="wm" aria-hidden="true">${Logo.lockup({ size: 56, color: "#f3cebb" })}</div>
             <div><span class="label">À lire</span>
               <p>Analyses automatisées à but éducatif. Ce n'est pas un conseil en investissement personnalisé au sens réglementaire. Les performances passées ne préjugent pas des performances futures. Pour les décisions fiscales importantes, consulte un professionnel (gestor ou asesor fiscal).</p></div>
           </footer>
