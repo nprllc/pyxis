@@ -205,9 +205,9 @@
     items.forEach((o, i) => {
       const r = Math.max(30, Math.min(130, 22 * Math.exp((o.score - 40) / 18)));
       if (!i) { placed.push({ o, r, x: W / 2, y: 0 }); return; }
-      for (let k = 0; k < 4000; k++) {
-        const a = k * 0.35, d = 4 * a;
-        const x = W / 2 + d * Math.cos(a) * 1.6, y = d * Math.sin(a);
+      for (let k = 0; k < 20000; k++) {
+        const a = k * 0.08, d = 1.6 * a;
+        const x = W / 2 + d * Math.cos(a) * 1.5, y = d * Math.sin(a);
         if (x - r < 0 || x + r > W) continue;
         if (placed.every((p) => Math.hypot(p.x - x, p.y - y) > p.r + r + 10)) { placed.push({ o, r, x, y }); return; }
       }
@@ -245,7 +245,7 @@
       </div>
     </div>
     ${q ? `<p style="margin:-14px 0 24px">Recherche : <b>${esc(state.query)}</b> · <button class="btn small" data-action="clear-search">Effacer</button></p>` : ""}
-    ${!rows.length ? empty : state.scanView === "cercles" ? constellation(rows) : `
+    ${!rows.length ? empty : state.scanView === "cercles" ? constellation(rows.slice(0, 32)) + (rows.length > 32 ? `<p class="label" style="margin-top:18px">Les 32 meilleurs scores. Les ${rows.length} titres sont dans la vue Liste.</p>` : "") : `
     <div class="table-scroll"><table class="table">
       <thead><tr><th>Titre</th><th class="hide-m">Tendance 3 mois</th><th class="r">1 mois</th><th class="r hide-m">${ex("rsi", "RSI")}</th><th class="r">${ex("score", "Score")}</th></tr></thead>
       <tbody>${rows.map((o) => `<tr data-go="#fiche-${o.ticker}" tabindex="0">
