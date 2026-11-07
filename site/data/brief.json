@@ -1,8 +1,8 @@
 {
   "date": "2026-11-07",
-  "generated_at": "2026-11-07T23:01:45+01:00",
-  "headline": "Après une chute brutale jeudi, les valeurs technologiques reprennent un peu de terrain, mais la semaine reste difficile pour les Bourses mondiales.",
-  "summary": "Jeudi 5 novembre, le S&P 500 (les 500 grandes entreprises américaines) a perdu plus de 4 %, sa pire séance depuis avril 2025, entraîné par les actions liées à l'intelligence artificielle. Vendredi, il a regagné 0,3 %, mais termine la semaine en baisse de 2,7 %. Les marchés s'inquiètent de l'effet des élections de mi-mandat américaines sur les dépenses en centres de données. En parallèle, l'emploi américain reste solide, ce qui pousse les investisseurs à anticiper une hausse des taux de la Fed en décembre. En Europe, la BCE a laissé son taux à 2,5 % fin octobre, tandis que la Banque d'Angleterre a relevé le sien à 4 %.",
+  "generated_at": "2026-11-07T23:03:13+01:00",
+  "headline": "Semaine agitée pour les Bourses mondiales, secouées par les valeurs de l'IA ; l'inflation américaine sera le rendez-vous clé de la semaine prochaine.",
+  "summary": "Jeudi 5 novembre, le S&P 500 (les 500 grandes entreprises américaines) a perdu plus de 4 %, sa pire séance depuis avril 2025, entraîné par les actions liées à l'intelligence artificielle. Vendredi, il a regagné 0,3 %, mais termine la semaine en baisse de 2,7 %. Les marchés s'inquiètent de l'effet des élections de mi-mandat américaines sur les dépenses en centres de données. En parallèle, l'emploi américain reste solide, ce qui pousse les investisseurs à anticiper une hausse des taux de la Fed en décembre. En Europe, la BCE a laissé son taux à 2,5 % fin octobre, tandis que la Banque d'Angleterre a relevé le sien à 4 %. La semaine prochaine, l'indice des prix américain d'octobre (mardi 10 novembre) sera scruté pour savoir si la Fed relèvera ses taux en décembre.",
   "sections": [
     {
       "title": "Marchés mondiaux",
@@ -82,6 +82,19 @@
             {
               "name": "ADVFN via Yahoo Finance UK",
               "url": "https://uk.finance.yahoo.com/news/european-stocks-fall-technology-sell-100031092.html"
+            }
+          ]
+        },
+        {
+          "text": "Semaine prochaine aux États-Unis : l'inflation (indice des prix CPI) d'octobre est publiée mardi 10 novembre, et les prix à la production (PPI, les prix payés par les entreprises) vendredi 13. Mercredi 11 est le Veterans Day, mais la Bourse reste ouverte.",
+          "sources": [
+            {
+              "name": "FinancialJuice",
+              "url": "https://features.financialjuice.com/2026/11/06/week-ahead-economic-indicators-9th-13th-november-us/"
+            },
+            {
+              "name": "StockTitan",
+              "url": "https://www.stocktitan.net/articles/earnings-calendar-week-of-november-9-2026"
             }
           ]
         }
@@ -176,6 +189,19 @@
             {
               "name": "TheStreet",
               "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-nov-06-2026"
+            }
+          ]
+        },
+        {
+          "text": "Côté résultats la semaine prochaine : KKR et Occidental lundi, CoreWeave mardi, puis Cisco et Applied Materials (un fabricant d'équipements pour puces) jeudi soir, ces deux derniers étant des tests pour le secteur technologique.",
+          "sources": [
+            {
+              "name": "StockTitan",
+              "url": "https://www.stocktitan.net/articles/earnings-calendar-week-of-november-9-2026"
+            },
+            {
+              "name": "eOption",
+              "url": "https://www.eoption.com/weekly-event-calendar-11-09-2026-11-13-2026/"
             }
           ]
         }
@@ -294,8 +320,8 @@
       "def": "Le taux auquel un État emprunte sur 10 ans ; quand il monte, les placements risqués deviennent souvent moins attrayants."
     },
     {
-      "term": "DCA (investissement programmé)",
-      "def": "Investir la même somme à intervalles réguliers, quel que soit le niveau du marché."
+      "term": "CPI (indice des prix)",
+      "def": "L'indice qui mesure l'évolution des prix payés par les ménages, donc l'inflation."
     }
   ]
 }
