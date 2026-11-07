@@ -1,0 +1,383 @@
+{
+ "checked": "2026-11-07",
+ "note": "Tarifs relevés le 7 novembre 2026 sur les grilles officielles des courtiers et dans des comparatifs spécialisés. Les courtiers changent souvent leurs prix : vérifie toujours la grille officielle avant d'ouvrir un compte. Les écarts entre prix d'achat et de vente (spreads) ne sont pas inclus. Sources anglophones et francophones en priorité ; celles en espagnol (marquées ES) ne servent que pour les grilles officielles et les règles propres à l'Espagne.",
+ "brokers": [
+  {
+   "id": "traderepublic",
+   "name": "Trade Republic",
+   "kind": "Néobanque-courtier allemande, succursale en Espagne",
+   "regulator": "BaFin (Allemagne), inscrite à la CNMV",
+   "tax": "simple",
+   "tax_text": "IBAN espagnol : retient l'impôt et informe le fisc espagnol. Pas de modèle 720 à faire.",
+   "etf_order": "1 €",
+   "stock_order": "1 €",
+   "plan": "Gratuit, dès 1 €",
+   "fractional": true,
+   "fx": "Aucun (cotations en euros)",
+   "pros": [
+    "Le plus simple fiscalement pour un résident espagnol",
+    "Plans programmés gratuits sur ETF et actions"
+   ],
+   "cons": [
+    "Moins de bourses accessibles que DEGIRO ou Interactive Brokers"
+   ],
+   "model": {
+    "plan_free": true,
+    "order_fixed": 1.0,
+    "order_pct": 0,
+    "order_min": 0,
+    "fx_pct": 0
+   },
+   "sources": [
+    {
+     "url": "https://assets.traderepublic.com/assets/files/250605_TradeRepublic_PressRelease_SpainBranchLaunch_PT_EN.pdf",
+     "lang": "en",
+     "name": "Trade Republic, communiqué officiel"
+    },
+    {
+     "url": "https://jeangalea.com/trade-republic-review/",
+     "lang": "en",
+     "name": "Jean Galea"
+    }
+   ]
+  },
+  {
+   "id": "myinvestor",
+   "name": "MyInvestor",
+   "kind": "Néobanque espagnole (groupe Andbank)",
+   "regulator": "Banque d'Espagne et CNMV",
+   "tax": "simple",
+   "tax_text": "Banque espagnole : informe directement le fisc. Pas de modèle 720.",
+   "etf_order": "0,12 % (min 1 €, max 25 €)",
+   "stock_order": "0,12 % (min 3 €, max 25 €)",
+   "plan": "Fonds indexés et portefeuilles automatiques ; pas de plan ETF gratuit identifié",
+   "fractional": false,
+   "fx": "0,30 %",
+   "pros": [
+    "Fonds indexés transférables sans impôt (traspasos)",
+    "Tout sous un même toit espagnol"
+   ],
+   "cons": [
+    "Pas d'actions fractionnées",
+    "Frais minimum pénalisants pour les petits achats d'actions"
+   ],
+   "model": {
+    "plan_free": false,
+    "order_fixed": 0,
+    "order_pct": 0.12,
+    "order_min": 1.0,
+    "stock_min": 3.0,
+    "fx_pct": 0.3
+   },
+   "sources": [
+    {
+     "url": "https://myinvestor.es/inversion/broker/",
+     "lang": "es",
+     "name": "MyInvestor, grille officielle"
+    }
+   ]
+  },
+  {
+   "id": "xtb",
+   "name": "XTB",
+   "kind": "Courtier polonais coté en bourse, bureau à Madrid",
+   "regulator": "KNF (Pologne), FCA, CNMV n° 40",
+   "tax": "partial",
+   "tax_text": "Bureau en Espagne, mais il ne transmet qu'une partie des informations au fisc : selon ce que tu détiens, le modèle 720 peut s'appliquer. À vérifier avec lui.",
+   "etf_order": "0 € (jusqu'à 100 000 €/mois)",
+   "stock_order": "0 € (jusqu'à 100 000 €/mois)",
+   "plan": "Gratuit, jusqu'à 9 ETF par plan",
+   "fractional": true,
+   "fx": "0,5 %",
+   "pros": [
+    "Aucune commission d'achat pour un particulier",
+    "Plans multi-ETF gratuits, cours en espagnol"
+   ],
+   "cons": [
+    "Change de 0,5 % sur les actions en dollars, à l'achat et à la revente",
+    "Frais d'inactivité après 12 mois sans activité",
+    "Propose aussi des CFD : produits à effet de levier, à éviter"
+   ],
+   "model": {
+    "plan_free": true,
+    "order_fixed": 0,
+    "order_pct": 0,
+    "order_min": 0,
+    "fx_pct": 0.5
+   },
+   "sources": [
+    {
+     "url": "https://www.xtb.com/en/help-center/instruments/do-you-charge-commissions",
+     "lang": "en",
+     "name": "XTB, aide officielle"
+    },
+    {
+     "url": "https://www.xtb.com/en/help-center/investment-plans-12/investment-plans-fees-and-commissions",
+     "lang": "en",
+     "name": "XTB, plans d'investissement"
+    },
+    {
+     "url": "https://economipedia.com/guia/mejores-brokers-para-invertir-en-bolsa-desde-espana",
+     "lang": "es",
+     "name": "Economipedia (fiscalité espagnole)"
+    }
+   ]
+  },
+  {
+   "id": "scalable",
+   "name": "Scalable Capital",
+   "kind": "Courtier allemand",
+   "regulator": "BaFin (Allemagne), inscrit à la CNMV",
+   "tax": "declarative",
+   "tax_text": "Tu déclares toi-même tes plus-values ; modèle 720 au-delà de 50 000 € à l'étranger.",
+   "etf_order": "0,99 € (0 € dès 250 € sur les ETF iShares, Xtrackers, Amundi…)",
+   "stock_order": "0,99 €",
+   "plan": "Gratuit, dès 1 €",
+   "fractional": true,
+   "fx": "Aucun en général (cotations en euros)",
+   "pros": [
+    "Très large choix de plans programmés gratuits",
+    "Formule PRIME+ (4,99 €/mois) si tu achètes souvent"
+   ],
+   "cons": [
+    "Fiscalité non automatique en Espagne",
+    "Achat sur Xetra cher (3,99 € + frais)"
+   ],
+   "model": {
+    "plan_free": true,
+    "order_fixed": 0.99,
+    "order_pct": 0,
+    "order_min": 0,
+    "fx_pct": 0
+   },
+   "sources": [
+    {
+     "url": "https://jeangalea.com/degiro-vs-scalable-capital/",
+     "lang": "en",
+     "name": "Jean Galea"
+    },
+    {
+     "url": "https://es.scalable.capital/assets/kcbf79ije7q7/1riErLyVKiRg7RoA3nkteA/71e274f52c820476d59dfbe6ac075c47/202410_Scalable_Capital_Fact_Sheet_Spain_in_ES.pdf",
+     "lang": "es",
+     "name": "Scalable Capital, fiche officielle Espagne"
+    }
+   ]
+  },
+  {
+   "id": "trading212",
+   "name": "Trading 212",
+   "kind": "Courtier britannique et chypriote",
+   "regulator": "FCA, CySEC",
+   "tax": "declarative",
+   "tax_text": "Courtier étranger : tu déclares toi-même ; modèle 720 au-delà de 50 000 €.",
+   "etf_order": "0 €",
+   "stock_order": "0 €",
+   "plan": "Gratuit (« Pies » et AutoInvest)",
+   "fractional": true,
+   "fx": "0,15 %",
+   "pros": [
+    "Aucune commission d'achat, change parmi les moins chers",
+    "Portefeuilles automatiques très simples"
+   ],
+   "cons": [
+    "Disponibilité incertaine : une comparaison anglophone de septembre 2026 indique que Trading 212 n'est pas disponible en Espagne. À vérifier avant tout.",
+    "Fiscalité entièrement à ta charge",
+    "Ne pas confondre avec son compte CFD (à effet de levier)"
+   ],
+   "model": {
+    "plan_free": true,
+    "order_fixed": 0,
+    "order_pct": 0,
+    "order_min": 0,
+    "fx_pct": 0.15
+   },
+   "sources": [
+    {
+     "url": "https://www.trading212.com/es/multi-currency",
+     "lang": "es",
+     "name": "Trading 212, page officielle"
+    },
+    {
+     "url": "https://www.seqooia.com/comparatif-meilleur-cto",
+     "lang": "fr",
+     "name": "Seqooia"
+    },
+    {
+     "url": "https://investingintheweb.com/comparison/degiro-vs-trading-212",
+     "lang": "en",
+     "name": "Investing in the Web (disponibilité)"
+    }
+   ]
+  },
+  {
+   "id": "revolut",
+   "name": "Revolut (formule Standard)",
+   "kind": "Néobanque, courtage via Revolut Securities Europe (Lituanie)",
+   "regulator": "Banque de Lituanie",
+   "tax": "declarative",
+   "tax_text": "Tu déclares toi-même tes plus-values.",
+   "etf_order": "1 € hors plan programmé",
+   "stock_order": "1 € (plus aucun ordre gratuit en Standard depuis le 6 octobre 2026)",
+   "plan": "Gratuit sur une sélection d'ETF",
+   "fractional": true,
+   "fx": "Gratuit jusqu'à 1 000 €/mois en semaine, puis 1 %",
+   "pros": [
+    "Tu as déjà le compte",
+    "Plans ETF gratuits sur la sélection proposée"
+   ],
+   "cons": [
+    "Depuis le 6 octobre 2026, chaque achat d'action coûte 1 € en formule Standard",
+    "Choix d'ETF plus restreint",
+    "Fiscalité à ta charge"
+   ],
+   "model": {
+    "plan_free": true,
+    "order_fixed": 1.0,
+    "order_pct": 0,
+    "order_min": 0,
+    "fx_pct": 0
+   },
+   "sources": [
+    {
+     "url": "https://help.revolut.com/es-ES/help/wealth/stocks/getting-started-with-etf-s/etfs-investment-plans/",
+     "lang": "es",
+     "name": "Revolut, aide officielle"
+    },
+    {
+     "url": "https://finantresnoticias.com/bancos/revolut-cambia-manana-operaciones-gratis-estandar-plus-empezaran-pagar/",
+     "lang": "es",
+     "name": "Finantres (changement du 6 octobre 2026)"
+    }
+   ]
+  },
+  {
+   "id": "degiro",
+   "name": "DEGIRO",
+   "kind": "Courtier néerlandais (groupe flatexDEGIRO)",
+   "regulator": "BaFin, DNB, inscrit à la CNMV",
+   "tax": "declarative",
+   "tax_text": "IBAN allemand : tu déclares toi-même ; modèle 720 au-delà de 50 000 €.",
+   "etf_order": "1 € (sélection principale), 3 € sinon",
+   "stock_order": "2 € (Madrid ou États-Unis)",
+   "plan": "Pas encore en Espagne (annoncé pour fin 2026)",
+   "fractional": false,
+   "fx": "0,25 %",
+   "pros": [
+    "Très bon marché pour des achats ponctuels",
+    "Accès à beaucoup de bourses"
+   ],
+   "cons": [
+    "Pas de plan programmé ni de fractions",
+    "2,50 €/an par bourse étrangère utilisée"
+   ],
+   "model": {
+    "plan_free": false,
+    "order_fixed": 1.0,
+    "stock_fixed": 2.0,
+    "order_pct": 0,
+    "order_min": 0,
+    "fx_pct": 0.25,
+    "yearly": 2.5
+   },
+   "sources": [
+    {
+     "url": "https://jeangalea.com/degiro-vs-scalable-capital/",
+     "lang": "en",
+     "name": "Jean Galea"
+    },
+    {
+     "url": "https://finantresnoticias.com/plataformas-de-inversion/degiro-brokers-sin-comisiones-costes-reales/",
+     "lang": "es",
+     "name": "Finantres (grille 2026)"
+    },
+    {
+     "url": "https://finantresnoticias.com/plataformas-de-inversion/degiro-planes-periodicos-inversion-espana/",
+     "lang": "es",
+     "name": "Finantres (plans programmés)"
+    }
+   ]
+  },
+  {
+   "id": "ibkr",
+   "name": "Interactive Brokers",
+   "kind": "Courtier américain, entité irlandaise pour l'Europe",
+   "regulator": "Banque centrale d'Irlande",
+   "tax": "declarative",
+   "tax_text": "Tu déclares toi-même ; modèle 720 au-delà de 50 000 €. Très bons relevés fiscaux.",
+   "etf_order": "3 € (ETF européens)",
+   "stock_order": "0,005 $/action (min 1 $) aux États-Unis",
+   "plan": "Investissements récurrents possibles",
+   "fractional": true,
+   "fx": "Quasi nul (taux interbancaire)",
+   "pros": [
+    "Le plus complet et le moins cher pour de gros montants",
+    "Change presque gratuit"
+   ],
+   "cons": [
+    "Interface complexe pour un débutant",
+    "Minimums par ordre pénalisants pour de petites sommes"
+   ],
+   "model": {
+    "plan_free": false,
+    "order_fixed": 3.0,
+    "stock_fixed": 1.0,
+    "order_pct": 0,
+    "order_min": 0,
+    "fx_pct": 0.01
+   },
+   "sources": [
+    {
+     "url": "https://www.interactivebrokers.ie/es/trading/products-etfs.php",
+     "lang": "es",
+     "name": "Interactive Brokers Irlande, page officielle"
+    },
+    {
+     "url": "https://finantres.com/interactive-brokers-vs-degiro",
+     "lang": "es",
+     "name": "Finantres"
+    }
+   ]
+  },
+  {
+   "id": "lightyear",
+   "name": "Lightyear",
+   "kind": "Courtier estonien",
+   "regulator": "EFSA (Estonie), FCA",
+   "tax": "declarative",
+   "tax_text": "Tu déclares toi-même.",
+   "etf_order": "0 €",
+   "stock_order": "1 €",
+   "plan": "Plans automatiques",
+   "fractional": true,
+   "fx": "0,35 %",
+   "pros": [
+    "ETF sans commission",
+    "Application claire"
+   ],
+   "cons": [
+    "Change plus cher que Trading 212",
+    "Fiscalité à ta charge"
+   ],
+   "model": {
+    "plan_free": true,
+    "order_fixed": 0,
+    "stock_fixed": 1.0,
+    "order_pct": 0,
+    "order_min": 0,
+    "fx_pct": 0.35
+   },
+   "sources": [
+    {
+     "url": "https://forum.canarywharfian.co.uk/threads/which-retail-brokerage-should-you-use-in-2026-in-londoneurope.697",
+     "lang": "en",
+     "name": "Canary Wharfian"
+    },
+    {
+     "url": "https://finantres.com/trading-212-vs-lightyear/",
+     "lang": "es",
+     "name": "Finantres"
+    }
+   ]
+  }
+ ]
+}

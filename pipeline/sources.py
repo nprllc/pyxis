@@ -108,6 +108,13 @@ FIELDS = {
     "revenue_growth": ("revenueGrowth",),
     "earnings_growth": ("earningsGrowth",),
     "expense_ratio": ("netExpenseRatio", "annualReportExpenseRatio"),
+    # Consensus des analystes (banques et bureaux d'études qui suivent le titre)
+    "analyst_count": ("numberOfAnalystOpinions",),
+    "analyst_mean": ("recommendationMean",),       # 1 = achat fort ... 5 = vente forte
+    "analyst_key": ("recommendationKey",),
+    "target_mean": ("targetMeanPrice",),
+    "target_low": ("targetLowPrice",),
+    "target_high": ("targetHighPrice",),
 }
 
 
@@ -124,6 +131,37 @@ def fundamentals_yahoo(ticker: str) -> dict | None:
     out = {}
     for key, candidates in FIELDS.items():
         out[key] = next((info[c] for c in candidates if info.get(c) not in (None, "", "Infinity")), None)
+    return out
+
+
+# -------------------------------------------------------------- Actualités ----
+def news_yahoo(ticker: str, limit: int = 6) -> list[dict]:
+    """Derniers titres de presse liés à un titre (Yahoo Finance agrège Reuters, Bloomberg, Barron's, etc.)."""
+    import yfinance as yf
+
+    try:
+        raw = yf.Ticker(ticker).news or []
+    except Exception as e:
+        log.warning("Actualités %s : %s", ticker, e)
+        return []
+    out = []
+    for item in raw:
+        c = item.get("content", item)  # le format a changé en 2025 : on gère les deux
+        title = c.get("title")
+        url = None
+        for k in ("canonicalUrl", "clickThroughUrl"):
+            if isinstance(c.get(k), dict) and c[k].get("url"):
+                url = c[k]["url"]
+                break
+        url = url or c.get("link")
+        pub = c["provider"].get("displayName") if isinstance(c.get("provider"), dict) else c.get("publisher")
+        date = c.get("pubDate") or c.get("displayTime")
+        if not date and c.get("providerPublishTime"):
+            date = pd.Timestamp(c["providerPublishTime"], unit="s", tz="UTC").isoformat()
+        if title and url:
+            out.append({"title": title, "url": url, "publisher": pub, "date": date})
+        if len(out) >= limit:
+            break
     return out
 
 

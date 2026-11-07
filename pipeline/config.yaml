@@ -125,9 +125,9 @@ macro:
   us_curve: T10Y2Y                     # écart taux 10 ans - 2 ans (États-Unis)
   us_unemployment: UNRATE              # chômage États-Unis
 
-# Mise à jour des fondamentaux (PER, marges…) : ils bougent peu,
-# on ne les rafraîchit qu'au-delà de cet âge, pour ménager Yahoo.
-fundamentals_max_age_days: 7
+# Fondamentaux et avis des analystes : rafraîchis chaque jour
+# (mettre un nombre plus grand si Yahoo se met à bloquer les requêtes).
+fundamentals_max_age_days: 1
 
 # Noms lisibles pour les ETF (Yahoo donne parfois des noms tronqués).
 names:

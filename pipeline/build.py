@@ -81,8 +81,8 @@ def load_fundamentals(tickers: list[str], max_age_days: int, fetch=sources.funda
     now = datetime.now(timezone.utc)
     for t in tickers:
         entry = cache.get(t)
-        age = (now - datetime.fromisoformat(entry["fetched"])).days if entry and entry.get("fetched") else 999
-        if age < max_age_days:
+        age_h = (now - datetime.fromisoformat(entry["fetched"])).total_seconds() / 3600 if entry and entry.get("fetched") else 1e9
+        if age_h < max_age_days * 24 - 4:  # marge de 4 h : la mise à jour ne tombe jamais pile à la même minute
             continue
         data = fetch(t)
         if data:
@@ -91,6 +91,19 @@ def load_fundamentals(tickers: list[str], max_age_days: int, fetch=sources.funda
     CACHE.parent.mkdir(parents=True, exist_ok=True)
     CACHE.write_text(json.dumps(clean(cache), ensure_ascii=False, indent=0), encoding="utf-8")
     return {t: (cache.get(t) or {}).get("data") or {} for t in tickers}
+
+
+def analyst_view(r: dict) -> dict | None:
+    """Consensus des analystes en mots simples. None si moins de 3 analystes suivent le titre."""
+    n, mean, price, target = r.get("analyst_count"), r.get("analyst_mean"), r.get("price"), r.get("target_mean")
+    if not n or n < 3 or mean is None:
+        return None
+    label = ("achat fort" if mean <= 1.5 else "achat" if mean <= 2.2 else "conserver" if mean <= 3.0
+             else "alléger" if mean <= 3.8 else "vendre")
+    upside = (target / price - 1) * 100 if target and price else None
+    return {"count": int(n), "mean": round(float(mean), 2), "label": label,
+            "target": target, "low": r.get("target_low"), "high": r.get("target_high"),
+            "upside": round(upside, 1) if upside is not None else None}
 
 
 def weekly_history(df: pd.DataFrame, years: int = 3) -> dict:
@@ -102,7 +115,8 @@ def weekly_history(df: pd.DataFrame, years: int = 3) -> dict:
 
 
 def run(price_fetch=sources.prices_yahoo, stooq_fetch=sources.prices_stooq,
-        fund_fetch=sources.fundamentals_yahoo, fred_fetch=sources.fred_series) -> int:
+        fund_fetch=sources.fundamentals_yahoo, fred_fetch=sources.fred_series,
+        news_fetch=sources.news_yahoo) -> int:
     started = datetime.now(timezone.utc)
     cfg = load_config()
     tickers, groups, names = cfg["_tickers"], cfg["_groups"], cfg.get("names") or {}
@@ -148,7 +162,9 @@ def run(price_fetch=sources.prices_yahoo, stooq_fetch=sources.prices_stooq,
         suffix = t.rsplit(".", 1)[1] if "." in t else ""
         is_etf = groups.get(t) == "etf" or f.get("kind") == "ETF"
         r.update({k: f.get(k) for k in ("pe", "forward_pe", "pb", "margin", "op_margin", "roe", "debt_to_equity",
-                                         "fcf", "market_cap", "dividend_yield", "revenue_growth", "expense_ratio")})
+                                         "fcf", "market_cap", "dividend_yield", "revenue_growth", "expense_ratio",
+                                         "analyst_count", "analyst_mean", "analyst_key", "target_mean", "target_low", "target_high")})
+        r["analysts"] = analyst_view(r)
         r["name"] = names.get(t) or f.get("name") or t
         r["kind"] = "ETF" if is_etf else "EQUITY"
         r["sector"] = "ETF" if is_etf else macro.SECTOR_FR.get(f.get("sector") or "", f.get("sector"))
@@ -165,6 +181,12 @@ def run(price_fetch=sources.prices_yahoo, stooq_fetch=sources.prices_stooq,
     # 5. Score
     scored = scoring.score_universe(recs)
     ideas = scoring.pick_ideas(scored)
+
+    # 6. Actualités des idées du jour et de la liste de surveillance
+    for r in scored:
+        if r["ticker"] in set(ideas) | set(cfg.get("watchlist") or []):
+            r["news"] = news_fetch(r["ticker"])
+            time.sleep(0.3)
     as_of = max(pd.Timestamp(prices[t].index[-1]) for t in recs).strftime("%Y-%m-%d")
 
     write_json("universe.json", {"generated_at": started.isoformat(), "as_of": as_of,

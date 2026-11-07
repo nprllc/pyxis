@@ -20,11 +20,14 @@
   };
   const state = {
     profile: store.get("profile", { ...M.profile }),
-    journal: store.get("journal", M.journal.slice()),
+    journal: store.get("journal", []),
+    positions: store.get("positions", { real: [], simulated: [] }),
     book: "real",
     filter: "tout",
     query: "",
     scanView: window.innerWidth < 700 ? "liste" : "cercles",
+    brokerSc: { plan: Math.round((M.profile.monthly * M.profile.core) / 100), n: 4, amt: 100, us: 50 },
+    simpleTax: false,
     explain: store.get("explain", false),
     sim: { monthly: M.profile.monthly, years: M.profile.horizon },
   };
@@ -43,7 +46,7 @@
     more: I('<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>'),
   };
   const NAME = "Pyxis";
-  const TOP = [["", "Aujourd'hui"], ["scanner", "Scanner"], ["macro", "Macro"], ["apprendre", "Apprendre"]];
+  const TOP = [["", "Aujourd'hui"], ["veille", "Veille"], ["scanner", "Scanner"], ["macro", "Macro"], ["apprendre", "Apprendre"]];
   const ACCOUNT = [["portefeuille", "Portefeuille"], ["journal", "Journal"], ["courtiers", "Courtiers"], ["reglages", "Réglages"]];
 
   /* ---------- Calculs du profil ---------- */
@@ -52,10 +55,10 @@
     return { core, sat: p.monthly - core };
   }
   function book(kind) {
-    const rows = M.portfolio[kind].map((r) => {
+    const rows = (state.positions[kind] || []).map((r) => {
       const live = M.universe.find((u) => u.ticker === r.ticker);
-      const price = live && live.price != null ? live.price : r.price;
-      return { ...r, price, value: r.qty * price, invested: r.qty * r.cost };
+      const price = live && live.price != null ? live.price : r.cost;
+      return { ...r, name: live?.name || r.name || r.ticker, bucket: r.bucket || (live?.kind === "ETF" ? "coeur" : "satellite"), live: !!live, price, value: r.qty * price, invested: r.qty * r.cost };
     });
     const value = rows.reduce((a, r) => a + r.value, 0), invested = rows.reduce((a, r) => a + r.invested, 0);
     const core = rows.filter((r) => r.bucket === "coeur").reduce((a, r) => a + r.value, 0);
@@ -112,7 +115,8 @@
   const disclaimer = "";
   /* Pastille d'état des données : fictives, à jour, anciennes ou en échec. */
   function dataStatus() {
-    if (M.isMock) return { text: "Données fictives", tone: "warn", tip: "Le site n'a pas trouvé les vraies données : il affiche un exemple." };
+    if (M.dataError) return { text: "Données indisponibles", tone: "loss", tip: "Les fichiers de données n'ont pas pu être chargés. Réessaie dans quelques minutes." };
+    if (M.isMock) return { text: "Aperçu hors ligne (exemple)", tone: "warn", tip: "Fichier ouvert sans connexion : les chiffres affichés sont un exemple." };
     const d = new Date(M.asOf + "T12:00:00");
     const days = Math.floor((Date.now() - d) / 864e5);
     const label = d.toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
@@ -130,8 +134,7 @@
   function viewHome() {
     const p = state.profile, sp = planSplit(p), b = book("real");
     const next = M.lessons.find((l) => !l.done);
-    const satPot = 40; // cagnotte satellite fictive
-    const mood = { expansion: "Le marché accélère.", surchauffe: "Le marché s'emballe.", ralentissement: "Le marché ralentit.", reprise: "Le marché repart." }[M.macro.phase];
+    const mood = { expansion: "Le marché accélère.", surchauffe: "Le marché s'emballe.", ralentissement: "Le marché ralentit.", reprise: "Le marché repart." }[M.macro?.phase] || "Le marché bouge.";
     const day = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
     return `
     <section class="pulse" aria-labelledby="pulse-t">
@@ -139,6 +142,7 @@
       <div class="pulse-inner">
         <div class="row between wrap"><span class="label">Bonjour ${esc(p.name)}, nous sommes ${day}</span>
           ${dataChip(true)}</div>
+        <p class="label sky-legend">Chaque étoile est un titre suivi : à droite ceux qui montent sur un mois, en haut les meilleurs scores. Les idées du jour forment la constellation. Survole une étoile, clique pour sa fiche.</p>
         <h1 class="pulse-title" id="pulse-t"><span>${mood}</span><span>Ton plan, lui, ne change pas.</span></h1>
         <div class="pulse-foot">
           <div class="pulse-amount num">${p.monthly} €<small>chaque mois</small></div>
@@ -148,13 +152,18 @@
               <span><i style="background:var(--on-ink)"></i>${sp.core} € dans l'${ex("etfMonde", "ETF monde")}, via un ${ex("dca", "plan programmé")}</span>
               <span><i style="background:var(--gain)"></i>${sp.sat} € de côté pour le ${ex("coeur", "satellite")}</span>
             </div>
-            <p class="pulse-note">Cagnotte satellite : ${satPot} €. Attends environ 100 € avant d'acheter une ${ex("action", "action")} seule : avec 1 € de ${ex("frais", "frais")}, un achat de 20 € coûte déjà 5 %.</p>
+            <p class="pulse-note">Mets la part satellite de côté jusqu'à environ 100 € avant d'acheter une ${ex("action", "action")} seule : avec 1 € de ${ex("frais", "frais")}, un achat de 20 € coûte déjà 5 %.</p>
           </div>
           <a class="btn" href="#portefeuille" style="color:var(--on-ink);border-color:var(--on-ink)">Voir la projection</a>
         </div>
       </div>
     </section>
 
+    ${M.brief ? `<section style="margin-top:64px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:end;border-top:1px solid var(--rule);padding-top:12px">
+      <div><span class="label">La veille du ${new Date(M.brief.date + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</span>
+        <h2 class="serif" style="font-size:clamp(26px,3vw,40px);line-height:1.08;letter-spacing:-.02em;margin:14px 0 10px;max-width:30ch">${esc(M.brief.headline)}</h2>
+        <p class="muted" style="max-width:70ch">${esc(M.brief.summary)}</p></div>
+      <a class="btn" href="#veille">Lire la veille</a></section>` : ""}
     <div class="grid g-home" style="margin-top:64px">
       <section class="panel" aria-labelledby="top-t">
         <div class="panel-head"><span class="label">Idées du jour</span><a class="label" href="#scanner">Tout le scanner</a></div>
@@ -165,14 +174,16 @@
 
       <div class="stack">
         <section class="panel" aria-labelledby="health-t">
-          <div class="panel-head"><span class="label" id="health-t">Santé du portefeuille (exemple, aux cours réels)</span><a class="label" href="#portefeuille">Détail</a></div>
-          <div class="num" style="font-size:52px;letter-spacing:-.04em;line-height:1">${eur(b.value, 2)}</div>
-          <p class="${b.pnl >= 0 ? "gain" : "loss"}" style="margin-top:8px">${b.pnl >= 0 ? "+" : ""}${eur(b.pnl, 2)} depuis tes achats (${pct((b.pnl / b.invested) * 100)})</p>
-          <p class="muted small" style="margin-top:4px">Ce que tes positions valent aujourd'hui, comparé à ce que tu as payé.</p>
+          <div class="panel-head"><span class="label" id="health-t">Santé du portefeuille</span><a class="label" href="#portefeuille">Détail</a></div>
+          ${b.rows.length ? `<div class="num" style="font-size:52px;letter-spacing:-.04em;line-height:1">${eur(b.value, 2)}</div>
+          <p class="${b.pnl >= 0 ? "gain" : "loss"}" style="margin-top:8px">${b.pnl >= 0 ? "+" : ""}${eur(b.pnl, 2)} depuis tes achats (${pct(b.invested ? (b.pnl / b.invested) * 100 : 0)})</p>
+          <p class="muted small" style="margin-top:4px">Ce que tes positions valent au dernier cours de clôture, comparé à ce que tu as payé.</p>
           <div style="margin-top:22px">
             ${ruleLine(b.corePct >= p.core - 10, `Cœur à ${Math.round(b.corePct)} % (objectif ${p.core} %)`, "La base diversifiée protège contre l'erreur sur une seule entreprise.")}
             ${ruleLine(b.maxLinePct <= p.maxLine, `Plus grosse action seule : ${Math.round(b.maxLinePct)} % (max ${p.maxLine} %)`, b.maxLinePct > p.maxLine ? "Une seule action pèse trop : si elle chute, tout ton portefeuille le sent." : "Aucune action seule ne peut faire trop de dégâts.")}
-          </div>
+          </div>` : `<p class="serif" style="font-size:22px;line-height:1.3">Ton portefeuille est vide pour l'instant.</p>
+          <p class="muted small" style="margin:8px 0 18px">Ajoute tes positions réelles, ou commence par un portefeuille simulé pour t'entraîner sans argent.</p>
+          <a class="btn" href="#portefeuille">Ajouter une position</a>`}
         </section>
 
         <section class="hero" aria-labelledby="lesson-t">
@@ -325,6 +336,26 @@
         </section>`}
       </div>
 
+      ${(o.analysts || o.news?.length || M.brief?.ideas_notes?.[o.ticker]) ? `<div class="grid g-2">
+        <section class="panel">
+          <div class="panel-head"><h2>L'avis des analystes</h2><p>Consensus</p></div>
+          ${o.analysts ? `<div class="row" style="gap:30px;align-items:flex-end;margin-bottom:14px">
+              <div><div class="serif" style="font-size:40px;line-height:1">${esc(o.analysts.label)}</div><div class="label" style="margin-top:6px">${o.analysts.count} analystes</div></div>
+              ${o.analysts.target ? `<div><div class="num" style="font-size:24px">${money(o.analysts.target, o.currency)}</div><div class="label">objectif moyen à 12 mois${o.analysts.upside != null ? `, soit ${pct(o.analysts.upside)}` : ""}</div></div>` : ""}</div>
+            ${o.analysts.low && o.analysts.high ? `<p class="small">Fourchette des objectifs : de ${money(o.analysts.low, o.currency)} à ${money(o.analysts.high, o.currency)}. Plus elle est large, moins les analystes sont d'accord entre eux.</p>` : ""}
+            <p class="muted small" style="margin-top:10px">Ce sont les analystes des banques et bureaux d'études qui suivent le titre (via Yahoo Finance). Ils sont en moyenne trop optimistes et changent souvent d'avis : c'est un repère, pas un verdict.</p>`
+          : `<p class="muted">Moins de trois analystes suivent ce titre${o.kind === "ETF" ? " (normal pour un ETF : il n'y a pas d'entreprise à analyser)" : ""}.</p>`}
+          ${M.brief?.ideas_notes?.[o.ticker] ? `<div class="flag" style="border-color:var(--ink)">${esc(M.brief.ideas_notes[o.ticker])}</div>` : ""}
+        </section>
+        <section class="panel">
+          <div class="panel-head"><h2>Dans l'actualité</h2><p>Derniers articles</p></div>
+          ${o.news?.length ? o.news.map((n) => `<a href="${esc(n.url)}" target="_blank" rel="noopener" style="display:block;padding:11px 0;border-bottom:1px solid var(--rule-soft);text-decoration:none">
+              <span class="serif" style="font-size:16px;line-height:1.35">${esc(n.title)}</span>
+              <span class="label" style="display:block;margin-top:4px">${esc(n.publisher || "")}${n.date ? " / " + new Date(n.date).toLocaleDateString("fr-FR", { day: "numeric", month: "short" }) : ""}</span></a>`).join("")
+            : `<p class="muted">Les articles sont récupérés pour les idées du jour et ta liste de surveillance.</p>`}
+        </section>
+      </div>` : ""}
+
       <section class="panel wrong">
         <div class="panel-head"><h2>Pourquoi je pourrais avoir tort</h2></div>
         <ul>${o.wrong.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>
@@ -363,8 +394,48 @@
     </div>` + disclaimer;
   }
 
+  /* ---------- La veille : synthèse quotidienne rédigée chaque matin (tâche Claude planifiée) ---------- */
+  const srcLinks = (arr) => (arr || []).map((x) => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name || "source")}</a>`).join(", ");
+  function viewVeille() {
+    const b = M.brief;
+    if (!b) return head("La veille", "Chaque matin de semaine, une synthèse de l'actualité des marchés et des analyses des grandes maisons, expliquée simplement.") +
+      `<div class="empty">La première veille n'est pas encore publiée. Elle arrive chaque matin de semaine vers 7 h.</div>`;
+    const d = new Date(b.date + "T12:00:00").toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+    const STANCE = { positif: ["Plutôt confiant", "gain"], neutre: ["Neutre", "mute"], prudent: ["Prudent", "warn"] };
+    return head("La veille", `${d.charAt(0).toUpperCase() + d.slice(1)}. Rédigée à partir de sources publiques, avec un lien vers chacune.`, "", `Veille / ${esc(b.date)}`) + `
+    <section class="hero" style="padding:40px">
+      <span class="label">L'essentiel</span>
+      <h2 class="serif" style="font-size:clamp(30px,3.6vw,48px);line-height:1.05;letter-spacing:-.02em;margin:16px 0 18px;max-width:24ch">${esc(b.headline)}</h2>
+      <p class="serif" style="font-size:19px;line-height:1.55;max-width:66ch;color:var(--on-ink)">${esc(b.summary)}</p>
+    </section>
+    <div class="grid g-home" style="margin-top:54px">
+      <div class="stack">
+        ${(b.sections || []).map((sec) => `<section class="panel">
+          <div class="panel-head"><h2>${esc(sec.title)}</h2></div>
+          ${(sec.points || []).map((p) => `<div style="padding:12px 0;border-bottom:1px solid var(--rule-soft)">
+            <p class="serif" style="font-size:17px;line-height:1.5">${esc(p.text)}</p>
+            ${p.sources?.length ? `<p class="label" style="margin-top:6px">Sources : ${srcLinks(p.sources)}</p>` : ""}</div>`).join("")}
+        </section>`).join("")}
+      </div>
+      <div class="stack">
+        ${b.for_you?.length ? `<section class="hero"><span class="label">Ce que ça change pour toi</span>
+          <ul class="plain-list" style="margin-top:14px">${b.for_you.map((x) => `<li class="serif" style="font-size:16px;line-height:1.5;margin:8px 0">${esc(x)}</li>`).join("")}</ul></section>` : ""}
+        ${b.houses?.length ? `<section class="panel"><div class="panel-head"><h2>Ce que disent les grandes maisons</h2></div>
+          ${b.houses.map((h) => `<div style="padding:12px 0;border-bottom:1px solid var(--rule-soft)">
+            <div class="row between"><b style="font-weight:500">${esc(h.name)}</b><span class="label" style="color:var(--${(STANCE[h.stance] || STANCE.neutre)[1]})">${(STANCE[h.stance] || STANCE.neutre)[0]}</span></div>
+            <p class="small" style="margin-top:4px">${esc(h.view)}</p>
+            <p class="label" style="margin-top:4px">${h.date ? esc(h.date) + " / " : ""}${h.url ? `<a href="${esc(h.url)}" target="_blank" rel="noopener">lire</a>` : ""}</p></div>`).join("")}
+          <p class="muted small" style="margin-top:12px">Perspectives publiques de grands gérants et banques. Elles se trompent aussi : leur intérêt est de montrer où se situe le consensus.</p></section>` : ""}
+        ${b.glossary?.length ? `<section class="panel"><div class="panel-head"><h2>Les mots du jour</h2></div>
+          ${b.glossary.map((g) => `<div style="padding:8px 0"><b style="font-weight:500">${esc(g.term)}</b><p class="serif small" style="font-size:15px">${esc(g.def)}</p></div>`).join("")}</section>` : ""}
+      </div>
+    </div>
+    <p class="label" style="margin-top:40px">Synthèse rédigée par une IA (Claude) à partir des sources citées, relue par aucun humain : en cas de doute, la source fait foi.</p>` + disclaimer;
+  }
+
   function viewMacro() {
     const m = M.macro;
+    if (!m) return head("Contexte économique") + `<div class="empty">Les indicateurs économiques n'ont pas pu être chargés. Réessaie dans quelques minutes.</div>`;
     return head("Contexte économique", "Où en est l'économie, et quels secteurs ont tendance à mieux résister dans cette phase.") + `
     <div class="grid g-2">
       <section class="panel">
@@ -389,7 +460,7 @@
     const p = state.profile, b = book(state.book);
     const proj = C.project({ monthly: state.sim.monthly, initial: b.value, years: state.sim.years });
     const end = proj[proj.length - 1];
-    return head("Portefeuille", "Tes positions, tes règles de risque et ce que ton plan pourrait donner. Les positions affichées sont un exemple : l'import de tes relevés arrive à l'étape 5. Les cours, eux, sont réels.") + `
+    return head("Portefeuille", "Tes positions au dernier cours de clôture, tes règles de risque et ce que ton plan pourrait donner. Tes positions restent dans ce navigateur : elles ne sont jamais publiées.") + `
     <div class="chips" role="group" aria-label="Choisir le portefeuille" style="margin-bottom:18px">
       <button class="chip" data-book="real" aria-pressed="${state.book === "real"}">Réel</button>
       <button class="chip" data-book="simulated" aria-pressed="${state.book === "simulated"}">Simulé (argent fictif)</button>
@@ -402,11 +473,12 @@
     </div>
     <div class="grid g-2">
       <section class="panel">
-        <div class="panel-head"><h2>Positions</h2></div>
-        <div class="table-scroll"><table class="table"><thead><tr><th>Titre</th><th class="r">Valeur</th><th class="r">Résultat</th></tr></thead><tbody>
-          ${b.rows.map((r) => `<tr data-go="#fiche-${r.ticker}" tabindex="0"><td class="who"><b>${esc(r.name)}</b><span>${r.qty.toLocaleString("fr-FR")} part(s) · ${r.bucket === "coeur" ? "cœur" : "satellite"}</span></td>
-          <td class="r num">${eur(r.value, 2)}</td><td class="r num ${r.value >= r.invested ? "gain" : "loss"}">${pct(((r.value - r.invested) / r.invested) * 100)}</td></tr>`).join("")}
-        </tbody></table></div>
+        <div class="panel-head"><h2>Positions</h2><button class="btn small" data-action="add-position">Ajouter une position</button></div>
+        ${b.rows.length ? `<div class="table-scroll"><table class="table"><thead><tr><th>Titre</th><th class="r">Valeur</th><th class="r">Résultat</th><th></th></tr></thead><tbody>
+          ${b.rows.map((r, i) => `<tr data-go="#fiche-${r.ticker}" tabindex="0"><td class="who"><b>${esc(r.name)}</b><span>${r.qty.toLocaleString("fr-FR")} part(s) / ${r.bucket === "coeur" ? "cœur" : "satellite"}${r.live ? "" : " / cours non suivi"}</span></td>
+          <td class="r num">${eur(r.value, 2)}</td><td class="r num ${r.value >= r.invested ? "gain" : "loss"}">${pct(r.invested ? ((r.value - r.invested) / r.invested) * 100 : 0)}</td>
+          <td class="r"><button class="btn small" data-action="del-position" data-i="${i}" aria-label="Retirer ${esc(r.name)}">Retirer</button></td></tr>`).join("")}
+        </tbody></table></div>` : `<div class="empty">Aucune position${state.book === "simulated" ? " simulée" : ""}. Ajoute ce que tu possèdes : le titre, le nombre de parts et le prix payé.</div>`}
         <p class="muted small" style="margin-top:12px">Un ${ex("latent", "gain latent")} n'existe que sur le papier tant que tu ne vends pas.</p>
       </section>
       <section class="panel">
@@ -416,7 +488,7 @@
           ${ruleLine(b.maxLinePct <= p.maxLine, `Aucune action seule au-dessus de ${p.maxLine} %`, `La plus grosse pèse ${Math.round(b.maxLinePct)} %.`)}
           ${ruleLine(true, "Frais sous 1 % par achat", "Vérifié automatiquement à chaque ordre à partir de l'étape 5.")}
         </div>
-        <div class="empty" style="margin-top:18px">Import des relevés Revolut et Trade Republic (CSV) : disponible à l'étape 5.</div>
+        <p class="muted small" style="margin-top:18px">L'import automatique des relevés (Trade Republic, Revolut…) arrive à l'étape 5.</p>
       </section>
     </div>
     <section class="panel" style="margin-top:18px">
@@ -484,24 +556,73 @@
     </section>` + disclaimer;
   }
 
-  function viewBrokers() {
-    const crit = [
-      ["Frais par ordre", "Vérifié à l'étape 5", "Vérifié à l'étape 5"],
-      ["Plans programmés sur ETF", "Vérifié à l'étape 5", "Vérifié à l'étape 5"],
-      ["Actions fractionnées", "Vérifié à l'étape 5", "Vérifié à l'étape 5"],
-      ["Frais de change (USD)", "Vérifié à l'étape 5", "Vérifié à l'étape 5"],
-      ["Documents fiscaux pour l'Espagne", "Vérifié à l'étape 5", "Vérifié à l'étape 5"],
-      ["Garantie des titres et dépôts", "Vérifié à l'étape 5", "Vérifié à l'étape 5"],
-    ];
-    return head("Courtiers et exécution", "Où et comment acheter, au coût le plus bas pour un résident fiscal en Espagne.") + `
-    <div class="grid g-2">
-      <section class="panel">
-        <div class="panel-head"><h2>Combien coûte un achat ?</h2></div>
-        <div class="grid g-2" style="gap:12px">
-          <label class="field">Montant de l'achat (€)<input type="number" min="1" value="50" id="feeAmt"></label>
-          <label class="field">Frais fixes (€)<input type="number" min="0" step="0.5" value="1" id="feeFix"></label>
+  /* ---------- Courtiers : comparatif vérifié + calcul du coût annuel dans ton cas ---------- */
+  function brokerCost(b, sc) {
+    const m = b.model;
+    const etfFee = (amt) => (m.order_fixed || 0) + Math.max(m.order_min || 0, (m.order_pct || 0) / 100 * amt);
+    const stockFee = (amt) => m.stock_fixed != null ? m.stock_fixed : (m.order_fixed || 0) + Math.max(m.stock_min ?? m.order_min ?? 0, (m.order_pct || 0) / 100 * amt);
+    const plan = m.plan_free ? 0 : 12 * etfFee(sc.plan);
+    const stocks = sc.n * (stockFee(sc.amt) + (m.fx_pct || 0) / 100 * sc.amt * sc.us / 100);
+    const yearly = sc.us > 0 && sc.n > 0 ? (m.yearly || 0) : 0;
+    return { total: plan + stocks + yearly, plan, stocks: stocks + yearly };
+  }
+  function brokerTable() {
+    const B = M.brokers;
+    if (!B) return `<div class="empty">Le comparatif se charge depuis le site en ligne.</div>`;
+    const sc = state.brokerSc;
+    const rows = B.brokers.map((b) => ({ b, c: brokerCost(b, sc) }))
+      .filter((r) => !state.simpleTax || r.b.tax === "simple")
+      .sort((x, y) => x.c.total - y.c.total);
+    const max = Math.max(...rows.map((r) => r.c.total), 1);
+    const invested = sc.plan * 12 + sc.n * sc.amt;
+    const TAX = { simple: ["Impôts automatiques", "gain"], partial: ["Impôts en partie à déclarer", "warn"], declarative: ["Impôts à déclarer toi-même", "warn"] };
+    return rows.map(({ b, c }, i) => `<details class="fx">
+      <summary style="grid-template-columns:28px minmax(0,1.2fr) minmax(0,2fr) 90px">
+        <span class="num serif" style="font-size:18px">${i + 1}</span>
+        <span><b style="font-weight:500">${esc(b.name)}</b><br><span class="label" style="color:var(--${TAX[b.tax][1] === "gain" ? "gain" : "mute"})">${TAX[b.tax][0]}</span></span>
+        <span class="bar"><span style="width:${Math.max(1.5, (c.total / max) * 100)}%"></span></span>
+        <span class="num" style="text-align:right">${money(c.total, "EUR")}<br><span class="label">${invested ? num((c.total / invested) * 100, 2) + " % investi" : ""}</span></span>
+      </summary>
+      <div class="grid g-2" style="gap:12px 40px;padding:16px 0 6px">
+        <div>
+          ${[["Type", b.kind], ["Régulateur", b.regulator], ["Achat d'ETF", b.etf_order], ["Achat d'action", b.stock_order], ["Plan programmé", b.plan], ["Fractions d'action", b.fractional ? "Oui" : "Non"], ["Change en dollars", b.fx]]
+            .map(([l, v]) => `<div class="row between" style="padding:7px 0;border-bottom:1px solid var(--rule-soft);gap:20px"><span class="label">${l}</span><span style="text-align:right">${esc(v)}</span></div>`).join("")}
         </div>
-        <div id="feeOut" style="margin-top:16px"></div>
+        <div>
+          <p class="small" style="margin-bottom:10px"><b>Fiscalité en Espagne.</b> ${esc(b.tax_text)}</p>
+          <p class="label" style="margin-bottom:4px">Points forts</p><ul class="plain-list small">${b.pros.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+          <p class="label" style="margin:10px 0 4px">Points faibles</p><ul class="plain-list small">${b.cons.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+          <p class="label" style="margin-top:12px">Sources : ${b.sources.map((x) => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)}</a>${x.lang === "es" ? " (ES)" : ""}`).join(", ")}</p>
+        </div>
+      </div></details>`).join("");
+  }
+  function viewBrokers() {
+    const sc = state.brokerSc;
+    const B = M.brokers;
+    return head("Courtiers et exécution", "Où acheter, au coût le plus bas et avec le moins de paperasse, quand on est résident fiscal en Espagne.") + `
+    <section class="panel">
+      <div class="panel-head"><h2>Combien te coûterait chaque courtier, sur un an ?</h2><p>${B ? `Tarifs vérifiés le ${new Date(B.checked).toLocaleDateString("fr-FR")}` : ""}</p></div>
+      <div class="grid g-2" style="gap:6px 40px;margin-bottom:24px">
+        <label class="field">Plan programmé sur un ETF, chaque mois : <b class="num" id="sc-plan-o">${sc.plan} €</b><input type="range" min="0" max="1000" step="10" value="${sc.plan}" data-sc="plan"></label>
+        <label class="field">Achats d'actions seules par an : <b class="num" id="sc-n-o">${sc.n}</b><input type="range" min="0" max="24" step="1" value="${sc.n}" data-sc="n"></label>
+        <label class="field">Montant moyen d'un achat d'action : <b class="num" id="sc-amt-o">${sc.amt} €</b><input type="range" min="20" max="2000" step="10" value="${sc.amt}" data-sc="amt"></label>
+        <label class="field">Part d'actions américaines (en dollars) : <b class="num" id="sc-us-o">${sc.us} %</b><input type="range" min="0" max="100" step="10" value="${sc.us}" data-sc="us"></label>
+      </div>
+      <div class="row wrap between" style="margin-bottom:14px">
+        <button type="button" class="toggle" style="color:var(--ink)" data-action="simple-tax" aria-pressed="${state.simpleTax}"><span class="sw" style="border-color:var(--mute)"></span>Seulement ceux qui gèrent les impôts à ma place</button>
+        <span class="label">Clique sur un courtier pour le détail et les sources</span>
+      </div>
+      <div id="brokerRows">${brokerTable()}</div>
+      <p class="muted small" style="margin-top:16px">${B ? esc(B.note) : ""} Le calcul compte les frais d'achat et de change à l'achat ; la revente coûtera à peu près autant.</p>
+    </section>
+    <div class="grid g-2" style="margin-top:54px">
+      <section class="panel">
+        <div class="panel-head"><h2>Pour toi, en résumé</h2></div>
+        <div class="stack" style="gap:14px">
+          <p class="serif" style="font-size:18px;line-height:1.5">Pour un plan mensuel sur un ETF monde et peu d'achats d'actions, les courtiers à plans gratuits se valent presque : la différence se joue surtout sur la <b>simplicité fiscale</b>. En Espagne, Trade Republic et MyInvestor retiennent l'impôt et informent le fisc à ta place. Avec les autres, c'est toi qui déclares chaque vente.</p>
+          <p class="muted small">Ton compte Revolut convient pour un plan ETF gratuit sur sa sélection. Mais depuis le 6 octobre 2026, chaque achat d'action y coûte 1 € en formule Standard.</p>
+          <p class="muted small">Ce n'est pas un conseil personnalisé : vérifie les conditions officielles avant d'ouvrir un compte, et parles-en à ton gestor pour la déclaration.</p>
+        </div>
       </section>
       <section class="panel">
         <div class="panel-head"><h2>Passer un ordre, simplement</h2></div>
@@ -511,14 +632,14 @@
           <li><div><b>Achète pendant les heures de bourse</b><div class="muted small">Entre 9 h et 17 h 30 pour les places européennes : l'écart entre prix d'achat et de vente y est plus faible.</div></div></li>
           <li><div><b>Note la décision dans le journal</b><div class="muted small">Avec ta raison du moment. Tu remercieras ton toi futur.</div></div></li>
         </ol>
+        <div class="panel-head" style="margin-top:34px"><h2>Combien coûte un achat ?</h2></div>
+        <div class="grid g-2" style="gap:12px">
+          <label class="field">Montant de l'achat (€)<input type="number" min="1" value="50" id="feeAmt"></label>
+          <label class="field">Frais fixes (€)<input type="number" min="0" step="0.5" value="1" id="feeFix"></label>
+        </div>
+        <div id="feeOut" style="margin-top:16px"></div>
       </section>
-    </div>
-    <section class="panel" style="margin-top:18px">
-      <div class="panel-head"><h2>Revolut ou Trade Republic</h2><p>Comparatif à jour à l'étape 5</p></div>
-      <div class="table-scroll"><table class="table" style="cursor:default"><thead><tr><th>Critère</th><th>Revolut</th><th>Trade Republic</th></tr></thead>
-      <tbody>${crit.map(([c, a, b]) => `<tr style="cursor:default"><td>${c}</td><td class="dim">${a}</td><td class="dim">${b}</td></tr>`).join("")}</tbody></table></div>
-      <p class="muted small" style="margin-top:12px">Les tarifs changent souvent : ils seront relevés à la source et datés, plutôt que de mémoire. Le PEA ne s'applique pas : il est réservé aux résidents fiscaux français.</p>
-    </section>` + disclaimer;
+    </div>` + disclaimer;
   }
   function feeVerdict() {
     const a = +($("#feeAmt")?.value || 0), f = +($("#feeFix")?.value || 0);
@@ -630,6 +751,33 @@
     back.querySelector(".opt").focus();
   }
 
+  /* ======================= PORTEFEUILLE : ajout d'une position ======================= */
+  function positionModal() {
+    const opts = M.universe.slice().sort((a, b) => a.name.localeCompare(b.name))
+      .map((u) => `<option value="${esc(u.ticker)}">${esc(u.name)} (${esc(u.ticker)})</option>`).join("");
+    const back = document.createElement("div");
+    back.className = "modal-back";
+    back.innerHTML = `<form class="modal stack" role="dialog" aria-modal="true" aria-labelledby="pt" style="gap:16px">
+      <h2 id="pt">Ajouter une position ${state.book === "simulated" ? "simulée" : "réelle"}</h2>
+      <label class="field">Titre<select name="ticker" required>${opts}</select></label>
+      <div class="grid g-2" style="gap:12px">
+        <label class="field">Nombre de parts<input type="number" name="qty" min="0" step="any" required></label>
+        <label class="field">Prix moyen payé par part<input type="number" name="cost" min="0" step="any" required></label>
+      </div>
+      <label class="field">Rôle dans le portefeuille<select name="bucket"><option value="">Automatique (ETF = cœur)</option><option value="coeur">Cœur</option><option value="satellite">Satellite</option></select></label>
+      <p class="dim small">Les fractions de parts sont acceptées (ex. 0,35). Tout reste enregistré dans ce navigateur uniquement.</p>
+      <div class="row"><button class="btn primary" type="submit">Ajouter</button><button class="btn" type="button" data-close>Annuler</button></div>
+    </form>`;
+    document.body.appendChild(back);
+    back.querySelector("[data-close]").onclick = () => back.remove();
+    back.querySelector("form").onsubmit = (ev) => {
+      ev.preventDefault();
+      const d = Object.fromEntries(new FormData(ev.target));
+      state.positions[state.book].push({ ticker: d.ticker, qty: +d.qty, cost: +d.cost, bucket: d.bucket || undefined });
+      store.set("positions", state.positions); back.remove(); render();
+    };
+  }
+
   /* ======================= JOURNAL : saisie ======================= */
   function journalModal(prefill = {}) {
     const today = new Date().toISOString().slice(0, 10);
@@ -692,7 +840,7 @@
     const parts = cut > 0 && ["fiche", "apprendre"].includes(h.slice(0, cut)) ? [h.slice(0, cut), h.slice(cut + 1)] : [h];
     let r = parts[0] || "";
     if (r === "accueil") r = "";
-    const views = { "": viewHome, scanner: viewScanner, macro: viewMacro, portefeuille: viewPortfolio, journal: viewJournal, courtiers: viewBrokers, reglages: viewSettings };
+    const views = { "": viewHome, veille: viewVeille, scanner: viewScanner, macro: viewMacro, portefeuille: viewPortfolio, journal: viewJournal, courtiers: viewBrokers, reglages: viewSettings };
     let html;
     if (r === "fiche") html = viewFiche(parts[1] || "");
     else if (r === "apprendre") html = parts[1] ? viewLesson(parts[1]) : viewLearn();
@@ -708,16 +856,15 @@
     });
     const mm = $("#mmenu"); if (mm?.classList.contains("open")) { mm.classList.remove("open"); $("#menuBtn").textContent = "Menu"; $("#menuBtn").setAttribute("aria-expanded", "false"); }
     const cv = $("#pulseCanvas");
-    if (cv && window.Pulse) {
-      // Volatilité moyenne des idées du jour (fictive pour l'instant) : elle règle l'agitation du relief.
-      const pool = M.universe.filter((o) => o.vol != null);
-      const vol = pool.length ? Math.min(1, pool.reduce((a, o) => a + o.vol, 0) / pool.length / 40) : 0.5;
-      const trend = pool.length ? Math.max(-1, Math.min(1, pool.reduce((a, o) => a + (o.chg1m || 0), 0) / pool.length / 10)) : 0;
-      stopPulse = window.Pulse.mount(cv, { vol, trend });
+    if (cv && window.Sky) {
+      stopPulse = window.Sky.mount(cv, {
+        items: M.universe, ideas: M.opportunities.map((o) => o.ticker),
+        onPick: (t) => { location.hash = "#fiche-" + t; },
+      });
     }
     hidePop();
     if (r === "courtiers") feeVerdict();
-    const titles = { "": "Aujourd'hui", scanner: "Scanner", macro: "Macro", portefeuille: "Portefeuille", journal: "Journal", courtiers: "Courtiers", apprendre: "Apprendre", reglages: "Réglages", fiche: parts[1] || "" };
+    const titles = { "": "Aujourd'hui", veille: "Veille", scanner: "Scanner", macro: "Macro", portefeuille: "Portefeuille", journal: "Journal", courtiers: "Courtiers", apprendre: "Apprendre", reglages: "Réglages", fiche: parts[1] || "" };
     document.title = (titles[r] ?? NAME) + " · " + NAME;
   }
 
@@ -737,6 +884,9 @@
       }
       if (a === "journal-new") journalModal({ ticker: t.dataset.ticker, amount: t.dataset.amount, thesis: t.dataset.thesis });
       if (a === "onboard") onboarding(0);
+      if (a === "add-position") positionModal();
+      if (a === "del-position") { e.stopPropagation(); state.positions[state.book].splice(+t.dataset.i, 1); store.set("positions", state.positions); render(); }
+      if (a === "simple-tax") { state.simpleTax = !state.simpleTax; t.setAttribute("aria-pressed", state.simpleTax); $("#brokerRows").innerHTML = brokerTable(); }
       if (a === "clear-search") { state.query = ""; const g = $("#globalSearch"); if (g) g.value = ""; render(); }
     });
     document.addEventListener("keydown", (e) => {
@@ -752,6 +902,11 @@
         const q = $("#q"); q.focus(); q.setSelectionRange(pos, pos);
       }
       if (e.target.id === "feeAmt" || e.target.id === "feeFix") feeVerdict();
+      if (e.target.dataset.sc) {
+        const k = e.target.dataset.sc; state.brokerSc[k] = +e.target.value;
+        $("#sc-" + k + "-o").textContent = state.brokerSc[k] + ({ plan: " €", amt: " €", us: " %" }[k] || "");
+        $("#brokerRows").innerHTML = brokerTable();
+      }
       if (e.target.dataset.sim) {
         state.sim[e.target.dataset.sim] = +e.target.value;
         $("#mOut").textContent = state.sim.monthly + " €"; $("#yOut").textContent = state.sim.years + " ans";
@@ -776,9 +931,16 @@
   async function loadData() {
     if (location.protocol === "file:") return;
     const get = (f) => fetch(`data/${f}?v=${Date.now() / 36e5 | 0}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-    const [uni, mac, meta, hist] = await Promise.all([get("universe.json"), get("macro.json"), get("meta.json"), get("history.json")]);
+    const getC = (f) => fetch(`content/${f}?v=${Date.now() / 36e5 | 0}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const [uni, mac, meta, hist, brokers, brief] = await Promise.all([get("universe.json"), get("macro.json"), get("meta.json"), get("history.json"), getC("brokers.json"), get("brief.json")]);
     if (meta) M.meta = meta;
-    if (!uni || !uni.items?.length) return;
+    if (brokers) M.brokers = brokers;
+    if (brief) M.brief = brief;
+    if (!uni || !uni.items?.length) {
+      // Sur le site en ligne, on n'affiche jamais de données inventées.
+      M.dataError = true; M.isMock = false; M.universe = []; M.opportunities = []; M.macro = mac || null;
+      return;
+    }
     M.isMock = false;
     M.asOf = uni.as_of;
     M.benchmark = uni.benchmark;

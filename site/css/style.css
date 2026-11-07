@@ -76,7 +76,7 @@ a { color: inherit; }
 .rail-foot { margin-top: auto; padding: 26px 34px; }
 
 .col { min-width: 0; display: flex; flex-direction: column; }
-.tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) 1fr minmax(0, 1fr); height: var(--top); border-bottom: 1px solid var(--rule-soft); }
+.tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)) 0.6fr minmax(0, 1fr); height: var(--top); border-bottom: 1px solid var(--rule-soft); }
 .tabs a {
   display: flex; align-items: center; padding: 0 26px; text-decoration: none;
   border-right: 1px solid var(--rule-soft); font-size: 15px; transition: background 0.2s, color 0.2s;
@@ -382,3 +382,6 @@ body.explain-on [data-explain] { text-decoration: underline solid var(--gain); t
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
 }
+
+.sky-legend { position: absolute; top: 84px; right: 54px; max-width: 250px; text-align: right; color: var(--on-ink-mute); pointer-events: none; }
+@media (max-width: 860px) { .sky-legend { position: static; text-align: left; max-width: none; } }

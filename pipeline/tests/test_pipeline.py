@@ -141,7 +141,8 @@ def test_full_run_writes_site_data(tmp_path, monkeypatch):
 
     m = pd.date_range("2022-01-01", periods=36, freq="MS")
     code = build.run(price_fetch=prices, stooq_fetch=lambda t: None, fund_fetch=fund,
-                     fred_fetch=lambda s: pd.Series(np.linspace(2, 3, 36), index=m))
+                     fred_fetch=lambda s: pd.Series(np.linspace(2, 3, 36), index=m),
+                     news_fetch=lambda t: [{"title": "Titre", "url": "https://example.com", "publisher": "Reuters", "date": None}])
     assert code == 0
     uni = json.loads((tmp_path / "data" / "universe.json").read_text())
     meta = json.loads((tmp_path / "data" / "meta.json").read_text())
@@ -155,7 +156,13 @@ def test_run_keeps_previous_data_when_sources_fail(tmp_path, monkeypatch):
     monkeypatch.setattr(build, "OUT", tmp_path / "data")
     monkeypatch.setattr(build, "CACHE", tmp_path / "cache.json")
     code = build.run(price_fetch=lambda t: {}, stooq_fetch=lambda t: None, fund_fetch=lambda t: None,
-                     fred_fetch=lambda s: None)
+                     fred_fetch=lambda s: None, news_fetch=lambda t: [])
     assert code == 1
     assert not (tmp_path / "data" / "universe.json").exists()
     assert json.loads((tmp_path / "data" / "meta.json").read_text())["status"] == "echec"
+
+
+def test_analyst_view_in_plain_words():
+    v = build.analyst_view({"analyst_count": 30, "analyst_mean": 1.9, "price": 100.0, "target_mean": 120.0})
+    assert v["label"] == "achat" and v["upside"] == 20.0
+    assert build.analyst_view({"analyst_count": 2, "analyst_mean": 1.0}) is None

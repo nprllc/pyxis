@@ -1,5 +1,6 @@
 /* =========================================================================
-   Données FICTIVES de l'étape 2.
+   Exemple utilisé UNIQUEMENT quand le site est ouvert hors ligne (fichier local).
+   Sur le site en ligne, ce sont toujours les vraies données de site/data/*.json.
    Elles servent uniquement à dessiner l'interface. À l'étape 3, elles seront
    remplacées par les vraies données (yfinance, FRED) servies par le backend.
    ========================================================================= */
@@ -116,17 +117,6 @@
     profile: { name: "Nico", capital: 450, monthly: 100, risk: "élevée", maxLine: 10, core: 80, horizon: 20 },
     opportunities,
     universe: [...opportunities, ...more],
-    portfolio: {
-      real: [
-        { ticker: "EUNL.DE", name: "iShares Core MSCI World", qty: 3.12, cost: 99.1, price: 104.2, bucket: "coeur" },
-        { ticker: "SAP.DE", name: "SAP", qty: 0.21, cost: 228.0, price: 241.7, bucket: "satellite" },
-      ],
-      simulated: [
-        { ticker: "EUNL.DE", name: "iShares Core MSCI World", qty: 8, cost: 96.0, price: 104.2, bucket: "coeur" },
-        { ticker: "ASML.AS", name: "ASML Holding", qty: 0.15, cost: 655.0, price: 612.4, bucket: "satellite" },
-        { ticker: "NOVO-B.CO", name: "Novo Nordisk", qty: 1.2, cost: 52.0, price: 48.9, bucket: "satellite" },
-      ],
-    },
     macro: {
       phase: "ralentissement", // expansion | surchauffe | ralentissement | reprise
       indicators: [
@@ -144,10 +134,6 @@
         { name: "Énergie", fit: 38, note: "Dépend du prix du pétrole, lui-même lié à la demande." },
       ],
     },
-    journal: [
-      { id: 1, date: "2026-09-14", ticker: "SAP.DE", action: "achat", amount: 48, thesis: "Tendance haussière + cloud. Je teste un signal momentum.", review: "2026-12-14", outcome: null },
-      { id: 2, date: "2026-08-02", ticker: "EUNL.DE", action: "achat", amount: 80, thesis: "Plan mensuel cœur de portefeuille.", review: null, outcome: null },
-    ],
     lessons: [
       { id: "bases", title: "Les mots de base : action, ETF, bourse, courtier", minutes: 5, done: false },
       { id: "etf", title: "Ce qu'il y a vraiment dans un ETF monde", minutes: 5, done: false },
