@@ -981,11 +981,26 @@
         <label class="field">Ton e-mail<input type="email" name="email" autocomplete="email" required></label>
         <div class="row wrap"><button class="btn primary" type="submit">Recevoir le lien de connexion</button></div>
         <p class="small" id="loginMsg" aria-live="polite"></p>
+      </form>
+      <form id="linkForm" class="stack link-form" style="gap:14px;max-width:460px" ${isStandalone() ? "" : "hidden"}>
+        <span class="label">Dans l'app de l'écran d'accueil</span>
+        <p class="small muted">Le lien s'ouvre dans Safari, pas ici. Dans l'e-mail, appuie longuement sur le lien, choisis « Copier le lien », puis colle-le ci-dessous.</p>
+        <label class="field">Lien reçu par e-mail<input type="url" name="link" autocomplete="off" spellcheck="false"></label>
+        <div class="row wrap"><button class="btn" type="submit">Se connecter avec ce lien</button></div>
+        <p class="small" id="linkMsg" aria-live="polite"></p>
       </form>`;
     return head("Compte", "Connecte-toi une fois sur chaque appareil : tu restes connecté, et tout se synchronise.") + `
       <section class="panel acct">${body}</section>` + disclaimer;
   }
+  const isStandalone = () => window.matchMedia?.("(display-mode: standalone)").matches || navigator.standalone === true;
   function bindAccount(root) {
+    const lf = root.querySelector("#linkForm");
+    lf?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const msg = root.querySelector("#linkMsg"); msg.textContent = "Connexion…";
+      try { const replaced = await PyxisSync.verifyLink(lf.link.value); if (replaced) location.reload(); else render(); }
+      catch (err) { msg.innerHTML = `<b class="loss">${esc(err.message)}</b>`; }
+    });
     const f = root.querySelector("#loginForm"); if (!f) return;
     f.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -994,6 +1009,7 @@
       try {
         await PyxisSync.sendCode(email);
         msg.innerHTML = `Lien envoyé à <b>${esc(email)}</b>. Ouvre l'e-mail <b>sur cet appareil</b> et touche le lien : tu reviens ici, connecté. Pense aux indésirables.`;
+        root.querySelector("#linkForm").hidden = false;
       } catch (err) { msg.innerHTML = `<b class="loss">${esc(err.message || "Erreur")}</b>`; btn.disabled = false; }
     });
   }

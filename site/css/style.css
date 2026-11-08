@@ -554,3 +554,4 @@ body.pyx-open .pyx-fab { opacity: 0; pointer-events: none; }
 @media (max-width: 860px) { .pyx-fab { right: 16px; bottom: 16px; height: 52px; padding: 0 10px; } .pyx-fab-mark svg { width: 30px; height: 30px; } }
 @media (prefers-reduced-motion: reduce) { .pyx-fab, .pyx-fab-mark svg, .pyx-fab-label { transition: none; } }
 .pyx-log:has(+ .pyx-setup) { display: none; }
+.link-form { margin-top: 40px; border-top: 1px solid var(--rule-soft); padding-top: 18px; }

@@ -79,10 +79,23 @@
     user = data.user;
     return pull();       // true : les données du compte ont remplacé celles de cet appareil
   }
+  /* Connexion en collant le lien reçu par e-mail (pour l'app de l'écran d'accueil de l'iPhone,
+     qui ne reçoit pas les liens : ils s'ouvrent dans Safari). Crée une session propre à cet appareil. */
+  async function verifyLink(text) {
+    let t = String(text || "").trim();
+    for (let i = 0; i < 3; i++) { try { t = decodeURIComponent(t); } catch { break; } }   // liens réécrits par certaines messageries
+    const token = (t.match(/[?&#]token=([^&#\s]+)/) || [])[1];
+    const type = (t.match(/[?&#]type=([a-z_]+)/) || [])[1] || "magiclink";
+    if (!token) throw new Error("Ce n'est pas le lien de connexion reçu par e-mail.");
+    const { data, error } = await sb.auth.verifyOtp({ token_hash: token, type: type === "signup" ? "signup" : "magiclink" });
+    if (error) throw new Error(/expired|invalid/i.test(error.message) ? "Ce lien a expiré ou a déjà servi : demande-en un nouveau." : error.message);
+    user = data.user;
+    return pull();
+  }
   async function signOut() { await sb.auth.signOut(); user = null; localStorage.removeItem(SYNCED); notify(); }
 
   window.PyxisSync = {
-    configured, available, init, changed, sendCode, verify, signOut, push,
+    configured, available, init, changed, sendCode, verify, verifyLink, signOut, push,
     user: () => user,
     lastSync: () => localStorage.getItem(SYNCED),
     onChange: (f) => listeners.push(f),
