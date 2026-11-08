@@ -1,5 +1,5 @@
 /* =========================================================================
-   Ton compte Pyxis : connexion par code reçu par e-mail, session gardée,
+   Ton compte Pyxis : connexion par lien reçu par e-mail, session gardée,
    et synchronisation de tes données entre appareils (profil, portefeuille,
    journal, progression, réglages et clé de Pyxis).
 
@@ -47,9 +47,11 @@
   async function init() {
     if (!available()) return;
     sb = window.supabase.createClient(CFG.url, CFG.anonKey, {
-      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false, storageKey: "pyxis.auth" },
+      // Lien de connexion reçu par e-mail : au retour sur le site, la session est lue dans l'adresse puis effacée.
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "implicit", storageKey: "pyxis.auth" },
     });
     const { data } = await sb.auth.getSession();
+    if (/access_token=|error_description=/.test(location.hash)) history.replaceState(null, "", location.pathname + "#compte");
     user = data.session?.user || null;
     sb.auth.onAuthStateChange((_e, s) => { user = s?.user || null; notify(); });
     if (user) {
@@ -68,7 +70,7 @@
   }
 
   async function sendCode(email) {
-    const { error } = await sb.auth.signInWithOtp({ email, options: { shouldCreateUser: true } });
+    const { error } = await sb.auth.signInWithOtp({ email, options: { shouldCreateUser: true, emailRedirectTo: location.origin + location.pathname } });
     if (error) throw error;
   }
   async function verify(email, token) {

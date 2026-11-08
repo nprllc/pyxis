@@ -977,10 +977,9 @@
     else if (u) body = `<p class="acct-who">Connecté en tant que <b>${esc(u.email)}</b></p>
         <p class="muted small">${last ? `Dernière synchronisation : ${new Date(last).toLocaleString("fr-FR", { dateStyle: "long", timeStyle: "short" })}.` : ""} Ton profil, ton portefeuille, ton journal, ta progression et ta clé de Pyxis suivent ce compte sur tous tes appareils.</p>
         <div class="row wrap"><button class="btn" type="button" data-action="sync-now">Synchroniser maintenant</button><button class="btn" type="button" data-action="sign-out">Se déconnecter</button></div>`;
-    else body = `<form id="loginForm" class="stack" style="gap:18px">
+    else body = `<form id="loginForm" class="stack" style="gap:18px;max-width:460px">
         <label class="field">Ton e-mail<input type="email" name="email" autocomplete="email" required></label>
-        <div class="code-step" hidden><label class="field">Code reçu par e-mail<input type="text" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="10"></label></div>
-        <div class="row wrap"><button class="btn primary" type="submit">Recevoir un code</button></div>
+        <div class="row wrap"><button class="btn primary" type="submit">Recevoir le lien de connexion</button></div>
         <p class="small" id="loginMsg" aria-live="polite"></p>
       </form>`;
     return head("Compte", "Connecte-toi une fois sur chaque appareil : tu restes connecté, et tout se synchronise.") + `
@@ -988,25 +987,14 @@
   }
   function bindAccount(root) {
     const f = root.querySelector("#loginForm"); if (!f) return;
-    let step = "email";
     f.addEventListener("submit", async (e) => {
       e.preventDefault();
       const msg = root.querySelector("#loginMsg"), btn = f.querySelector("button[type=submit]"), email = f.email.value.trim();
-      btn.disabled = true;
+      btn.disabled = true; msg.textContent = "Envoi…";
       try {
-        if (step === "email") {
-          msg.textContent = "Envoi du code…";
-          await PyxisSync.sendCode(email);
-          step = "code"; f.querySelector(".code-step").hidden = false; f.email.readOnly = true; btn.textContent = "Se connecter";
-          msg.textContent = `Code envoyé à ${email}. Regarde aussi dans les indésirables.`; f.code.focus();
-        } else {
-          msg.textContent = "Vérification…";
-          const replaced = await PyxisSync.verify(email, f.code.value);
-          msg.textContent = "Connecté.";
-          if (replaced) location.reload(); else render();
-        }
-      } catch (err) { msg.innerHTML = `<b class="loss">${esc(err.message || "Erreur")}</b>`; }
-      btn.disabled = false;
+        await PyxisSync.sendCode(email);
+        msg.innerHTML = `Lien envoyé à <b>${esc(email)}</b>. Ouvre l'e-mail <b>sur cet appareil</b> et touche le lien : tu reviens ici, connecté. Pense aux indésirables.`;
+      } catch (err) { msg.innerHTML = `<b class="loss">${esc(err.message || "Erreur")}</b>`; btn.disabled = false; }
     });
   }
 
