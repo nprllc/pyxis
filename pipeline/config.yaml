@@ -151,10 +151,7 @@ veille:
     - { name: "CNBC Économie", url: "https://www.cnbc.com/id/20910258/device/rss/rss.html", lang: en }
     - { name: "MarketWatch", url: "https://feeds.content.dowjones.io/public/rss/mw_topstories", lang: en }
     - { name: "Le Monde Économie", url: "https://www.lemonde.fr/economie/rss_full.xml", lang: fr, filter: true }
-    - { name: "Les Échos", url: "https://services.lesechos.fr/rss/les-echos-finance-marches.xml", lang: fr }
-    - { name: "Les Échos", url: "https://syndication.lesechos.fr/rss/rss_finance-marches.xml", lang: fr }
     - { name: "BFM Business", url: "https://www.bfmtv.com/rss/economie/", lang: fr, filter: true }
-    - { name: "Boursorama", url: "https://www.boursorama.com/rss/actualites/economie", lang: fr, filter: true }
   # Modèles essayés dans l'ordre pour rédiger le digest. Un modèle n'est utilisé que si sa clé
   # existe dans les secrets du dépôt (nom indiqué dans key_env). Sans aucune clé : revue de presse.
   # provider : anthropic, openai, mistral, gemini, ou openai-compatible (avec base_url).

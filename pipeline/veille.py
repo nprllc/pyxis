@@ -75,8 +75,12 @@ def _date(s: str):
     return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
 
 
-def parse_feed(xml_text: str, source: dict) -> list[dict]:
-    """Lit un flux RSS 2.0 ou Atom et renvoie une liste d'articles."""
+def parse_feed(xml_text, source: dict) -> list[dict]:
+    """Lit un flux RSS 2.0 ou Atom (texte ou octets bruts) et renvoie une liste d'articles."""
+    if isinstance(xml_text, bytes):
+        xml_text = xml_text.lstrip(b"\xef\xbb\xbf \r\n\t")
+    else:
+        xml_text = xml_text.lstrip("\ufeff \r\n\t")
     root = ET.fromstring(xml_text)
     atom = "{http://www.w3.org/2005/Atom}"
     items = root.findall(".//item") or root.findall(f".//{atom}entry")
@@ -109,7 +113,7 @@ def collect(feeds: list[dict], now: datetime, fetch=None) -> list[dict]:
         try:
             r = fetch(f["url"])
             r.raise_for_status()
-            got = parse_feed(r.text, f)
+            got = parse_feed(getattr(r, "content", None) or r.text, f)
             log.info("%-28s %3d articles", f["name"], len(got))
         except Exception as e:
             log.warning("%-28s indisponible (%s)", f["name"], e)
