@@ -199,7 +199,7 @@ a { color: inherit; }
 
 /* ---------- Idées (liste éditoriale) ---------- */
 .opps { list-style: none; margin: 0; padding: 0; }
-.opp { display: grid; grid-template-columns: 70px 1fr 120px; gap: 22px; align-items: center; padding: 18px 0; text-decoration: none; color: inherit; border-bottom: 1px solid var(--rule-soft); }
+.opp { display: grid; grid-template-columns: 70px 1fr 120px 26px; gap: 22px; align-items: center; padding: 18px 0; text-decoration: none; color: inherit; border-bottom: 1px solid var(--rule-soft); }
 .opps li:first-child .opp { padding-top: 4px; }
 .opp:hover .t b { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .opp .t { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
@@ -271,9 +271,9 @@ a { color: inherit; }
 
 /* ---------- Formulaires ---------- */
 label.field { display: flex; flex-direction: column; gap: 8px; font: 400 10.5px var(--mono); color: var(--mute); }
-input[type="text"], input[type="number"], input[type="date"], select, textarea {
+input[type="text"], input[type="number"], input[type="date"], input[type="password"], input[type="url"], input[type="email"], input[type="search"], select, textarea {
   font: 400 15px var(--sans); color: var(--ink);
-  background: transparent; border: 1px solid var(--ink); border-radius: 0; padding: 11px 12px; width: 100%;
+  background: transparent; border: 1px solid var(--ink); border-radius: 0; padding: 11px 12px; width: 100%; -webkit-appearance: none; appearance: none;
 }
 textarea { min-height: 90px; resize: vertical; font-family: var(--serif); font-size: 16px; }
 input[type="range"] { width: 100%; -webkit-appearance: none; appearance: none; height: 1px; background: var(--ink); margin: 18px 0 12px; }
@@ -404,10 +404,10 @@ body.explain-on [data-explain] { text-decoration: underline solid var(--gain); t
 
 /* ---------- Divers ---------- */
 .empty { padding: 30px; text-align: center; color: var(--mute); border: 1px dashed var(--rule); font-family: var(--serif); font-size: 16px; }
-.footer { margin-top: auto; background: var(--ink); color: var(--on-ink); padding: 54px; display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: start; }
+.footer { margin-top: auto; background: var(--paper-deep); color: var(--ink); padding: 54px; display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: start; }
 
-.footer p { font: 400 14px/1.6 var(--serif); color: var(--on-ink); max-width: 72ch; }
-.footer .label { display: block; border-top: 1px solid rgba(243, 206, 187, 0.3); padding-top: 8px; margin-bottom: 14px; max-width: 72ch; color: var(--on-ink-mute); }
+.footer p { font: 400 14px/1.6 var(--serif); color: var(--ink); max-width: 72ch; }
+.footer .label { display: block; border-top: 1px solid var(--rule); padding-top: 8px; margin-bottom: 14px; max-width: 72ch; color: var(--mute); }
 
 /* Transition de page : un rideau d'encre qui passe. */
 .curtain { position: fixed; inset: 0; z-index: 80; background: var(--ink); transform: translateY(100%); pointer-events: none; visibility: hidden; }
@@ -447,7 +447,7 @@ body.explain-on [data-explain] { text-decoration: underline solid var(--gain); t
   .brief-home .btn { justify-self: start; }
   .fiche-head { grid-template-columns: 1fr; gap: 20px; }
   .fx summary, .factor { grid-template-columns: 112px 1fr 32px; gap: 12px; }
-  .opp { grid-template-columns: 56px 1fr; gap: 16px; }
+  .opp { grid-template-columns: 56px 1fr 26px; gap: 14px; }
   .opp .spark { display: none; }
   .hide-m { display: none; }
   .g-3 { grid-template-columns: 1fr; }
@@ -501,7 +501,9 @@ h1 .pyx-ask svg { width: 26px; height: 26px; }
 .label .pyx-ask { width: 20px; height: 20px; margin-left: 6px; }
 .label .pyx-ask svg { width: 16px; height: 16px; }
 .pyx-slot { display: inline-flex; align-items: center; }
-.opp .t .pyx-ask, .pyx-slot .pyx-ask { margin-left: 2px; }
+.pyx-slot .pyx-ask { margin-left: 2px; }
+.opp > .pyx-slot { align-self: center; justify-self: end; }
+.opp > .pyx-slot .pyx-ask { margin: 0; }
 .panel-head > .pyx-ask { margin-left: 12px; flex: none; }
 .topbar > .row > .pyx-ask { margin: 0 4px 0 0; }
 .pyx-paste { padding: 0 22px 6px; display: flex; flex-direction: column; gap: 8px; }
@@ -537,3 +539,10 @@ h1 .pyx-ask svg { width: 26px; height: 26px; }
 .talk { padding: 16px 0; border-bottom: 1px solid var(--rule-soft); display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
 .talk p { font: 400 16px/1.55 var(--serif); }
 .talk .row { width: 100%; }
+
+.pyx-adv { border-top: 1px solid var(--rule-soft); padding-top: 10px; }
+.pyx-adv summary { cursor: pointer; list-style: none; }
+.pyx-adv summary::-webkit-details-marker { display: none; }
+.pyx-adv[open] summary { margin-bottom: 14px; }
+.pyx-adv .field + .field { margin-top: 14px; }
+#aiForm { gap: 18px; }

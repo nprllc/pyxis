@@ -96,7 +96,7 @@
           </form>
           <main class="main" id="main" tabindex="-1"></main>
           <footer class="footer">
-            <div class="wm" aria-hidden="true">${Logo.lockup({ size: 56, color: "#f3cebb" })}</div>
+            <div class="wm" aria-hidden="true">${Logo.lockup({ size: 56, color: "#1e1b1a" })}</div>
           </footer>
         </div>
       </div>
@@ -237,7 +237,7 @@
           <div class="row between"><span class="label">À apprendre ensuite · ${esc(moduleOf(next).title)}</span><span class="label">${next.minutes} min</span></div>
           <h3 id="lesson-t" class="serif" style="font-size:30px;line-height:1.08;font-weight:400;letter-spacing:-.02em;margin:22px 0 12px">${esc(next.title)}</h3>
           <p class="muted" style="margin-bottom:22px">${learnDone()} leçon${learnDone() > 1 ? "s" : ""} terminée${learnDone() > 1 ? "s" : ""} sur ${M.lessons.length}.</p>
-          <div class="row" style="gap:10px"><a class="btn" href="#apprendre-${next.id}">Commencer la leçon</a><span class="pyx-slot" data-scope="hero"></span></div>
+          <a class="btn" href="#apprendre-${next.id}">Commencer la leçon</a>
         </section>` : `<section class="hero"><span class="label">Parcours terminé</span><h3 class="serif" style="font-size:30px;font-weight:400;margin:22px 0 12px">Les ${M.lessons.length} leçons sont faites.</h3><a class="btn" href="#apprendre">Revoir une leçon</a></section>`}
       </div>
     </div>`;
@@ -251,8 +251,8 @@
   function oppRow(o) {
     return `<li><a class="opp" href="#fiche-${o.ticker}">
       ${C.orb(o.score, o.low, o.high, 60)}
-      <div><div class="t"><b>${esc(o.name)}</b><span class="tag ${o.type}">${TYPE_LABEL[o.type]}</span><span class="pyx-slot" data-scope="opp"></span></div><p>${esc(o.thesis)}</p></div>
-      ${C.sparkline(o.spark, { w: 110, h: 34 })}</a></li>`;
+      <div><div class="t"><b>${esc(o.name)}</b><span class="tag ${o.type}">${TYPE_LABEL[o.type]}</span></div><p>${esc(o.thesis)}</p></div>
+      ${C.sparkline(o.spark, { w: 110, h: 34 })}<span class="pyx-slot" data-scope="opp"></span></a></li>`;
   }
 
   /* Constellation : chaque titre est un cercle, sa taille suit le score.

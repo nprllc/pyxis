@@ -199,12 +199,14 @@ ${ctx.text.slice(0, 6000)}
     const c = getCfg(), p = c.provider || "";
     return `<section class="panel" style="max-width:640px;margin-top:54px" id="pyxis-ai">
       <div class="panel-head"><h2>Pyxis, ton assistant</h2></div>
-      <p class="muted small" style="margin-bottom:16px">Pyxis répond à tes questions partout sur le site : clique sur son signe. Choisis le modèle et colle ta clé d'API ; tu peux en changer quand tu veux. La clé reste dans ce navigateur, jamais publiée ni sauvegardée.</p>
+      <p class="muted small" style="margin-bottom:8px">Choisis le fournisseur et colle ta clé. Elle reste dans ce navigateur.</p>
       <form id="aiForm" class="stack">
         <label class="field">Fournisseur<select name="provider"><option value="">Choisir…</option>${Object.entries(PROVIDERS).map(([k, v]) => `<option value="${k}"${k === p ? " selected" : ""}>${v.label}</option>`).join("")}</select></label>
-        <label class="field">Modèle<input type="text" name="model" value="${esc(c.model || "")}" placeholder="${esc(PROVIDERS[p]?.model || "nom du modèle")}" autocomplete="off"></label>
-        <label class="field" data-base ${p === "compatible" ? "" : "hidden"}>Adresse du service (compatible OpenAI)<input type="url" name="base" value="${esc(c.base || "")}" placeholder="https://…/v1"></label>
         <label class="field">Clé d'API<input type="password" name="key" value="${esc(c.key || "")}" autocomplete="off" spellcheck="false"></label>
+        <details class="pyx-adv"><summary class="label">Réglages avancés</summary>
+          <label class="field">Modèle<input type="text" name="model" value="${esc(c.model || "")}" placeholder="${esc(PROVIDERS[p]?.model || "nom du modèle")}" autocomplete="off"></label>
+          <label class="field" data-base ${p === "compatible" ? "" : "hidden"}>Adresse du service<input type="url" name="base" value="${esc(c.base || "")}" placeholder="https://…/v1"></label>
+        </details>
         <p class="muted small" data-keyhelp>${PROVIDERS[p]?.keyUrl ? `Où trouver ta clé : <a href="${PROVIDERS[p].keyUrl}" target="_blank" rel="noopener">${PROVIDERS[p].keyUrl.replace("https://", "")}</a>` : "Mistral et Gemini proposent une offre gratuite ; Claude et OpenAI coûtent quelques euros par mois pour un usage personnel."}</p>
         <div class="row wrap"><button class="btn primary" type="submit">Enregistrer et tester</button>${c.key ? `<button class="btn" type="button" data-action="ai-forget">Effacer la clé</button>` : ""}</div>
         <p class="small" id="aiMsg" aria-live="polite"></p>
@@ -238,7 +240,6 @@ ${ctx.text.slice(0, 6000)}
      soit dans un emplacement prévu (.pyx-slot), soit au bout des rangées d'en-tête. */
   const btnHTML = (scope) => `<span role="button" tabindex="0" class="pyx-ask" data-ask data-scope="${scope}" aria-label="Demander à Pyxis" title="Demander à Pyxis">${window.Logo ? Logo.mark({ size: 18 }) : "P"}</span>`;
   const HOSTS = [
-    [".panel-head", "panel"],
     [".pyx-point > .label:last-child", "point"],
     [".lex-item dt", "lex"],
   ];
