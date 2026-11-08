@@ -380,7 +380,7 @@
 <h3>Un classement relatif</h3>
 <p>« Qualité 90 » veut dire : meilleur que 90 % des titres suivis sur ce critère. Pas que l'entreprise est parfaite.</p>
 <h3>La fourchette</h3>
-<p>Pyxis affiche toujours une fourchette autour du score : quand une donnée manque ou que les critères se contredisent, elle s'élargit. Elle reste provisoire tant que la méthode n'a pas été testée sur le passé ([[backtest|backtest]]), ce qui viendra plus tard.</p>
+<p>Pyxis affiche toujours une fourchette autour du score : quand une donnée manque ou que les critères se contredisent, elle s'élargit. La partie « prix » de la méthode (momentum et risque) est testée chaque soir sur les cinq dernières années : c'est le [[backtest|backtest]], visible dans la page Méthode, avec toutes ses limites.</p>
 <h3>Ce que le score ne sait pas</h3>
 <p>Une nouvelle de la nuit, un procès, un changement de dirigeant. Chaque idée vient donc avec « ce qui pourrait la rendre fausse » et un signal d'alerte. Lis-les toujours.</p>
 {{live:score}}`,
@@ -390,7 +390,7 @@
         { q: "Quel critère pèse le plus dans le score ?", o: ["Macro", "Valorisation et qualité, à égalité", "Risque"], a: 1, why: "25 % chacune, devant le momentum (20 %), le risque et la macro (15 % chacun)." },
         { q: "Un score élevé veut dire qu'il faut acheter. Vrai ?", o: ["Vrai", "Faux : c'est une piste à étudier"], a: 1, why: "Le score ignore beaucoup de choses ; c'est un point de départ." },
       ],
-      apply: { href: "#", label: "Voir les idées du jour et leur score" },
+      apply: { href: "#methode", label: "Voir la méthode et le test sur le passé" },
     },
 
     /* ============================ MODULE 4 ============================ */

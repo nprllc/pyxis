@@ -48,7 +48,7 @@
     more: I('<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>'),
   };
   const NAME = "Pyxis";
-  const TOP = [["", "Aujourd'hui"], ["veille", "Veille"], ["scanner", "Scanner"], ["macro", "Macro"], ["apprendre", "Apprendre"]];
+  const TOP = [["", "Aujourd'hui"], ["veille", "Veille"], ["scanner", "Scanner"], ["macro", "Macro"], ["apprendre", "Apprendre"], ["methode", "Méthode"]];
   const ACCOUNT = [["portefeuille", "Portefeuille"], ["journal", "Journal"], ["courtiers", "Courtiers"], ["reglages", "Réglages"]];
 
   /* ---------- Calculs du profil ---------- */
@@ -388,6 +388,7 @@
               <div><div class="serif" style="font-size:40px;line-height:1">${esc(o.analysts.label)}</div><div class="label" style="margin-top:6px">${o.analysts.count} analystes</div></div>
               ${o.analysts.target ? `<div><div class="num" style="font-size:24px">${money(o.analysts.target, o.currency)}</div><div class="label">objectif moyen à 12 mois${o.analysts.upside != null ? `, soit ${pct(o.analysts.upside)}` : ""}</div></div>` : ""}</div>
             ${o.analysts.low && o.analysts.high ? `<p class="small">Fourchette des objectifs : de ${money(o.analysts.low, o.currency)} à ${money(o.analysts.high, o.currency)}. Plus elle est large, moins les analystes sont d'accord entre eux.</p>` : ""}
+            ${staleTargets(o) ? `<p class="flag">Le cours (${money(o.price, o.currency)}) est ${o.price < o.analysts.low ? "sous l'objectif le plus bas" : "très loin sous l'objectif moyen"}. C'est souvent le signe que les objectifs n'ont pas encore été revus après une baisse récente : la hausse affichée est probablement trop optimiste.</p>` : ""}
             <p class="muted small" style="margin-top:10px">Ce sont les analystes des banques et bureaux d'études qui suivent le titre (via Yahoo Finance). Ils sont en moyenne trop optimistes et changent souvent d'avis : c'est un repère, pas un verdict.</p>`
           : `<p class="muted">Moins de trois analystes suivent ce titre${o.kind === "ETF" ? " (normal pour un ETF : il n'y a pas d'entreprise à analyser)" : ""}.</p>`}
           ${M.brief?.ideas_notes?.[o.ticker] ? `<div class="flag" style="border-color:var(--ink)">${esc(M.brief.ideas_notes[o.ticker])}</div>` : ""}
@@ -695,6 +696,68 @@
       <p>${msg}</p><p class="muted small" style="margin-top:6px">Tu perds ce pourcentage dès l'achat : le titre doit monter d'autant pour que tu retrouves ta mise. Avec ${eur(f, 2)} de frais, il faut acheter au moins ${eur(minOk)} pour rester sous 1 %.</p>`;
   }
 
+  /* ======================= MÉTHODE : comment Pyxis note, et ce que ça aurait donné ======================= */
+  function btChart(bt) {
+    const W = 1000, H = 300, P = 34, keys = [["bench", "var(--mute)", "4 4"], ["all", "var(--ink)", "2 3"], ["bottom", "var(--loss)", ""], ["top", "var(--gain)", ""]].filter(([k]) => bt.curves[k]);
+    const all = keys.flatMap(([k]) => bt.curves[k]), lo = Math.min(1, ...all), hi = Math.max(1, ...all), n = bt.dates.length;
+    const X = (i) => P + (i / (n - 1)) * (W - 2 * P), Y = (v) => H - P - ((v - lo) / (hi - lo || 1)) * (H - 2 * P);
+    const years = bt.dates.map((d, i) => [d.slice(0, 4), i]).filter(([y], i, a) => i > 0 && y !== a[i - 1][0]);
+    return `<svg viewBox="0 0 ${W} ${H}" class="bt-chart" role="img" aria-label="Évolution de 1 € investi selon chaque stratégie">
+      <line x1="${P}" x2="${W - P}" y1="${Y(1)}" y2="${Y(1)}" stroke="var(--rule-soft)"/>
+      <text x="${P}" y="${Y(1) + 16}" class="bt-ax">1 € investi</text>
+      ${years.map(([y, i]) => `<text x="${X(i)}" y="${H - 8}" class="bt-ax">${y}</text>`).join("")}
+      ${keys.map(([k, c, dash]) => `<polyline fill="none" stroke="${c}" stroke-width="${k === "top" ? 2.4 : 1.5}" ${dash ? `stroke-dasharray="${dash}"` : ""} points="${bt.curves[k].map((v, i) => X(i).toFixed(1) + "," + Y(v).toFixed(1)).join(" ")}"/>
+        <text x="${W - P + 4}" y="${Y(bt.curves[k][n - 1]) + 4}" class="bt-ax" fill="${c}">${num(bt.curves[k][n - 1], 2)} €</text>`).join("")}
+    </svg>`;
+  }
+  function viewMethod() {
+    const bt = M.backtest;
+    const F = [["Valorisation", 25, "Le titre est-il bon marché par rapport à ses bénéfices et à son secteur ? (PER, PER prévisionnel, prix sur valeur comptable)"],
+      ["Qualité", 25, "L'entreprise est-elle solide ? (marges, rentabilité des capitaux propres, dette)"],
+      ["Momentum", 20, "Sa tendance sur un an, sans le dernier mois (qui a tendance à se retourner)."],
+      ["Risque", 15, "Sa volatilité et sa pire baisse sur un an : moins c'est agité, mieux c'est noté."],
+      ["Macro", 15, "Son secteur convient-il à la phase économique estimée ?"]];
+    return head("Méthode", "Comment Pyxis note chaque titre, et ce que cette méthode aurait donné dans le passé. Sans rien cacher de ses limites.") + `
+    <div class="grid g-2">
+      <section class="panel">
+        <div class="panel-head"><h2>Le score, en cinq critères</h2><p>Chacun classé de 0 à 100 par rapport aux autres titres</p></div>
+        ${F.map(([n, w, d]) => `<div class="mt-row"><div class="mt-w num">${w}<small>%</small></div><div><b>${n}</b><p class="muted small">${d}</p></div></div>`).join("")}
+        <p class="small" style="margin-top:16px">Les actions et les ETF sont classés séparément. Quand une donnée manque, le critère est ignoré et la fourchette autour du score s'élargit. ${ex("score", "En savoir plus sur le score")}.</p>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>D'où viennent les données</h2></div>
+        <ul class="plain-list">
+          <li><b>Cours</b> : Yahoo Finance, Stooq en secours, chaque soir de semaine vers 23 h.</li>
+          <li><b>Chiffres des entreprises et avis d'analystes</b> : Yahoo Finance, actualisés chaque jour.</li>
+          <li><b>Économie</b> : la base FRED de la Réserve fédérale de Saint-Louis (taux BCE, inflation et chômage de la zone euro, courbe des taux américaine).</li>
+          <li><b>Veille</b> : rédigée chaque matin de semaine par une IA à partir de sources de référence citées (Reuters, Financial Times, Les Échos, banques centrales…).</li>
+        </ul>
+        <p class="muted small" style="margin-top:12px">Chaque titre passe des contrôles avant d'être noté : historique suffisant, cours récent, pas de prix aberrant. En dessous de la moitié des titres récupérés, Pyxis garde les données de la veille plutôt que d'afficher des chiffres douteux.</p>
+      </section>
+    </div>
+    <section class="panel" style="margin-top:54px">
+      <div class="panel-head"><h2>Le test sur le passé</h2><p>${bt ? `${bt.months} mois, de ${new Date(bt.start).toLocaleDateString("fr-FR", { month: "long", year: "numeric" })} à ${new Date(bt.end).toLocaleDateString("fr-FR", { month: "long", year: "numeric" })}` : ""}</p></div>
+      ${bt ? `
+      <p style="max-width:75ch">Chaque fin de mois, on classe les ${bt.stocks} actions suivies selon les deux critères qu'on peut recalculer dans le passé avec les seuls cours : <b>momentum</b> et <b>risque</b>. On « achète » à parts égales le tiers le mieux classé, on garde un mois, et on recommence. Voici ce qu'aurait donné 1 € investi.</p>
+      ${btChart(bt)}
+      <div class="bt-legend">${[["top", "var(--gain)"], ["all", "var(--ink)"], ["bottom", "var(--loss)"], ["bench", "var(--mute)"]].filter(([k]) => bt.strategies[k]).map(([k, c]) => `<span><i style="background:${c}"></i>${esc(bt.strategies[k].label)}</span>`).join("")}</div>
+      <table class="bt-table"><thead><tr><th></th><th>Gain total</th><th>Par an</th><th>Volatilité</th><th>Pire baisse</th></tr></thead><tbody>
+        ${["top", "all", "bottom", "bench"].filter((k) => bt.strategies[k]).map((k) => { const x = bt.strategies[k]; return `<tr><td>${esc(x.label)}</td><td class="num ${x.total >= 0 ? "gain" : "loss"}">${pct(x.total, 0)}</td><td class="num">${pct(x.annual)}</td><td class="num">${num(x.vol, 0)} %</td><td class="num loss">${pct(x.maxdd, 0)}</td></tr>`; }).join("")}
+      </tbody></table>
+      <div class="grid g-2" style="margin-top:28px;gap:24px 40px">
+        <div><span class="label">Ce que ça dit</span>
+          <p class="small" style="margin-top:6px">Le tiers le mieux classé a fait mieux que la moyenne des actions suivies ${num(bt.beat_all_pct, 0)} % des mois${bt.beat_bench_pct != null ? `, et mieux que l'ETF monde ${num(bt.beat_bench_pct, 0)} % des mois` : ""}. Un mois typique, l'écart avec la moyenne allait de <b>${pct(bt.excess.p10, 1)}</b> à <b>${pct(bt.excess.p90, 1)}</b> (8 mois sur 10), avec un milieu à ${pct(bt.excess.median, 2)}. Autrement dit : même quand une méthode marche, elle se trompe souvent sur un mois donné.</p></div>
+        <div><span class="label">Ce que ça ne dit pas</span>
+          <ul class="plain-list small" style="margin-top:6px">
+            <li><b>${ex("survivant", "Biais du survivant")}</b> : on teste la liste d'aujourd'hui. Les entreprises disparues ou sorties des indices n'y sont pas, ce qui embellit tous les résultats.</li>
+            <li><b>Seulement 35 % du score</b> : valorisation, qualité et macro ne sont pas testées, faute d'historique gratuit des comptes.</li>
+            <li><b>Sans frais, ni impôts, ni change</b> : changer de titres chaque mois coûterait des frais réels.</li>
+            <li><b>Le passé ne garantit rien</b> : une méthode qui a marché peut cesser de marcher.</li>
+          </ul></div>
+      </div>` : `<div class="empty">Le test sur le passé se calcule lors de la prochaine mise à jour du soir.</div>`}
+    </section>` + disclaimer;
+  }
+
   /* ======================= APPRENDRE ======================= */
   const LEARN = window.PYXIS_LEARN || { modules: [], lessons: [] };
   function loadLearn() {
@@ -731,15 +794,17 @@
     <section class="panel lexique-panel" id="lexique">
       <div class="panel-head"><h2>Lexique du débutant</h2><p>${Object.keys(G).length} mots, de A à Z</p></div>
       <p class="muted small" style="margin:-6px 0 16px">Partout dans Pyxis, les mots soulignés en pointillé s'expliquent quand tu passes dessus. Active « Explique-moi » pour les voir tous.</p>
-      <label class="field lex-search">Chercher un mot<input type="search" id="lexQ" placeholder="ETF, dividende, PER…" autocomplete="off"></label>
+      <div class="lex-search">${SEARCH_ICON}<input type="text" id="lexQ" placeholder="Chercher un mot : ETF, dividende, PER…" autocomplete="off" aria-label="Chercher un mot du lexique"></div>
       <nav class="lex-letters" aria-label="Lettres">${Object.keys(letters).map((L) => `<a href="#apprendre-lexique" data-letter="${L}">${L}</a>`).join("")}</nav>
       <div class="lex-list">${Object.entries(letters).map(([L, items]) => `<div class="lex-group" data-l="${L}"><div class="lex-letter serif" id="lettre-${L}">${L}</div><dl>${items.map(([k, [t, d, e]]) => `
-        <div class="lex-item" id="mot-${k}" data-s="${esc((t + " " + d).toLowerCase())}"><dt>${esc(t)}</dt><dd><p>${esc(d)}</p>${e ? `<p class="lex-ex">${esc(e)}</p>` : ""}${termLesson[k] ? `<a class="label" href="#apprendre-${termLesson[k].id}">Expliqué dans : ${esc(termLesson[k].title)}</a>` : ""}</dd></div>`).join("")}</dl></div>`).join("")}
+        <div class="lex-item" id="mot-${k}" data-s="${esc((t + " " + d).toLowerCase())}"><dt>${esc(t)}</dt><dd><p>${esc(d)}</p>${e ? `<p class="lex-ex">${esc(e)}</p>` : ""}</dd></div>`).join("")}</dl></div>`).join("")}
         <p class="empty lex-none" hidden>Aucun mot ne correspond. Essaie un autre terme.</p></div>
     </section>` + disclaimer;
   }
 
   /* Encadrés calculés sur les vraies données du jour. */
+  // Objectifs d'analystes en retard sur le cours (après une forte baisse, ils sont révisés avec plusieurs semaines de décalage).
+  const staleTargets = (o) => !!(o.analysts && o.price && ((o.analysts.low && o.price < o.analysts.low) || (o.analysts.upside != null && o.analysts.upside > 50)));
   function live(name) {
     const U = M.universe || [], find = (t) => U.find((o) => o.ticker === t);
     const box = (title, body) => `<aside class="live"><span class="label">Dans les données Pyxis · ${esc(title)}</span>${body}</aside>`;
@@ -985,7 +1050,7 @@
     const parts = cut > 0 && ["fiche", "apprendre"].includes(h.slice(0, cut)) ? [h.slice(0, cut), h.slice(cut + 1)] : [h];
     let r = parts[0] || "";
     if (r === "accueil") r = "";
-    const views = { "": viewHome, veille: viewVeille, scanner: viewScanner, macro: viewMacro, portefeuille: viewPortfolio, journal: viewJournal, courtiers: viewBrokers, reglages: viewSettings };
+    const views = { "": viewHome, veille: viewVeille, scanner: viewScanner, macro: viewMacro, portefeuille: viewPortfolio, journal: viewJournal, courtiers: viewBrokers, reglages: viewSettings, methode: viewMethod };
     let html;
     if (r === "fiche") html = viewFiche(parts[1] || "");
     else if (r === "apprendre") html = parts[1] ? viewLesson(parts[1]) : viewLearn();
@@ -1011,7 +1076,7 @@
     }
     hidePop();
     if (r === "courtiers") feeVerdict();
-    const titles = { "": "Aujourd'hui", veille: "Veille", scanner: "Scanner", macro: "Macro", portefeuille: "Portefeuille", journal: "Journal", courtiers: "Courtiers", apprendre: "Apprendre", reglages: "Réglages", fiche: parts[1] || "" };
+    const titles = { "": "Aujourd'hui", veille: "Veille", scanner: "Scanner", macro: "Macro", portefeuille: "Portefeuille", journal: "Journal", courtiers: "Courtiers", apprendre: "Apprendre", reglages: "Réglages", methode: "Méthode", fiche: parts[1] || "" };
     document.title = (titles[r] ?? NAME) + " · " + NAME;
   }
 
@@ -1102,6 +1167,7 @@
     const get = (f) => fetch(`data/${f}?v=${Date.now() / 36e5 | 0}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
     const getC = (f) => fetch(`content/${f}?v=${Date.now() / 36e5 | 0}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
     const [uni, mac, meta, hist, brokers, brief] = await Promise.all([get("universe.json"), get("macro.json"), get("meta.json"), get("history.json"), getC("brokers.json"), get("brief.json")]);
+    get("backtest.json").then((bt) => { if (bt) { M.backtest = bt; if (location.hash === "#methode") render(); } });
     if (meta) M.meta = meta;
     if (brokers) M.brokers = brokers;
     if (brief) M.brief = brief;

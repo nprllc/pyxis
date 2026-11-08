@@ -166,3 +166,20 @@ def test_analyst_view_in_plain_words():
     v = build.analyst_view({"analyst_count": 30, "analyst_mean": 1.9, "price": 100.0, "target_mean": 120.0})
     assert v["label"] == "achat" and v["upside"] == 20.0
     assert build.analyst_view({"analyst_count": 2, "analyst_mean": 1.0}) is None
+
+
+def test_backtest_runs_and_reports_survivor_free_stats():
+    from pipeline import backtest
+    prices = {f"S{i}": fake_prices(seed=i, n=900, drift=0.0002 * (i % 5)) for i in range(20)}
+    prices["BENCH"] = fake_prices(seed=99, n=900)
+    out = backtest.run_backtest(prices, [f"S{i}" for i in range(20)], "BENCH")
+    assert out and out["months"] >= 12
+    assert set(out["strategies"]) >= {"top", "all", "bottom", "bench"}
+    assert len(out["curves"]["top"]) == out["months"] == len(out["dates"])
+    assert out["excess"]["p10"] <= out["excess"]["median"] <= out["excess"]["p90"]
+
+
+def test_backtest_needs_enough_history():
+    from pipeline import backtest
+    prices = {f"S{i}": fake_prices(seed=i, n=200) for i in range(20)}
+    assert backtest.run_backtest(prices, list(prices), None) is None

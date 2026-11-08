@@ -20,7 +20,7 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from . import indicators, macro, quality, scoring, sources
+from . import backtest, indicators, macro, quality, scoring, sources
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG = ROOT / "pipeline" / "config.yaml"
@@ -193,6 +193,13 @@ def run(price_fetch=sources.prices_yahoo, stooq_fetch=sources.prices_stooq,
                                  "benchmark": cfg.get("benchmark"), "ideas": ideas,
                                  "watchlist": cfg.get("watchlist") or [], "items": scored})
     write_json("macro.json", {"generated_at": started.isoformat(), **mac})
+    # 7. Test sur le passé de la partie « prix » du score
+    try:
+        bt = backtest.run_backtest(prices, [t for t, r in recs.items() if r["kind"] != "ETF"], cfg.get("benchmark"))
+        if bt:
+            write_json("backtest.json", {"generated_at": started.isoformat(), **bt})
+    except Exception as e:  # le backtest ne doit jamais bloquer la mise à jour du jour
+        log.warning("Backtest impossible : %s", e)
     write_json("history.json", {t: weekly_history(prices[t]) for t in recs})
     write_json("meta.json", {"generated_at": started.isoformat(), "as_of": as_of, "status": "ok" if not failed else "partiel",
                              "ok": len(recs), "total": len(tickers), "failed": failed, "warnings": warnings[:60],
