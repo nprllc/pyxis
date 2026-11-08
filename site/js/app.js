@@ -96,7 +96,7 @@
           </form>
           <main class="main" id="main" tabindex="-1"></main>
           <footer class="footer">
-            <div class="wm" aria-hidden="true">${Logo.lockup({ size: 56, color: "#1e1b1a" })}</div>
+            <div class="wm" aria-hidden="true">${Logo.lockup({ size: 56, color: "#695b52" })}</div>
           </footer>
         </div>
       </div>

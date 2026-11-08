@@ -7,7 +7,8 @@
 :root {
   --paper: #f3cebb;        /* pêche Syndicate */
   --paper-2: #f8ddcf;      /* pêche clair (cartes ouvertes, modales) */
-  --paper-deep: #d9b5a3;   /* pêche profond (pied de page) */
+  --paper-deep: #d2b6a5;   /* pêche grisé (pied de page, relevé sur Syndicate) */
+  --taupe: #695b52;        /* taupe du logo de pied de page Syndicate */
   --ink: #1e1b1a;          /* encre chaude */
   --ash: #3d3634;          /* cendre : élément actif du rail */
   --mute: #7d6359;         /* texte secondaire sur pêche */
@@ -405,9 +406,9 @@ body.explain-on [data-explain] { text-decoration: underline solid var(--gain); t
 
 /* ---------- Divers ---------- */
 .empty { padding: 30px; text-align: center; color: var(--mute); border: 1px dashed var(--rule); font-family: var(--serif); font-size: 16px; }
-.footer { margin-top: auto; background: var(--paper-deep); color: var(--ink); padding: 54px; display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: start; }
+.footer { margin-top: auto; background: var(--paper-deep); color: var(--taupe); padding: 54px; display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: start; }
 
-.footer p { font: 400 14px/1.6 var(--serif); color: var(--ink); max-width: 72ch; }
+.footer p { font: 400 14px/1.6 var(--serif); color: var(--taupe); max-width: 72ch; }
 .footer .label { display: block; border-top: 1px solid var(--rule); padding-top: 8px; margin-bottom: 14px; max-width: 72ch; color: var(--mute); }
 
 /* Transition de page : un rideau d'encre qui passe. */
