@@ -97,6 +97,10 @@ python -m pipeline.build                # mise à jour des données
 python -m http.server 8000 -d site      # puis ouvrir http://localhost:8000
 ```
 
+## Pyxis, l'assistant
+
+Pyxis est aussi l'intelligence de la plateforme : son signe, à côté de chaque section, ouvre une conversation sur ce sujet (`site/js/pyxis.js`). Le contenu de la section, la séance du jour et ton profil lui servent de contexte. « Ajouter au Journal » enregistre la conclusion datée de l'échange. Le modèle est au choix (Réglages) et la clé reste dans le navigateur.
+
 ## Tes données personnelles
 
 Profil, positions, journal et progression dans le parcours sont enregistrés dans le navigateur (`localStorage`), jamais dans le dépôt. Depuis **Réglages → Tes données**, tu peux télécharger une sauvegarde et la restaurer sur un autre appareil. Depuis **Portefeuille → Importer un relevé**, tu peux charger l'export CSV des transactions de ton courtier.

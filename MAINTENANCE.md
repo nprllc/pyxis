@@ -60,6 +60,12 @@ La veille est écrite par ta tâche Claude (ton abonnement). Si un jour Claude n
 
 Pour essayer sans rien publier : **Actions → Veille (relais) → Run workflow**, coche « Essai », puis lis le résultat dans le journal de l'exécution.
 
+## Pyxis, l'assistant
+
+Le signe Pyxis à côté de chaque section ouvre une conversation. Le modèle se règle dans **Réglages → Pyxis, ton assistant** : fournisseur (Claude, Mistral, Gemini, OpenAI, ou tout service compatible OpenAI), nom du modèle, clé d'API. La clé reste dans ton navigateur, jamais dans le dépôt ni dans les sauvegardes : sur un autre appareil, il faut la recoller.
+
+Si Pyxis répond « erreur » : le nom du modèle a peut-être été retiré par le fournisseur (mets le nom du modèle actuel), ou la clé a expiré. Le bouton « Enregistrer et tester » vérifie tout en une seconde.
+
 ## Relancer une mise à jour à la main
 
 GitHub → onglet **Actions** → **Mise à jour** → bouton **Run workflow** → **Run workflow**. Compte trois à cinq minutes.

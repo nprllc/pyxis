@@ -169,7 +169,7 @@
       <div class="pulse-top"><span class="label">${p.name && state.hasPlan ? `Bonjour ${esc(p.name)}, nous sommes` : "Nous sommes"} ${day}</span>${dataChip(true)}</div>
       <div class="pulse-grid">
         <div class="pulse-text">
-          <span class="label">${ex("seance", "Séance")} du ${esc(hl.when)}, ${hl.n} titres suivis</span>
+          <span class="label pyx-host">${ex("seance", "Séance")} du ${esc(hl.when)}, ${hl.n} titres suivis</span>
           <h1 class="pulse-title" id="pulse-t">${esc(hl.title)}</h1>
           <p class="pulse-sub">${hl.up} titres montent, ${hl.down} baissent. Variation médiane : <b class="${hl.median >= 0 ? "gain" : "loss"}">${pct(hl.median, 2)}</b>.${hl.world != null ? ` L'${ex("etfMonde", "ETF monde")} : <b class="${hl.world >= 0 ? "gain" : "loss"}">${pct(hl.world, 2)}</b>.` : ""}</p>
           <div class="health">
@@ -207,7 +207,7 @@
     </section>` : ""}
 
     ${M.brief && briefFresh() ? `<section class="brief-home">
-      <div><span class="label">La veille du ${new Date(M.brief.date + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</span>
+      <div><span class="label pyx-host">La veille du ${new Date(M.brief.date + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</span>
         <h2 class="serif" style="font-size:clamp(26px,3vw,40px);line-height:1.08;letter-spacing:-.02em;margin:14px 0 10px;max-width:30ch">${esc(M.brief.headline)}</h2>
         <p class="muted" style="max-width:70ch">${esc(M.brief.summary)}</p></div>
       <a class="btn" href="#veille">Lire la veille</a></section>` : ""}
@@ -460,7 +460,7 @@
       <div class="stack">
         ${(b.sections || []).map((sec) => `<section class="panel">
           <div class="panel-head"><h2>${esc(sec.title)}</h2></div>
-          ${(sec.points || []).map((p) => `<div style="padding:12px 0;border-bottom:1px solid var(--rule-soft)">
+          ${(sec.points || []).map((p) => `<div class="pyx-point" style="padding:12px 0;border-bottom:1px solid var(--rule-soft)">
             <p class="serif" style="font-size:17px;line-height:1.5">${esc(p.text)}</p>
             ${p.sources?.length ? `<p class="label" style="margin-top:6px">Sources : ${srcLinks(p.sources)}</p>` : ""}</div>`).join("")}
         </section>`).join("")}
@@ -575,7 +575,8 @@
     return { mine: avg(0), bench: avg(1), n: pairs.length };
   }
   function viewJournal() {
-    const j = state.journal.slice().sort((a, b) => b.date.localeCompare(a.date));
+    const all = state.journal.slice().sort((a, b) => (b.date + (b.id || "")).localeCompare(a.date + (a.id || "")));
+    const j = all.filter((e) => e.kind !== "conversation"), talks = all.filter((e) => e.kind === "conversation");
     const n = j.length, need = 20;
     return head("Journal de décisions", "Chaque achat ou vente, avec ta raison du moment. C'est ce qui te permettra de savoir si ta méthode marche vraiment.",
       `<button class="btn primary" data-action="journal-new">Nouvelle décision</button>`) + `
@@ -599,6 +600,15 @@
         <span class="dim small">${new Date(e.date).toLocaleDateString("fr-FR")}${e.review ? ` · revue le ${new Date(e.review).toLocaleDateString("fr-FR")}` : ""}</span></div>
         <p class="muted" style="margin-top:6px">${esc(e.thesis)}</p></article>`).join("")}</div>`
         : `<div class="empty">Ton journal est vide. Note ta première décision, même un simple achat d'ETF.</div>`}
+    </section>
+    <section class="panel" style="margin-top:54px">
+      <div class="panel-head"><h2>Conversations avec Pyxis</h2><p>${talks.length ? `${talks.length} conclusion${talks.length > 1 ? "s" : ""}` : ""}</p></div>
+      ${talks.length ? talks.map((e, i) => `<article class="talk">
+        <div class="row between wrap"><b>${esc(e.title)}</b><span class="dim small">${new Date(e.date + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</span></div>
+        <span class="label">À propos : ${esc(e.topic)}${e.ticker ? ` · <a href="#fiche-${esc(e.ticker)}">${esc(e.ticker)}</a>` : ""}</span>
+        <p>${esc(e.conclusion)}</p>
+        <button class="btn small" data-action="del-talk" data-id="${e.id}">Supprimer</button></article>`).join("")
+        : `<div class="empty">Après une conversation avec Pyxis, clique sur « Ajouter au Journal » : la conclusion, datée, s'affiche ici.</div>`}
     </section>` + disclaimer;
   }
 
@@ -959,13 +969,13 @@
       <div class="row wrap"><button class="btn" type="button" data-action="backup">Télécharger une sauvegarde</button>
         <label class="btn" style="cursor:pointer">Restaurer une sauvegarde<input type="file" accept=".json,application/json" id="restoreFile" hidden></label></div>
       <p class="muted small" id="backupMsg" aria-live="polite" style="margin-top:10px"></p>
-    </section>`;
+    </section>${window.PyxisAI ? PyxisAI.settingsHTML() : ""}`;
   }
 
   /* ======================= SAUVEGARDE ======================= */
   function backup() {
     const data = {};
-    for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith("investlab.")) data[k] = localStorage.getItem(k); }
+    for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith("investlab.") && k !== "investlab.ai") data[k] = localStorage.getItem(k); }
     const blob = new Blob([JSON.stringify({ app: "pyxis", version: 1, date: new Date().toISOString(), data }, null, 1)], { type: "application/json" });
     const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `pyxis-sauvegarde-${new Date().toISOString().slice(0, 10)}.json`; a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
@@ -975,7 +985,7 @@
     file.text().then((txt) => {
       const j = JSON.parse(txt);
       if (j.app !== "pyxis" || !j.data) throw new Error("format");
-      Object.entries(j.data).forEach(([k, v]) => { if (k.startsWith("investlab.")) localStorage.setItem(k, v); });
+      Object.entries(j.data).forEach(([k, v]) => { if (k.startsWith("investlab.") && k !== "investlab.ai") localStorage.setItem(k, v); });
       msg.textContent = "Sauvegarde restaurée. La page se recharge…"; setTimeout(() => location.reload(), 800);
     }).catch(() => { msg.textContent = "Ce fichier n'est pas une sauvegarde Pyxis."; });
   }
@@ -1211,6 +1221,7 @@
     window.Logo && Logo.align();
     runSims();
     typo(document.getElementById("app") || document.body);
+    if (window.PyxisAI) { if (r !== "reglages") PyxisAI.decorate(main); else PyxisAI.bindSettings(main); }
     const inAccount = ACCOUNT.some(([k]) => k === r);
     document.querySelectorAll("[data-route]").forEach((a) => {
       const k = a.dataset.route;
@@ -1231,7 +1242,26 @@
     document.title = (titles[r] ?? NAME) + " · " + NAME;
   }
 
+  /* Contexte donné à Pyxis : profil (s'il est réglé), séance du jour, et de quoi enregistrer une conclusion au Journal. */
+  function pyxEnv() {
+    const p = state.profile, h = M.universe?.length ? marketHealth() : null;
+    return {
+      name: state.hasPlan ? p.name : "",
+      profile: state.hasPlan ? `investit ${p.monthly} € par mois (environ ${p.core} % dans un ETF monde, le reste en actions choisies, ${p.maxLine} % maximum par action), tolérance au risque ${p.risk}, résident fiscal en Espagne, pas de crypto, objectif : apprendre.` : "débutant, profil non renseigné.",
+      today: new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" }),
+      market: h ? `séance du ${h.when} : ${h.up} titres suivis en hausse, ${h.down} en baisse, variation médiane ${num(h.median, 2)} %, ETF monde ${h.world != null ? num(h.world, 2) + " %" : "n.d."} ; ${h.above200} % des titres au-dessus de leur moyenne 200 jours ; phase économique estimée : ${M.macro?.phase || "n.d."}.` : "indisponibles.",
+      save: (e) => { state.journal.push({ id: Date.now(), date: new Date().toISOString().slice(0, 10), ...e }); store.set("journal", state.journal); if (location.hash === "#journal") render(); },
+    };
+  }
+
   function bindLearn() {
+    document.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-ask]"); if (!b || !window.PyxisAI) return;
+      e.preventDefault(); e.stopPropagation();
+      const ctx = PyxisAI.contextOf(b);
+      const m = location.hash.match(/^#fiche-(.+)$/); if (m) ctx.ticker = decodeURIComponent(m[1]);
+      PyxisAI.open(ctx, pyxEnv());
+    }, true);
     document.addEventListener("change", (e) => { if (e.target.id === "restoreFile" && e.target.files[0]) restore(e.target.files[0]); });
     document.addEventListener("click", (e) => {
       const qa = e.target.closest("[data-qa]"); if (qa) { answerQuiz(qa); return; }
@@ -1272,6 +1302,7 @@
       if (a === "onboard") onboarding(0);
       if (a === "add-position") positionModal();
       if (a === "import-csv") importModal();
+      if (a === "del-talk") { state.journal = state.journal.filter((x) => String(x.id) !== t.dataset.id); store.set("journal", state.journal); render(); }
       if (a === "sim-add") {
         const u = M.universe.find((x) => x.ticker === t.dataset.ticker);
         if (u && u.price) { state.positions.simulated.push({ ticker: u.ticker, qty: +(+t.dataset.amount / u.price).toFixed(6), cost: u.price }); store.set("positions", state.positions); state.book = "simulated"; location.hash = "portefeuille"; }
