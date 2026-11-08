@@ -11,7 +11,7 @@
 (function () {
   const PEACH = [243, 206, 187], GREEN = [124, 176, 86], RED = [222, 92, 70], INK = "#1e1b1a";
   const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
-  const MONTH = 15; // ±15 % sur un mois
+  const PAD = 14; // marge intérieure : aucun point ne touche ni ne dépasse le cadre
   // Échelle de la séance : comprimée (arcsinus hyperbolique) pour que les petits mouvements
   // restent lisibles au centre et que les très gros (+11 %) tiennent dans le cadre sans s'écraser au bord.
   const K = 0.8;
@@ -33,12 +33,15 @@
     const byDay = [...pool].sort((a, b) => b.chg1d - a.chg1d);
     const MAX = Math.min(15, Math.max(2, ...pool.map((o) => Math.abs(o.chg1d))));
     const sx = (d) => Math.asinh(Math.max(-MAX, Math.min(MAX, d)) / K) / Math.asinh(MAX / K); // -1 .. 1
+    // Même compression pour la tendance sur un mois : plus aucun titre n'est rabattu sur le bord.
+    const MAXM = Math.min(40, Math.max(5, ...pool.map((o) => Math.abs(o.chg1m))));
+    const sy = (m) => Math.asinh(Math.max(-MAXM, Math.min(MAXM, m)) / 4) / Math.asinh(MAXM / 4);
     const ticks = [1, 2, 5, 10].filter((k) => k <= MAX * 0.98);
     const top = byDay.slice(0, 3).map((o) => o.ticker), bottom = byDay.slice(-3).map((o) => o.ticker);
     const stars = pool.map((o) => ({
       o,
       fx: sx(o.chg1d),
-      fy: Math.max(-MONTH, Math.min(MONTH, o.chg1m)) / MONTH,
+      fy: sy(o.chg1m),
       mag: Math.min(1, Math.abs(o.chg1d) / 4),
       jx: 0, jy: (rnd() - 0.5) * 0.03,
       phase: rnd() * Math.PI * 2, speed: 0.5 + rnd(),
@@ -50,8 +53,8 @@
     function place(s) {
       const B = box();
       return {
-        x: B.l + ((s.fx + 1) / 2 + s.jx) * (B.r - B.l),
-        y: B.b - ((s.fy + 1) / 2 + s.jy) * (B.b - B.t),
+        x: B.l + PAD + Math.max(0, Math.min(1, (s.fx + 1) / 2 + s.jx)) * (B.r - B.l - 2 * PAD),
+        y: B.b - PAD - Math.max(0, Math.min(1, (s.fy + 1) / 2 + s.jy)) * (B.b - B.t - 2 * PAD),
       };
     }
     function size() {
@@ -70,7 +73,7 @@
       ctx.fillStyle = g; ctx.fillRect(B.l, B.t, B.r - B.l, B.b - B.t);
       ctx.lineWidth = 1; ctx.strokeStyle = rgba(PEACH, 0.08);
       tk.forEach((k) => [k, -k].forEach((v) => {
-        const x = zx + sx(v) * (zx - B.l);
+        const x = zx + sx(v) * (zx - B.l - PAD);
         ctx.beginPath(); ctx.moveTo(x, B.t); ctx.lineTo(x, B.b); ctx.stroke();
       }));
       ctx.strokeStyle = rgba(PEACH, 0.3);
@@ -81,7 +84,7 @@
       ctx.textAlign = "left"; ctx.fillText("← baisse sur la séance", B.l, B.b + 34);
       ctx.textAlign = "right"; ctx.fillText("hausse sur la séance →", B.r, B.b + 34);
       ctx.textAlign = "center";
-      tk.forEach((k) => [k, -k].forEach((v) => ctx.fillText(fmt(v, 0), zx + sx(v) * (zx - B.l), B.t - 12)));
+      tk.forEach((k) => [k, -k].forEach((v) => ctx.fillText(fmt(v, 0), zx + sx(v) * (zx - B.l - PAD), B.t - 12)));
       ctx.fillText("0 %", zx, B.t - 12);
       ctx.save(); ctx.translate(B.l - 16, zy); ctx.rotate(-Math.PI / 2);
       ctx.fillText("↓ baisse sur un mois · hausse sur un mois ↑", 0, 0); ctx.restore();
@@ -112,6 +115,7 @@
       axes();
 
       const pts = stars.map((s) => ({ s, ...place(s) }));
+      const F = box(); ctx.save(); ctx.beginPath(); ctx.rect(F.l, F.t, F.r - F.l, F.b - F.t); ctx.clip(); // rien ne déborde du cadre
       const draw = reduce ? 1 : Math.min(1, Math.max(0, (t - 0.3) / 1.8));
       chain(top.map((tk) => pts.find((p) => p.s.o.ticker === tk)).filter(Boolean), GREEN, draw);
       chain(bottom.map((tk) => pts.find((p) => p.s.o.ticker === tk)).filter(Boolean), RED, draw);
@@ -131,6 +135,7 @@
         ctx.fillStyle = rgba(col, (0.45 + 0.55 * s.mag) * tw);
         ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); ctx.fill();
       });
+      ctx.restore();
       // Étiquettes des plus forts mouvements : on essaie plusieurs positions et on garde la première libre.
       if (draw >= 1) {
         const taken = [];
