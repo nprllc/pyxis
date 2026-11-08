@@ -4,8 +4,6 @@ Pyxis est une plateforme personnelle pour apprendre à investir et garder le cap
 
 Pyxis, c'est la Boussole : une petite constellation du ciel austral. Le logo reprend la position réelle de ses trois étoiles principales.
 
-> Analyses automatisées à but éducatif. Ce n'est pas un conseil en investissement personnalisé au sens réglementaire. Les performances passées ne préjugent pas des performances futures.
-
 **Site :** https://nprllc.github.io/pyxis/
 
 ## Comment ça marche
@@ -21,6 +19,8 @@ Chaque soir de semaine (22 h 17 UTC), GitHub Actions :
 
 Le site est une simple page web : il lit ces fichiers JSON et n'a besoin d'aucun serveur.
 
+En plus, chaque matin de semaine vers 6 h 43 (heure de Madrid), une **tâche Claude planifiée** (« Pyxis – veille du matin ») lit la presse financière de référence, écrit `site/data/brief.json` et le pousse dans le dépôt : le site se republie tout seul avec la veille du jour.
+
 **Ton portefeuille et ton journal restent dans ton navigateur.** Ils ne sont jamais envoyés dans le dépôt, qui est public.
 
 ## Organisation
@@ -28,7 +28,10 @@ Le site est une simple page web : il lit ces fichiers JSON et n'a besoin d'aucun
 | Dossier / fichier | Rôle |
 |---|---|
 | `site/` | Le site : `index.html`, `css/`, `js/`, `assets/` (logo, planche d'identité) |
-| `site/data/` | Données produites chaque soir. Ne pas modifier à la main. |
+| `site/data/` | Données produites chaque soir (et la veille chaque matin). Ne pas modifier à la main. |
+| `site/content/lessons.js` | **Le parcours Apprendre** : 24 leçons, leurs quiz et leurs liens |
+| `site/content/brokers.json` | **Le comparatif des courtiers** : tarifs, fiscalité, sources (date de vérification incluse) |
+| `site/js/data.js` | Le lexique du débutant (`GLOSSARY`) |
 | `pipeline/config.yaml` | **Les titres suivis, ta liste de surveillance et les séries macro.** C'est le fichier à modifier pour ajouter ou retirer un titre. |
 | `pipeline/build.py` | Le chef d'orchestre de la mise à jour |
 | `pipeline/sources.py` | Récupération des données, avec reprises sur erreur |
@@ -36,6 +39,7 @@ Le site est une simple page web : il lit ces fichiers JSON et n'a besoin d'aucun
 | `pipeline/indicators.py` | Indicateurs techniques (RSI, tendance, volatilité, volumes…) |
 | `pipeline/scoring.py` | Score, fourchette, type de signal, thèse, « Pourquoi je pourrais avoir tort » |
 | `pipeline/macro.py` | Contexte économique et phase du cycle |
+| `pipeline/backtest.py` | Test sur le passé de la partie « prix » du score (page Méthode) |
 | `pipeline/tests/` | Tests automatiques (sans réseau) |
 | `.github/workflows/update.yml` | La tâche automatique quotidienne |
 
@@ -75,7 +79,11 @@ Les types de signal suivent des règles explicites :
 - **Momentum** : tendance dans le haut de l'univers, au-dessus de la moyenne 200 jours, sans surchauffe (RSI sous 70).
 - **Anomalie** : volume de la semaine au moins deux fois supérieur à la normale.
 
-Pour l'instant, la fourchette d'incertitude reflète seulement les données manquantes et le désaccord entre facteurs. **L'étape 4 la calibrera avec un backtest.**
+La fourchette d'incertitude reflète les données manquantes et le désaccord entre facteurs.
+
+### Le test sur le passé
+
+Chaque soir, `pipeline/backtest.py` rejoue les cinq dernières années mois par mois : il classe les actions selon les deux critères recalculables avec les seuls cours (tendance et stabilité), « achète » le tiers le mieux classé et compare à toutes les actions et à l'ETF monde. Le résultat, avec ses limites (biais du survivant, 35 % du score seulement, sans frais ni impôts), est sur la page **Méthode**.
 
 ## Travailler en local (facultatif)
 
@@ -86,11 +94,19 @@ python -m pipeline.build                # mise à jour des données
 python -m http.server 8000 -d site      # puis ouvrir http://localhost:8000
 ```
 
+## Tes données personnelles
+
+Profil, positions, journal et progression dans le parcours sont enregistrés dans le navigateur (`localStorage`), jamais dans le dépôt. Depuis **Réglages → Tes données**, tu peux télécharger une sauvegarde et la restaurer sur un autre appareil. Depuis **Portefeuille → Importer un relevé**, tu peux charger l'export CSV des transactions de ton courtier.
+
+## Entretien
+
+Voir [MAINTENANCE.md](MAINTENANCE.md) : ce qu'il faut vérifier, quand, et quoi faire si quelque chose casse.
+
 ## Feuille de route
 
 1. Architecture ✅
 2. Interface et identité ✅
 3. Vraies données et scanner ✅
-4. Backtest, scénarios, fourchette calibrée
-5. Import des relevés Revolut / Trade Republic, comparatif des courtiers, parcours d'apprentissage complet
-6. Finitions et guide de maintenance
+4. Test sur le passé et page Méthode ✅
+5. Import des relevés, sauvegarde, comparatif des courtiers, parcours d'apprentissage complet ✅
+6. Finitions et guide de maintenance ✅
