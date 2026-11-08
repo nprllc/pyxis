@@ -1383,5 +1383,4 @@
   }
   shell(); bind(); window.Logo && Logo.align();
   loadData().finally(go);
-  if (!store.get("onboarded", false)) setTimeout(() => onboarding(0), 400);
 })();
