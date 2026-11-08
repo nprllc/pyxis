@@ -1,13 +1,13 @@
 """
-Score provisoire (étape 3) : chaque titre est classé par rapport aux autres
+Score : chaque titre est classé par rapport aux autres
 sur cinq facteurs, puis on fait une moyenne pondérée.
 
 Rang en percentile = « meilleur que X % des autres titres de l'univers ».
 C'est robuste aux valeurs extrêmes et facile à expliquer.
 
-À l'étape 4, le backtest viendra calibrer la fourchette d'incertitude et les
-scénarios. En attendant, la fourchette reflète seulement les données manquantes
-et le désaccord entre facteurs : elle est volontairement large.
+La fourchette reflète les données manquantes et le désaccord entre facteurs.
+La partie « prix » du score (tendance, stabilité) est testée sur le passé
+dans backtest.py ; le résultat est publié sur la page Méthode.
 """
 from __future__ import annotations
 
@@ -180,13 +180,17 @@ def why_wrong(r: dict, f: dict, kind: str, missing: list[str]) -> list[str]:
         out.append("Il baissera avec tout le marché : en 2008, un ETF monde a perdu plus de la moitié de sa valeur avant de remonter.")
     if missing:
         out.append("Certaines données manquent (" + ", ".join(FACTOR_FR[m] for m in missing) + ") : le score repose sur moins d'informations.")
-    out.append("Ce score n'est pas encore vérifié par un backtest (étape 4) : prends-le comme une piste, pas comme une preuve.")
+    out.append("Seule la partie « prix » de ce score (tendance, stabilité) est testée sur le passé, avec des limites : prends-le comme une piste, pas comme une preuve.")
     return out
 
 
 def invalidation(r: dict, kind: str) -> str:
     price, ma200 = _num(r.get("price")), _num(r.get("dist_ma200"))
-    level = f" (environ {_p(price / (1 + ma200 / 100), 2)} {r.get('currency') or ''})".rstrip() if price and ma200 is not None else ""
+    lv, cur = (price / (1 + ma200 / 100), r.get("currency") or "") if price and ma200 is not None else (None, "")
+    if cur == "GBp":  # Londres cote en pence : on affiche en livres, plus parlant
+        lv, cur = lv / 100, "£"
+    cur = {"EUR": "€", "USD": "$", "GBP": "£"}.get(cur, cur)
+    level = f" (environ {_p(lv, 2)} {cur})".rstrip() if lv is not None else ""
     return {
         "coeur": "Pas de sortie prévue : c'est une détention de long terme, alimentée chaque mois, y compris dans les baisses.",
         "valeur": "La thèse tombe si le cours casse son plus bas des six derniers mois, ou si les marges se dégradent au prochain trimestre.",

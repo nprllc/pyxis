@@ -166,10 +166,10 @@
   {
    "id": "trading212",
    "name": "Trading 212",
-   "kind": "Courtier britannique et chypriote",
-   "regulator": "FCA, CySEC",
+   "kind": "Courtier allemand (Trading 212 EU GmbH)",
+   "regulator": "BaFin (Allemagne)",
    "tax": "declarative",
-   "tax_text": "Courtier étranger : tu déclares toi-même ; modèle 720 au-delà de 50 000 €.",
+   "tax_text": "Courtier étranger : tu déclares toi-même chaque vente et chaque dividende ; modèle 720 au-delà de 50 000 € à l'étranger.",
    "etf_order": "0 €",
    "stock_order": "0 €",
    "plan": "Gratuit (« Pies » et AutoInvest)",
@@ -177,11 +177,12 @@
    "fx": "0,15 %",
    "pros": [
     "Aucune commission d'achat, change parmi les moins chers",
-    "Portefeuilles automatiques très simples"
+    "Portefeuilles automatiques très simples",
+    "Les résidents espagnols sont rattachés à sa filiale allemande, régulée par la BaFin, avec une garantie des titres jusqu'à 20 000 €"
    ],
    "cons": [
-    "Disponibilité incertaine : une comparaison anglophone de septembre 2026 indique que Trading 212 n'est pas disponible en Espagne. À vérifier avant tout.",
     "Fiscalité entièrement à ta charge",
+    "Service client en anglais",
     "Ne pas confondre avec son compte CFD (à effet de levier)"
    ],
    "model": {
@@ -203,9 +204,14 @@
      "name": "Seqooia"
     },
     {
-     "url": "https://investingintheweb.com/comparison/degiro-vs-trading-212",
+     "url": "https://www.euinvestinghub.com/articles/is-trading-212-safe-for-european-investors/",
      "lang": "en",
-     "name": "Investing in the Web (disponibilité)"
+     "name": "EU Investing Hub : entités Trading 212 par pays (vérifié en octobre 2026)"
+    },
+    {
+     "url": "https://www.bankeronwheels.com/trading-212-review/",
+     "lang": "en",
+     "name": "Banker on Wheels : Trading 212 Review 2026 (pays et entités)"
     }
    ]
   },

@@ -309,7 +309,7 @@
         <td class="hide-m">${C.sparkline(o.spark, { w: 120, h: 30 })}</td>
         <td class="r num ${o.chg1m >= 0 ? "gain" : "loss"}">${pct(o.chg1m)}</td>
         <td class="r num hide-m ${o.rsi < 30 ? "warn" : ""}">${o.rsi}</td>
-        <td class="r"><span class="num serif" style="font-size:22px">${o.score}</span> <span class="label">[${o.low}–${o.high}]</span></td>
+        <td class="r"><span class="num serif" style="font-size:22px">${o.score}</span> <span class="label nowrap">${o.low}–${o.high}</span></td>
       </tr>`).join("")}</tbody>
     </table></div>`}
     <p class="label" style="margin-top:28px">${M.isMock ? `Univers de démonstration de ${M.universe.length} titres.` : `${M.universe.length} titres suivis, mis à jour chaque soir de semaine. La liste se modifie dans pipeline/config.yaml.`}</p>`;
@@ -329,13 +329,13 @@
     if (!o && !lite) return head("Titre introuvable") + `<div class="empty">Ce titre n'est pas dans l'univers surveillé. <a href="#scanner">Retour au scanner</a></div>`;
     if (lite) return head(esc(lite.name), `${esc(lite.ticker)} / ${esc(lite.sector)}`, "", `<a href="#scanner">Scanner</a> / ${esc(lite.name)}`) + `
       <section class="panel"><div class="fiche-head">${C.orb(lite.score, lite.low, lite.high, 150)}
-      <p class="muted">La fiche complète (score détaillé, scénarios, backtest) sera générée pour chaque titre à l'étape 4. Pour voir à quoi elle ressemblera, ouvre l'une des 5 idées du jour.</p></div></section>`;
+      <p class="muted">Les détails de ce titre n'ont pas pu être calculés lors de la dernière mise à jour (données incomplètes). Ils reviendront à la prochaine mise à jour réussie.</p></div></section>`;
 
     const p = state.profile, b = book("real");
-    const total = Math.max(b.value, p.capital);
+    const total = Math.max(b.value, p.capital || 0, 500);
     const maxAmount = Math.floor((total * p.maxLine) / 100);
     const amount = o.type === "coeur" ? planSplit(p).core : Math.min(maxAmount, 50);
-    const limit = (o.price * 0.99).toFixed(2).replace(".", ",");
+    const limit = money(o.currency === "GBp" ? o.price * 0.99 / 100 : o.price * 0.99, o.currency === "GBp" ? "GBP" : o.currency);
     const scen = (arr, label) => `<div style="margin-bottom:14px"><div class="row between small" style="margin-bottom:6px"><span>${label}</span><span class="dim">vs ETF monde</span></div>
       <div class="scen" role="img" aria-label="${arr[0]} % mieux, ${arr[1]} % pareil, ${arr[2]} % moins bien">
       <span class="up" style="width:${arr[0]}%">${arr[0]} %</span><span class="flat" style="width:${arr[1]}%">${arr[1]} %</span><span class="down" style="width:${arr[2]}%">${arr[2]} %</span></div></div>`;
@@ -347,7 +347,7 @@
         <div>
           <span class="tag ${o.type}">${TYPE_LABEL[o.type]}</span>
           <p class="thesis">${esc(o.thesis)}</p>
-          <p class="muted" style="max-width:60ch">Score de ${o.score} sur 100, probablement entre ${o.low} et ${o.high}. ${o.backtest ? (o.high - o.low > 20 ? "La fourchette est large : les cas passés similaires sont peu nombreux et assez dispersés." : "La fourchette est étroite : les données sont complètes et les cas passés cohérents.") : (o.high - o.low > 20 ? "La fourchette est large : des données manquent ou les facteurs se contredisent." : "La fourchette est assez étroite : les facteurs vont plutôt dans le même sens.") + " Elle reste provisoire tant que le backtest (étape 4) ne l'a pas calibrée."}</p>
+          <p class="muted" style="max-width:60ch">Score de ${o.score} sur 100, probablement entre ${o.low} et ${o.high}. ${o.backtest ? (o.high - o.low > 20 ? "La fourchette est large : les cas passés similaires sont peu nombreux et assez dispersés." : "La fourchette est étroite : les données sont complètes et les cas passés cohérents.") : (o.high - o.low > 20 ? "La fourchette est large : des données manquent ou les facteurs se contredisent." : "La fourchette est assez étroite : les facteurs vont plutôt dans le même sens.") + " Seule la partie « prix » du score est testée sur le passé : voir la page " + `<a href="#methode">Méthode</a>.`}</p>
           <div class="facts">
             <div><div class="label">Cours actuel</div><div class="v num">${money(o.price, o.currency)}</div></div>
             <div><div class="label">Sur 1 mois</div><div class="v num ${o.chg1m >= 0 ? "gain" : "loss"}">${pct(o.chg1m)}</div></div>
@@ -361,7 +361,7 @@
         <section class="panel">
           <div class="panel-head"><h2>D'où vient le score</h2><p>Clique sur un facteur</p></div>
           ${FACTORS.map(([k, label, w, gk, why]) => `<details class="fx"><summary>
-              <span>${gk ? ex(gk, label) : label} <span class="dim small">${w} %</span></span>
+              <span>${gk ? ex(gk, label) : label} <span class="dim small nowrap">${w}\u00a0%</span></span>
               <span class="bar ${k === "risk" ? "risk" : ""}"><span style="width:${o.factors[k]}%"></span></span>
               <span class="num" style="text-align:right">${o.factors[k]}</span></summary>
             <p class="why">${why.replace("{peText}", o.pe ? `PER de ${num(o.pe)}${o.pe_sector ? `, contre ${num(o.pe_sector)} en médiane dans son secteur.` : "."}` : o.kind === "ETF" ? "Pour un ETF, la valorisation compte peu : il contient tout le marché." : "PER indisponible pour ce titre.").replace("{vol}", num(o.vol, 0))}</p></details>`).join("")}
@@ -377,7 +377,7 @@
           ${[["Sur 3 mois", pct(o.chg3m)], ["Sur 12 mois", pct(o.chg12m)], [ex("volatilite", "Volatilité sur un an"), o.vol != null ? num(o.vol, 0) + " %" : "—"],
              [ex("drawdown", "Pire baisse sur un an"), pct(o.maxdd_1y)], ["Écart avec son plus haut sur un an", pct(o.dist_52w_high)]]
             .map(([l, v]) => `<div class="row between" style="padding:9px 0;border-bottom:1px solid var(--rule-soft)"><span>${l}</span><span class="num">${v}</span></div>`).join("")}
-          <p class="muted small" style="margin-top:14px">Les scénarios (probabilité de faire mieux ou moins bien que l'ETF monde) arrivent à l'étape 4, avec le backtest.</p>
+          ${M.backtest ? `<p class="muted small" style="margin-top:14px">Pour situer : sur ${M.backtest.months} mois, les actions les mieux classées sur la tendance et la stabilité ont fait mieux que la moyenne ${num(M.backtest.beat_all_pct, 0)} % des mois. <a href="#methode">Voir le test sur le passé</a>.</p>` : ""}
         </section>`}
       </div>
 
@@ -395,10 +395,10 @@
         </section>
         <section class="panel">
           <div class="panel-head"><h2>Dans l'actualité</h2><p>Derniers articles</p></div>
-          ${o.news?.length ? o.news.map((n) => `<a href="${esc(n.url)}" target="_blank" rel="noopener" style="display:block;padding:11px 0;border-bottom:1px solid var(--rule-soft);text-decoration:none">
+          ${relevantNews(o).length ? relevantNews(o).map((n) => `<a href="${esc(n.url)}" target="_blank" rel="noopener" style="display:block;padding:11px 0;border-bottom:1px solid var(--rule-soft);text-decoration:none">
               <span class="serif" style="font-size:16px;line-height:1.35">${esc(n.title)}</span>
               <span class="label" style="display:block;margin-top:4px">${esc(n.publisher || "")}${n.date ? " / " + new Date(n.date).toLocaleDateString("fr-FR", { day: "numeric", month: "short" }) : ""}</span></a>`).join("")
-            : `<p class="muted">Les articles sont récupérés pour les idées du jour et ta liste de surveillance.</p>`}
+            : `<p class="muted">${o.news?.length ? "Aucun article récent ne parle directement de ce titre." : "Les articles sont récupérés pour les idées du jour et ta liste de surveillance."}</p>`}
         </section>
       </div>` : ""}
 
@@ -421,20 +421,20 @@
           "survivant": "Biais du survivant : seules les entreprises encore cotées aujourd'hui sont testées, ce qui embellit les chiffres.",
           "période favorable": "La période testée est surtout haussière : le signal n'a pas été éprouvé dans une vraie crise.",
         }[f]}</div>`).join("")}
-      </section>` : `<section class="panel"><div class="panel-head"><h2>Ce que ce signal a donné par le passé</h2><p>${ex("backtest", "Backtest")}</p></div><div class="empty">Le backtest de chaque signal arrive à l'étape 4. D'ici là, le score n'est pas vérifié sur le passé.</div></section>`}
+      </section>` : `<section class="panel"><div class="panel-head"><h2>Ce que ce signal a donné par le passé</h2><p>${ex("backtest", "Backtest")}</p></div><p class="small" style="max-width:70ch">Pyxis ne teste pas chaque type de signal séparément : il y a trop peu de cas pour que ce soit fiable. Ce qui est testé, c'est la partie « prix » du score sur l'ensemble des actions suivies${M.backtest ? ` : le tiers le mieux classé a fait ${pct(M.backtest.strategies.top.annual)} par an contre ${pct(M.backtest.strategies.all.annual)} pour la moyenne, avec une pire baisse de ${pct(M.backtest.strategies.top.maxdd, 0)} contre ${pct(M.backtest.strategies.all.maxdd, 0)}` : ""}. <a href="#methode">Le détail et ses limites</a>.</p></section>`}
 
       <section class="panel">
         <div class="panel-head"><h2>Si tu veux passer à l'action</h2><p>Adapté à ton profil</p></div>
         <ol class="steps">
           <li><div><b>Montant : ${amount} €</b><div class="muted small">${o.type === "coeur" ? "C'est ta part mensuelle pour le cœur de portefeuille." : `Au maximum ${p.maxLine} % de ton portefeuille sur une seule action, soit ${maxAmount} €. On reste en dessous pour commencer.`}</div></div></li>
-          <li><div><b>${o.type === "coeur" ? "Plan d'investissement programmé" : `${ex("ordreLimite", "Ordre à cours limité")} à ${limit} €`}</b><div class="muted small">${o.type === "coeur" ? "Le même jour chaque mois, sans regarder le cours. C'est souvent gratuit chez les courtiers en ligne." : "Environ 1 % sous le cours actuel : tu n'achètes pas plus cher que prévu si le prix s'agite à l'ouverture."}</div></div></li>
+          <li><div><b>${o.type === "coeur" ? "Plan d'investissement programmé" : `${ex("ordreLimite", "Ordre à cours limité")} à ${limit}`}</b><div class="muted small">${o.type === "coeur" ? "Le même jour chaque mois, sans regarder le cours. C'est souvent gratuit chez les courtiers en ligne." : "Environ 1 % sous le cours actuel : tu n'achètes pas plus cher que prévu si le prix s'agite à l'ouverture."}</div></div></li>
           <li><div><b>Horizon : ${o.type === "coeur" ? "10 ans et plus" : "12 mois, puis revue"}</b><div class="muted small">${o.type === "coeur" ? "On ne vend pas dans les baisses : c'est là que le plan achète le moins cher." : "Une date de revue est ajoutée au journal pour vérifier si la thèse s'est réalisée."}</div></div></li>
           <li><div><b>Sortie</b><div class="muted small">${esc(o.invalidation)}</div></div></li>
         </ol>
         ${o.type !== "coeur" && 1 / amount > 0.01 ? `<div class="flag">Avec environ 1 € de frais, un achat de ${amount} € coûte ${((1 / amount) * 100).toLocaleString("fr-FR", { maximumFractionDigits: 1 })} % d'entrée. Ton capital est encore petit pour une action seule : teste d'abord cette idée en simulé, ou attends que ta cagnotte satellite atteigne 100 €.</div>` : ""}
         <div class="row wrap" style="margin-top:16px">
           <button class="btn primary" data-action="journal-new" data-ticker="${o.ticker}" data-amount="${amount}" data-thesis="${esc(o.thesis)}">Noter dans le journal</button>
-          <button class="btn" disabled title="Disponible à l'étape 5">Tester en simulé</button>
+          <button class="btn" data-action="sim-add" data-ticker="${o.ticker}" data-amount="${amount}">Tester en simulé (${amount} € fictifs)</button>
         </div>
       </section>
     </div>` + disclaimer;
@@ -530,9 +530,9 @@
         <div>
           ${ruleLine(b.corePct >= p.core - 10, `Cœur ETF ≥ ${p.core - 10} %`, `Actuellement ${Math.round(b.corePct)} %.`)}
           ${ruleLine(b.maxLinePct <= p.maxLine, `Aucune action seule au-dessus de ${p.maxLine} %`, `La plus grosse pèse ${Math.round(b.maxLinePct)} %.`)}
-          ${ruleLine(true, "Frais sous 1 % par achat", "Vérifié automatiquement à chaque ordre à partir de l'étape 5.")}
+          ${ruleLine(true, "Frais sous 1 % par achat", "Avec 1 € de frais par ordre, n'achète pas une action seule pour moins de 100 €.")}
         </div>
-        <p class="muted small" style="margin-top:18px">L'import automatique des relevés (Trade Republic, Revolut…) arrive à l'étape 5.</p>
+        <p class="muted small" style="margin-top:18px">Pour reprendre tes positions sans tout saisir, utilise « Importer un relevé » avec l'export CSV des transactions de ton courtier.</p>
       </section>
     </div>
     <section class="panel" style="margin-top:18px">
@@ -580,7 +580,7 @@
     <section class="hero" style="margin-bottom:18px">
       <h2>Est-ce que ça marche ?</h2>
       <p class="muted" style="margin:6px 0 18px;max-width:62ch">Sur quelques mois, le hasard pèse plus que la méthode. Ce tableau te dira quand tu as assez de recul pour conclure.</p>
-      <div class="grid g-3">
+      <div class="grid g-3 jstats">
         <div><div class="num" style="font-size:30px;font-weight:600">${n} <span class="dim" style="font-size:16px">/ ${need}</span></div><div class="muted small">décisions notées. Il en faut une vingtaine pour commencer à juger.</div>
           <div class="bar" style="margin-top:10px"><span style="width:${Math.min(100, (n / need) * 100)}%"></span></div></div>
         ${(() => { const c = compareToBenchmark(j); return c
@@ -621,11 +621,11 @@
     const invested = sc.plan * 12 + sc.n * sc.amt;
     const TAX = { simple: ["Impôts automatiques", "gain"], partial: ["Impôts en partie à déclarer", "warn"], declarative: ["Impôts à déclarer toi-même", "warn"] };
     return rows.map(({ b, c }, i) => `<details class="fx">
-      <summary style="grid-template-columns:28px minmax(0,1.2fr) minmax(0,2fr) 90px">
+      <summary class="brk">
         <span class="num serif" style="font-size:18px">${i + 1}</span>
         <span><b style="font-weight:500">${esc(b.name)}</b><br><span class="label" style="color:var(--${TAX[b.tax][1] === "gain" ? "gain" : "mute"})">${TAX[b.tax][0]}</span></span>
         <span class="bar"><span style="width:${Math.max(1.5, (c.total / max) * 100)}%"></span></span>
-        <span class="num" style="text-align:right">${money(c.total, "EUR")}<br><span class="label">${invested ? num((c.total / invested) * 100, 2) + " % investi" : ""}</span></span>
+        <span class="num nowrap" style="text-align:right">${money(c.total, "EUR")}<br><span class="label">${invested ? num((c.total / invested) * 100, 2) + " % investi" : ""}</span></span>
       </summary>
       <div class="grid g-2" style="gap:12px 40px;padding:16px 0 6px">
         <div>
@@ -698,7 +698,7 @@
 
   /* ======================= MÉTHODE : comment Pyxis note, et ce que ça aurait donné ======================= */
   function btChart(bt) {
-    const W = 1000, H = 300, P = 34, keys = [["bench", "var(--mute)", "4 4"], ["all", "var(--ink)", "2 3"], ["bottom", "var(--loss)", ""], ["top", "var(--gain)", ""]].filter(([k]) => bt.curves[k]);
+    const narrow = window.innerWidth < 700, W = narrow ? 520 : 1000, H = narrow ? 340 : 300, P = narrow ? 30 : 34, keys = [["bench", "var(--mute)", "4 4"], ["all", "var(--ink)", "2 3"], ["bottom", "var(--loss)", ""], ["top", "var(--gain)", ""]].filter(([k]) => bt.curves[k]);
     const all = keys.flatMap(([k]) => bt.curves[k]), lo = Math.min(1, ...all), hi = Math.max(1, ...all), n = bt.dates.length;
     const X = (i) => P + (i / (n - 1)) * (W - 2 * P), Y = (v) => H - P - ((v - lo) / (hi - lo || 1)) * (H - 2 * P);
     const years = bt.dates.map((d, i) => [d.slice(0, 4), i]).filter(([y], i, a) => i > 0 && y !== a[i - 1][0]);
@@ -810,6 +810,13 @@
   /* Encadrés calculés sur les vraies données du jour. */
   // Objectifs d'analystes en retard sur le cours (après une forte baisse, ils sont révisés avec plusieurs semaines de décalage).
   const staleTargets = (o) => !!(o.analysts && o.price && ((o.analysts.low && o.price < o.analysts.low) || (o.analysts.upside != null && o.analysts.upside > 50)));
+  // Ne garder que les articles dont le titre parle vraiment de l'entreprise (Yahoo mélange beaucoup d'articles généraux).
+  function relevantNews(o) {
+    const stop = new Set(["the", "inc", "plc", "group", "holding", "holdings", "company", "corporation", "sa", "se", "ag", "nv", "spa", "and", "co", "de"]);
+    const keys = o.name.toLowerCase().replace(/[^a-z0-9àâçéèêëîïôûùüÿñ ]/g, " ").split(/\s+/).filter((w) => w.length > 2 && !stop.has(w)).slice(0, 2);
+    keys.push(o.ticker.split(".")[0].toLowerCase());
+    return (o.news || []).filter((n) => { const t = " " + (n.title || "").toLowerCase().replace(/[^a-z0-9àâçéèêëîïôûùüÿñ ]/g, " ") + " "; return keys.some((k) => t.includes(" " + k + " ") || t.includes(" " + k + "s ")); });
+  }
   function live(name) {
     const U = M.universe || [], find = (t) => U.find((o) => o.ticker === t);
     const box = (title, body) => `<aside class="live"><span class="label">Dans les données Pyxis · ${esc(title)}</span>${body}</aside>`;
@@ -1251,6 +1258,10 @@
       if (a === "onboard") onboarding(0);
       if (a === "add-position") positionModal();
       if (a === "import-csv") importModal();
+      if (a === "sim-add") {
+        const u = M.universe.find((x) => x.ticker === t.dataset.ticker);
+        if (u && u.price) { state.positions.simulated.push({ ticker: u.ticker, qty: +(+t.dataset.amount / u.price).toFixed(6), cost: u.price }); store.set("positions", state.positions); state.book = "simulated"; location.hash = "portefeuille"; }
+      }
       if (a === "backup") backup();
       if (a === "del-position") { e.stopPropagation(); state.positions[state.book].splice(+t.dataset.i, 1); store.set("positions", state.positions); render(); }
       if (a === "simple-tax") { state.simpleTax = !state.simpleTax; t.setAttribute("aria-pressed", state.simpleTax); $("#brokerRows").innerHTML = brokerTable(); }

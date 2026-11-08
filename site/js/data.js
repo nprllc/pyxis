@@ -114,7 +114,7 @@
 
   window.MOCK = {
     isMock: true,
-    profile: { name: "", capital: 450, monthly: 100, risk: "élevée", maxLine: 10, core: 80, horizon: 20 },
+    profile: { name: "", capital: 0, monthly: 100, risk: "élevée", maxLine: 10, core: 80, horizon: 20 },
     opportunities,
     universe: [...opportunities, ...more],
     macro: {
