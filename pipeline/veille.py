@@ -43,6 +43,8 @@ THEMES = [
     ("Entreprises et secteurs", r"\b(earnings|results|résultats|revenue|chiffre d'affaires|profit|bénéfice|guidance|ipo|merger|acquisition|rachat|buyback|ceo)\b"),
 ]
 FALLBACK_THEME = "Marchés"
+# Pour les flux généralistes (filter: true) : on ne garde que ce qui parle de marchés ou d'économie.
+FINANCE = r"\b(bourse|march[ée]s?|action[s]?|indice|cac|ibex|dax|s&p|nasdaq|dow|stocks?|shares?|markets?|investi\w*|épargne|etf|banque|bank)\b"
 
 
 # --------------------------------------------------------------------------- collecte
@@ -114,6 +116,12 @@ def collect(feeds: list[dict], now: datetime, fetch=None) -> list[dict]:
             continue
         for a in got:
             if a["date"] and a["date"] < since:
+                continue
+            if f.get("filter"):
+                t = (a["title"] + " " + a["summary"]).lower()
+                if not re.search(FINANCE, t) and not any(re.search(rx, t) for _, rx in THEMES):
+                    continue
+            if "/m-perso/" in a["url"] or "/video" in a["url"]:   # conseils perso, vidéos : hors sujet ici
                 continue
             key = re.sub(r"\W+", "", a["title"].lower())[:80]
             if key in seen:
