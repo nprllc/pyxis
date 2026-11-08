@@ -21,6 +21,7 @@ permissions:
   contents: write   # pour enregistrer les nouvelles données dans le dépôt
   pages: write
   id-token: write
+  actions: write    # pour se réactiver soi-même (voir la dernière étape)
 
 concurrency:
   group: pyxis-update
@@ -72,3 +73,11 @@ jobs:
           path: site
       - id: deploy
         uses: actions/deploy-pages@v4
+
+      # GitHub met en pause les tâches planifiées d'un dépôt public après 60 jours sans activité.
+      # Se réactiver à chaque passage remet ce compteur à zéro : le site tourne sans limite de durée.
+      - name: Rester actif
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow enable update.yml --repo "${{ github.repository }}" || true

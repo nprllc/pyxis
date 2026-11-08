@@ -138,6 +138,8 @@
     return sp.length > 1 && sp[sp.length - 2] ? (sp[sp.length - 1] / sp[sp.length - 2] - 1) * 100 : null;
   }
   function median(a) { if (!a.length) return 0; const b = [...a].sort((x, y) => x - y), m = b.length >> 1; return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; }
+  // La veille n'est montrée sur l'accueil que si elle a moins de 4 jours (week-end compris).
+  const briefFresh = () => { const d = M.brief?.date ? new Date(M.brief.date + "T12:00:00") : null; return !d || Date.now() - d < 4 * 864e5; };
   function marketHealth() {
     const rows = M.universe.map((o) => ({ o, d: day1(o) })).filter((r) => r.d != null && isFinite(r.d));
     const n = rows.length || 1, up = rows.filter((r) => r.d > 0).length, down = rows.filter((r) => r.d < 0).length;
@@ -204,7 +206,7 @@
       <a class="btn" href="#portefeuille">Voir la projection</a>
     </section>` : ""}
 
-    ${M.brief ? `<section class="brief-home">
+    ${M.brief && briefFresh() ? `<section class="brief-home">
       <div><span class="label">La veille du ${new Date(M.brief.date + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</span>
         <h2 class="serif" style="font-size:clamp(26px,3vw,40px);line-height:1.08;letter-spacing:-.02em;margin:14px 0 10px;max-width:30ch">${esc(M.brief.headline)}</h2>
         <p class="muted" style="max-width:70ch">${esc(M.brief.summary)}</p></div>
