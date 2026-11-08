@@ -206,7 +206,7 @@
       <a class="btn" href="#portefeuille">Voir la projection</a>
     </section>` : ""}
 
-    ${M.brief ? `<section style="margin-top:64px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:end;border-top:1px solid var(--rule);padding-top:12px">
+    ${M.brief ? `<section class="brief-home">
       <div><span class="label">La veille du ${new Date(M.brief.date + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</span>
         <h2 class="serif" style="font-size:clamp(26px,3vw,40px);line-height:1.08;letter-spacing:-.02em;margin:14px 0 10px;max-width:30ch">${esc(M.brief.headline)}</h2>
         <p class="muted" style="max-width:70ch">${esc(M.brief.summary)}</p></div>
@@ -233,12 +233,12 @@
           <a class="btn" href="#portefeuille">Ajouter une position</a>`}
         </section>
 
-        <section class="hero" aria-labelledby="lesson-t">
-          <div class="row between"><span class="label">À apprendre ensuite</span><span class="label">${next.minutes} min</span></div>
+        ${next ? `<section class="hero" aria-labelledby="lesson-t">
+          <div class="row between"><span class="label">À apprendre ensuite · ${esc(moduleOf(next).title)}</span><span class="label">${next.minutes} min</span></div>
           <h3 id="lesson-t" class="serif" style="font-size:30px;line-height:1.08;font-weight:400;letter-spacing:-.02em;margin:22px 0 12px">${esc(next.title)}</h3>
-          <p class="muted" style="margin-bottom:22px">Les quelques mots qui reviennent partout, expliqués avec des exemples du quotidien.</p>
+          <p class="muted" style="margin-bottom:22px">${learnDone()} leçon${learnDone() > 1 ? "s" : ""} terminée${learnDone() > 1 ? "s" : ""} sur ${M.lessons.length}.</p>
           <a class="btn" href="#apprendre-${next.id}">Commencer la leçon</a>
-        </section>
+        </section>` : `<section class="hero"><span class="label">Parcours terminé</span><h3 class="serif" style="font-size:30px;font-weight:400;margin:22px 0 12px">Les ${M.lessons.length} leçons sont faites.</h3><a class="btn" href="#apprendre">Revoir une leçon</a></section>`}
       </div>
     </div>`;
   }
@@ -699,53 +699,155 @@
       <p>${msg}</p><p class="muted small" style="margin-top:6px">Tu perds ce pourcentage dès l'achat : le titre doit monter d'autant pour que tu retrouves ta mise. Avec ${eur(f, 2)} de frais, il faut acheter au moins ${eur(minOk)} pour rester sous 1 %.</p>`;
   }
 
-  function viewLearn() {
-    const nextIdx = M.lessons.findIndex((l) => !l.done);
-    return head("Apprendre", "Un parcours dans l'ordre, une notion à la fois. Chaque leçon prend quelques minutes.") + `
-    <div class="stack">
-      <section class="panel">
-        <div class="panel-head"><h2>Ton parcours</h2><p>${M.lessons.filter((l) => l.done).length} sur ${M.lessons.length} terminées</p></div>
-        <ol class="path">${M.lessons.map((l, i) => `<li class="${l.done ? "done" : i === nextIdx ? "next" : ""}"><div><b>${esc(l.title)}</b><div class="dim small">${l.minutes} min</div></div>
-          ${i === nextIdx ? `<a class="btn small primary" href="#apprendre-${l.id}">Commencer</a>` : l.done ? `<span class="gain small">Terminée</span>` : ""}</li>`).join("")}</ol>
-      </section>
-      <section class="panel">
-        <div class="panel-head"><span class="label">Lexique du débutant</span></div><p class="muted small" style="margin:-6px 0 14px">Les mots soulignés en pointillé, partout dans l'app, s'expliquent quand tu passes dessus ou que tu les touches.</p>
-        <div class="lexique">${Object.entries(G).map(([k, [t, d, e]]) => `<div id="mot-${k}"><b>${esc(t)}</b><p class="muted small">${esc(d)}</p>${e ? `<p class="small" style="font-style:italic;color:var(--mute);margin-top:4px">${esc(e)}</p>` : ""}</div>`).join("")}</div>
-      </section>
-    </div>` + disclaimer;
+  /* ======================= APPRENDRE ======================= */
+  const LEARN = window.PYXIS_LEARN || { modules: [], lessons: [] };
+  function loadLearn() {
+    const prog = store.get("learn", {});
+    M.lessons = LEARN.lessons.map((l) => ({ ...l, done: !!prog[l.id], best: prog[l.id]?.score }));
   }
-  const LESSONS = {
-    bases: `
-      <p>Investir en bourse, c'est acheter des morceaux d'entreprises en espérant qu'ils prennent de la valeur avec le temps. Cinq mots suffisent pour démarrer.</p>
-      <h3>Une action</h3>
-      <p>Un tout petit morceau d'une entreprise. Si tu achètes une action Inditex, tu possèdes une minuscule part de Zara. Quand l'entreprise gagne plus d'argent, ta part vaut en général plus cher. Quand elle va mal, elle perd de la valeur, et elle peut même tomber à zéro si l'entreprise fait faillite.</p>
-      <h3>La bourse</h3>
-      <p>Le marché où ces morceaux s'achètent et se vendent. Le prix change toute la journée : plus il y a de gens qui veulent acheter, plus il monte.</p>
-      <h3>Un courtier</h3>
-      <p>Tu ne peux pas aller acheter toi-même à la bourse : tu passes par un intermédiaire, le courtier. Aujourd'hui c'est simplement une application, comme Revolut ou Trade Republic.</p>
-      <h3>Un ETF</h3>
-      <p>Choisir les bonnes entreprises est difficile, même pour les professionnels. Un ETF règle le problème : c'est un panier tout prêt qui contient des centaines d'actions. Tu achètes une seule « part du panier » et tu possèdes un petit bout de chaque entreprise dedans. Si l'une s'effondre, ça ne pèse presque rien sur le total.</p>
-      <h3>Un ETF monde</h3>
-      <p>Le panier le plus large : environ 1 400 grandes entreprises d'une vingtaine de pays riches. Avec 80 €, tu deviens un tout petit actionnaire d'une grande partie de l'économie mondiale. Tu n'as pas à deviner qui va gagner : tu les as presque toutes.</p>
-      <div class="flag" style="background:rgba(91,140,255,0.1);color:var(--ink)">À retenir : une action, c'est parier sur une entreprise. Un ETF monde, c'est parier sur l'économie mondiale dans son ensemble. C'est beaucoup moins risqué, et c'est pour ça qu'il sert de base.</div>`,
-    etf: `
-      <p>Un ${ex("etfMonde", "ETF monde")} ne choisit rien lui-même. Il achète automatiquement les grandes entreprises de 23 pays développés, chacune selon sa taille : plus une entreprise est grosse, plus elle pèse dans le panier.</p>
-      <p>Conséquence : les entreprises américaines font environ 70 % du panier, et la dizaine de plus grosses (Apple, Microsoft, Nvidia…) en pèse à elle seule près d'un quart. « Monde » ne veut donc pas dire « réparti également ».</p>
-      <p>Ce qu'il n'y a pas dedans : les pays émergents (Chine, Inde, Brésil…) et les petites entreprises. Un ETF « All-World » ajoute les pays émergents.</p>
-      <div class="flag" style="background:rgba(91,140,255,0.1);color:var(--ink)">À retenir : un ETF monde contient énormément d'entreprises, mais il dépend beaucoup des États-Unis et des géants de la technologie.</div>`,
+  loadLearn();
+  const learnDone = () => M.lessons.filter((l) => l.done).length;
+  const moduleOf = (l) => LEARN.modules.find((m) => m.id === l.module) || { title: "", n: 0 };
+  // Pour chaque mot du lexique, la première leçon qui l'explique.
+  const termLesson = {};
+  LEARN.lessons.forEach((l) => (l.body.match(/\[\[(\w+)\|/g) || []).forEach((m) => { const k = m.slice(2, -1); if (!termLesson[k]) termLesson[k] = l; }));
+
+  function viewLearn() {
+    const nextL = M.lessons.find((l) => !l.done);
+    const total = M.lessons.length, done = learnDone();
+    const letters = {};
+    Object.entries(G).sort((x, y) => x[1][0].localeCompare(y[1][0], "fr", { sensitivity: "base" }))
+      .forEach(([k, v]) => { const L = v[0].normalize("NFD")[0].toUpperCase(); (letters[L] ||= []).push([k, v]); });
+    return head("Apprendre", "Un parcours dans l'ordre, une notion à la fois. Chaque leçon prend quelques minutes et se termine par un petit quiz.") + `
+    <section class="learn-top">
+      <div><span class="label">Ta progression</span><div class="learn-count num">${done}<small>/ ${total} leçons</small></div>
+        <div class="hbar learn-bar"><span class="up" style="width:${(100 * done) / (total || 1)}%"></span></div></div>
+      ${nextL ? `<div class="learn-next"><span class="label">Prochaine leçon · module ${moduleOf(nextL).n}</span><b class="serif">${esc(nextL.title)}</b><a class="btn primary" href="#apprendre-${nextL.id}">${done ? "Continuer" : "Commencer"}</a></div>`
+        : `<div class="learn-next"><span class="label">Bravo</span><b class="serif">Tout le parcours est fait.</b><a class="btn" href="#apprendre-lexique">Revoir le lexique</a></div>`}
+    </section>
+    <div class="modules">${LEARN.modules.map((m) => {
+      const ls = M.lessons.filter((l) => l.module === m.id), d = ls.filter((l) => l.done).length;
+      return `<section class="module">
+        <header><span class="label">Module ${m.n} · ${d}/${ls.length}</span><h2 class="serif">${esc(m.title)}</h2><p class="muted">${esc(m.lede)}</p></header>
+        <ol class="path">${ls.map((l) => `<li class="${l.done ? "done" : l === nextL ? "next" : ""}"><a href="#apprendre-${l.id}"><b>${esc(l.title)}</b><span class="dim small">${l.minutes} min${l.done && l.best != null ? ` · quiz ${l.best}/${l.quiz.length}` : ""}</span></a></li>`).join("")}</ol>
+      </section>`;
+    }).join("")}</div>
+    <section class="panel lexique-panel" id="lexique">
+      <div class="panel-head"><h2>Lexique du débutant</h2><p>${Object.keys(G).length} mots, de A à Z</p></div>
+      <p class="muted small" style="margin:-6px 0 16px">Partout dans Pyxis, les mots soulignés en pointillé s'expliquent quand tu passes dessus. Active « Explique-moi » pour les voir tous.</p>
+      <label class="field lex-search">Chercher un mot<input type="search" id="lexQ" placeholder="ETF, dividende, PER…" autocomplete="off"></label>
+      <nav class="lex-letters" aria-label="Lettres">${Object.keys(letters).map((L) => `<a href="#apprendre-lexique" data-letter="${L}">${L}</a>`).join("")}</nav>
+      <div class="lex-list">${Object.entries(letters).map(([L, items]) => `<div class="lex-group" data-l="${L}"><div class="lex-letter serif" id="lettre-${L}">${L}</div><dl>${items.map(([k, [t, d, e]]) => `
+        <div class="lex-item" id="mot-${k}" data-s="${esc((t + " " + d).toLowerCase())}"><dt>${esc(t)}</dt><dd><p>${esc(d)}</p>${e ? `<p class="lex-ex">${esc(e)}</p>` : ""}${termLesson[k] ? `<a class="label" href="#apprendre-${termLesson[k].id}">Expliqué dans : ${esc(termLesson[k].title)}</a>` : ""}</dd></div>`).join("")}</dl></div>`).join("")}
+        <p class="empty lex-none" hidden>Aucun mot ne correspond. Essaie un autre terme.</p></div>
+    </section>` + disclaimer;
+  }
+
+  /* Encadrés calculés sur les vraies données du jour. */
+  function live(name) {
+    const U = M.universe || [], find = (t) => U.find((o) => o.ticker === t);
+    const box = (title, body) => `<aside class="live"><span class="label">Dans les données Pyxis · ${esc(title)}</span>${body}</aside>`;
+    if (!U.length) return "";
+    if (name === "market") {
+      const h = marketHealth();
+      return box(`séance du ${h.when}`, `<p>Sur les ${h.n} titres suivis, <b>${h.up}</b> ont monté et <b>${h.down}</b> ont baissé. La moitié a fait mieux que <b class="${h.median >= 0 ? "gain" : "loss"}">${pct(h.median, 2)}</b>, l'autre moitié moins bien.${h.world != null ? ` L'ETF monde a fait <b class="${h.world >= 0 ? "gain" : "loss"}">${pct(h.world, 2)}</b>.` : ""}</p><a class="label" href="#">Voir la séance sur Aujourd'hui</a>`);
+    }
+    if (name === "world") {
+      const w = find("EUNL.DE"); if (!w) return "";
+      return box(w.name, `<p>Une part vaut <b>${money(w.price, w.currency)}</b>. Sur un an : <b class="${w.chg12m >= 0 ? "gain" : "loss"}">${pct(w.chg12m)}</b>. Frais annuels : <b>${num(w.expense_ratio, 2)} %</b>, soit ${eur((w.expense_ratio || 0.2) * 10, 2)} par an pour 1 000 € placés.</p><a class="label" href="#fiche-EUNL.DE">Ouvrir la fiche</a>`);
+    }
+    if (name === "vol") {
+      const w = find("EUNL.DE"), st = U.filter((o) => o.kind !== "etf" && o.vol != null).sort((a, b) => b.vol - a.vol)[0];
+      if (!w || !st) return "";
+      return box("ETF monde contre action seule", `<p>Sur un an, l'ETF monde a une volatilité de <b>${num(w.vol, 0)} %</b> et sa pire chute a été de <b class="loss">${pct(w.maxdd_1y, 0)}</b>. L'action la plus agitée du Scanner, ${esc(st.name)}, a une volatilité de <b>${num(st.vol, 0)} %</b> et une pire chute de <b class="loss">${pct(st.maxdd_1y, 0)}</b>.</p><a class="label" href="#fiche-${esc(st.ticker)}">Ouvrir sa fiche</a>`);
+    }
+    if (name === "per" || name === "quality") {
+      const o = U.filter((x) => x.kind !== "etf" && x.pe != null && x.pe_sector != null && x.margin != null).sort((a, b) => (b.market_cap || 0) - (a.market_cap || 0))[0];
+      if (!o) return "";
+      if (name === "per") return box(o.name, `<p>PER actuel : <b>${num(o.pe, 1)}</b>, contre <b>${num(o.pe_sector, 0)}</b> en moyenne pour son secteur.${o.forward_pe ? ` PER prévisionnel : <b>${num(o.forward_pe, 1)}</b> : les analystes attendent ${o.forward_pe < o.pe ? "une hausse" : "une baisse"} des bénéfices.` : ""} ${o.pe > o.pe_sector * 1.2 ? "Le marché paie donc nettement plus cher que la moyenne pour ses bénéfices." : o.pe < o.pe_sector * 0.8 ? "Le marché la paie donc moins cher que la moyenne : à creuser." : "Elle est payée à peu près comme son secteur."}</p><a class="label" href="#fiche-${esc(o.ticker)}">Ouvrir sa fiche</a>`);
+      return box(o.name, `<p>Marge nette : <b>${num(o.margin * 100, 0)} %</b> (${eur(o.margin * 100, 0)} gardés sur 100 € de ventes).${o.roe != null ? ` Rentabilité des capitaux propres : <b>${num(o.roe * 100, 0)} %</b>.` : ""}${o.debt_to_equity != null ? ` Dette : <b>${num(o.debt_to_equity, 0)} %</b> de ses capitaux propres.` : ""} Facteur qualité Pyxis : <b>${o.factors?.quality ?? "—"}/100</b>.</p><a class="label" href="#fiche-${esc(o.ticker)}">Ouvrir sa fiche</a>`);
+    }
+    if (name === "analysts") {
+      const o = U.filter((x) => x.analysts && x.analysts.count && x.currency === "USD").sort((a, b) => b.analysts.count - a.analysts.count)[0];
+      if (!o) return "";
+      const a = o.analysts;
+      return box(o.name, `<p><b>${a.count}</b> analystes suivent ce titre. Leur avis moyen : <b>${esc(a.label)}</b>. Objectif moyen à 12 mois : <b>${money(a.target, o.currency)}</b> pour un cours de ${money(o.price, o.currency)}${a.upside != null ? ` (${pct(a.upside, 0)})` : ""}. Mais les objectifs vont de ${money(a.low, o.currency, 0)} à ${money(a.high, o.currency, 0)}.</p><a class="label" href="#fiche-${esc(o.ticker)}">Ouvrir sa fiche</a>`);
+    }
+    if (name === "score") {
+      const o = M.opportunities?.[0] || U.filter((x) => x.score != null).sort((a, b) => b.score - a.score)[0];
+      if (!o || !o.factors) return "";
+      const F = [["valuation", "Valorisation"], ["quality", "Qualité"], ["momentum", "Momentum"], ["risk", "Risque"], ["macro", "Macro"]];
+      return box(`${o.name}, première idée du jour`, `<p>Score <b>${o.score}</b>, fourchette ${o.low} à ${o.high}.</p><div class="live-bars">${F.map(([k, l]) => `<div><span class="label">${l}</span><span class="hbar"><span class="up" style="width:${o.factors[k] ?? 0}%"></span></span><span class="num small">${o.factors[k] ?? "—"}</span></div>`).join("")}</div><a class="label" href="#fiche-${esc(o.ticker)}">Lire sa thèse et ce qui pourrait la rendre fausse</a>`);
+    }
+    if (name === "macro") {
+      const m = M.macro; if (!m) return "";
+      const PH = { reprise: "Reprise", expansion: "Expansion", surchauffe: "Surchauffe", ralentissement: "Ralentissement" };
+      return box("aujourd'hui", `<p>Phase estimée : <b>${PH[m.phase] || m.phase}</b> (confiance ${esc(m.confidence)}). ${esc(m.phase_text)}</p><ul class="plain-list small">${(m.indicators || []).slice(0, 3).map((i) => `<li>${esc(i.label)} : <b>${esc(i.value)}</b>, ${i.trend === "stable" ? "stable" : "en " + esc(i.trend)}</li>`).join("")}</ul><a class="label" href="#macro">Voir la page Macro</a>`);
+    }
+    return "";
+  }
+
+  /* Simulateurs */
+  const SIMS = {
+    compound: { fields: [["m", "Chaque mois", 100, 10, 1000, 10, " €"], ["r", "Rendement moyen supposé", 6, 0, 10, 0.5, " % / an"], ["y", "Durée", 20, 1, 40, 1, " ans"]],
+      run: ({ m, r, y }) => { let v = 0; const g = Math.pow(1 + r / 100, 1 / 12); for (let i = 0; i < y * 12; i++) v = v * g + m; const put = m * 12 * y;
+        return `<div class="sim-out"><div><span class="label">Tu auras versé</span><b class="num">${eur(put)}</b></div><div><span class="label">Valeur estimée</span><b class="num">${eur(v)}</b></div><div><span class="label">Dont gains</span><b class="num gain">${eur(v - put)}</b></div></div><p class="muted small">Hypothèse d'un rendement régulier, hors impôts. La réalité fera des hauts et des bas.</p>`; } },
+    fees: { fields: [["m", "Chaque mois", 100, 10, 1000, 10, " €"], ["a", "Frais annuels du fonds A", 0.2, 0, 3, 0.05, " %"], ["b", "Frais annuels du fonds B", 1.8, 0, 3, 0.05, " %"], ["y", "Durée", 20, 1, 40, 1, " ans"]],
+      run: ({ m, a, b, y }) => { const sim = (f) => { let v = 0; const g = Math.pow(1 + (6 - f) / 100, 1 / 12); for (let i = 0; i < y * 12; i++) v = v * g + m; return v; };
+        const va = sim(a), vb = sim(b);
+        return `<div class="sim-out"><div><span class="label">Fonds A</span><b class="num">${eur(va)}</b></div><div><span class="label">Fonds B</span><b class="num">${eur(vb)}</b></div><div><span class="label">Écart</span><b class="num loss">${eur(Math.abs(va - vb))}</b></div></div><p class="muted small">Avec le même rendement de 6 % par an avant frais pour les deux fonds. L'écart représente ${num((Math.abs(va - vb) / Math.max(va, vb)) * 100, 0)} % de la somme finale.</p>`; } },
   };
+  function sim(name) {
+    const S = SIMS[name]; if (!S) return "";
+    return `<div class="sim" data-sim="${name}">${S.fields.map(([k, l, v, mn, mx, st, u]) => `<label class="field">${l} : <b class="num" data-out="${k}">${num(v, 2)}${u}</b><input type="range" min="${mn}" max="${mx}" step="${st}" value="${v}" data-k="${k}" data-u="${u}"></label>`).join("")}<div class="sim-res"></div></div>`;
+  }
+  function runSims(root = document) {
+    root.querySelectorAll(".sim").forEach((el) => {
+      const vals = {}; el.querySelectorAll("input[data-k]").forEach((i) => { vals[i.dataset.k] = +i.value; el.querySelector(`[data-out="${i.dataset.k}"]`).textContent = num(+i.value, 2) + i.dataset.u; });
+      el.querySelector(".sim-res").innerHTML = SIMS[el.dataset.sim].run(vals);
+    });
+  }
+
+  function lessonHTML(body) {
+    return body.replace(/\[\[(\w+)\|([^\]]+)\]\]/g, (_, k, t) => (G[k] ? ex(k, t) : t))
+      .replace(/\{\{live:(\w+)\}\}/g, (_, n) => live(n))
+      .replace(/\{\{sim:(\w+)\}\}/g, (_, n) => sim(n));
+  }
+
   function viewLesson(id) {
+    if (id === "lexique") { setTimeout(() => document.getElementById("lexique")?.scrollIntoView(), 0); return viewLearn(); }
     const l = M.lessons.find((x) => x.id === id);
     if (!l) return viewLearn();
-    const i = M.lessons.indexOf(l), nxt = M.lessons[i + 1];
-    return head(esc(l.title), `Leçon ${i + 1} sur ${M.lessons.length}, ${l.minutes} minutes`, "", `<a href="#apprendre">Apprendre</a> / Leçon ${i + 1}`) + `
+    const i = M.lessons.indexOf(l), nxt = M.lessons[i + 1], prv = M.lessons[i - 1], mod = moduleOf(l);
+    return head(esc(l.title), `Module ${mod.n} · ${esc(mod.title)} · leçon ${i + 1} sur ${M.lessons.length} · ${l.minutes} min`, "", `<a href="#apprendre">Apprendre</a> / ${esc(mod.title)}`) + `
     <article class="lesson">
-      <div class="stack" style="gap:14px">
-        ${LESSONS[id] || `<div class="empty">Cette leçon sera écrite à l'étape 5.</div>`}
-        <p class="dim small">Le parcours complet, avec un petit quiz à la fin de chaque leçon, arrive à l'étape 5.</p>
-        ${nxt ? `<div><a class="btn primary" href="#apprendre-${nxt.id}">Leçon suivante : ${esc(nxt.title)}</a></div>` : ""}
-      </div>
-    </article>`;
+      ${lessonHTML(l.body)}
+      <div class="keep"><span class="label">À retenir</span><p>${esc(l.keep)}</p></div>
+      <section class="quiz" data-lesson="${l.id}">
+        <span class="label">Petit quiz · ${l.quiz.length} questions</span>
+        ${l.quiz.map((q, qi) => `<div class="q" data-q="${qi}"><p class="q-t">${qi + 1}. ${esc(q.q)}</p><div class="q-o">${q.o.map((o, oi) => `<button type="button" data-qa="${qi}:${oi}">${esc(o)}</button>`).join("")}</div><p class="q-why" hidden></p></div>`).join("")}
+        <p class="quiz-end" hidden></p>
+      </section>
+      ${l.apply ? `<a class="apply" href="${l.apply.href}"><span class="label">Mettre en pratique</span>${esc(l.apply.label)} →</a>` : ""}
+      <nav class="lesson-nav">${prv ? `<a class="btn" href="#apprendre-${prv.id}">← ${esc(prv.title)}</a>` : `<a class="btn" href="#apprendre">← Le parcours</a>`}${nxt ? `<a class="btn primary" href="#apprendre-${nxt.id}">Leçon suivante : ${esc(nxt.title)} →</a>` : `<a class="btn primary" href="#apprendre">Retour au parcours</a>`}</nav>
+    </article>` + disclaimer;
+  }
+  function answerQuiz(btn) {
+    const quiz = btn.closest(".quiz"), l = M.lessons.find((x) => x.id === quiz.dataset.lesson);
+    const [qi, oi] = btn.dataset.qa.split(":").map(Number), q = l.quiz[qi], box = quiz.querySelector(`[data-q="${qi}"]`);
+    if (box.dataset.done) return;
+    box.dataset.done = oi === q.a ? "ok" : "ko";
+    box.querySelectorAll("button").forEach((b, j) => { b.disabled = true; if (j === q.a) b.classList.add("right"); else if (j === oi) b.classList.add("wrong"); });
+    const why = box.querySelector(".q-why"); why.hidden = false;
+    why.innerHTML = `<b class="${oi === q.a ? "gain" : "loss"}">${oi === q.a ? "Exact." : "Pas tout à fait."}</b> ${esc(q.why)}`;
+    const all = [...quiz.querySelectorAll(".q")];
+    if (all.every((x) => x.dataset.done)) {
+      const score = all.filter((x) => x.dataset.done === "ok").length, prog = store.get("learn", {});
+      prog[l.id] = { score: Math.max(score, prog[l.id]?.score || 0), date: new Date().toISOString().slice(0, 10) };
+      store.set("learn", prog); l.done = true; l.best = prog[l.id].score;
+      const end = quiz.querySelector(".quiz-end"); end.hidden = false;
+      end.innerHTML = `<b>${score} sur ${all.length}.</b> ${score === all.length ? "Parfait, leçon validée." : "Leçon validée. Relis les explications ci-dessus, elles valent mieux qu'un score."}`;
+    }
   }
 
   function viewSettings() {
@@ -896,6 +998,7 @@
     if (stopPulse) { stopPulse(); stopPulse = null; }
     main.innerHTML = `<div class="view">${html}</div>`;
     window.Logo && Logo.align();
+    runSims();
     const inAccount = ACCOUNT.some(([k]) => k === r);
     document.querySelectorAll("[data-route]").forEach((a) => {
       const k = a.dataset.route;
@@ -915,6 +1018,28 @@
     const titles = { "": "Aujourd'hui", veille: "Veille", scanner: "Scanner", macro: "Macro", portefeuille: "Portefeuille", journal: "Journal", courtiers: "Courtiers", apprendre: "Apprendre", reglages: "Réglages", fiche: parts[1] || "" };
     document.title = (titles[r] ?? NAME) + " · " + NAME;
   }
+
+  function bindLearn() {
+    document.addEventListener("click", (e) => {
+      const qa = e.target.closest("[data-qa]"); if (qa) { answerQuiz(qa); return; }
+      const lt = e.target.closest("[data-letter]");
+      if (lt) { e.preventDefault(); document.getElementById("lettre-" + lt.dataset.letter)?.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    });
+    document.addEventListener("input", (e) => {
+      if (e.target.matches(".sim input[data-k]")) runSims(e.target.closest(".sim").parentElement);
+      if (e.target.id === "lexQ") {
+        const q = e.target.value.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        let any = false;
+        document.querySelectorAll(".lex-group").forEach((g) => {
+          let n = 0;
+          g.querySelectorAll(".lex-item").forEach((it) => { const hit = !q || it.dataset.s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(q); it.hidden = !hit; n += hit; });
+          g.hidden = !n; any ||= !!n;
+        });
+        document.querySelector(".lex-none").hidden = any;
+      }
+    });
+  }
+  bindLearn();
 
   function bind() {
     document.addEventListener("click", (e) => {
