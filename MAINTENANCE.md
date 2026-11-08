@@ -62,9 +62,9 @@ Pour essayer sans rien publier : **Actions → Veille (relais) → Run workflow*
 
 ## Pyxis, l'assistant
 
-Le signe Pyxis à côté de chaque section ouvre une conversation. Par défaut, elle passe par ton **abonnement Claude** : ta question part avec le contexte de la section dans une nouvelle conversation sur claude.ai ; à la fin, tu écris « conclusion » à Claude et tu colles sa réponse dans Pyxis pour l'ajouter au Journal. Pour changer de modèle, **Réglages → Pyxis, ton assistant → Une clé d'API** : fournisseur (Claude, Mistral, Gemini, OpenAI, ou tout service compatible OpenAI), nom du modèle, clé ; la conversation reste alors dans Pyxis. La clé reste dans ton navigateur, jamais dans le dépôt ni dans les sauvegardes : sur un autre appareil, il faut la recoller.
+Le signe Pyxis, à côté de chaque information (point de la veille, idée, valeur du scanner, article, section), ouvre une conversation sur ce sujet, sans quitter le site. Le modèle se règle dans **Réglages → Pyxis, ton assistant** : fournisseur (Claude, Mistral, Gemini, OpenAI, ou tout service compatible OpenAI), nom du modèle, clé d'API. « Ajouter au Journal » enregistre la conclusion datée. La clé reste dans ton navigateur, jamais dans le dépôt ni dans les sauvegardes : sur un autre appareil, il faut la recoller.
 
-Si Pyxis répond « erreur » : le nom du modèle a peut-être été retiré par le fournisseur (mets le nom du modèle actuel), ou la clé a expiré. Le bouton « Enregistrer et tester » vérifie tout en une seconde.
+Si Pyxis répond « erreur » : le nom du modèle a peut-être été retiré par le fournisseur (mets le nom du modèle actuel), ou la clé a expiré ou n'a plus de crédit. « Enregistrer et tester » vérifie tout en une seconde.
 
 ## Relancer une mise à jour à la main
 

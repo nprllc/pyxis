@@ -532,7 +532,7 @@ h1 .pyx-ask svg { width: 26px; height: 26px; }
 .pyx-form { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: end; padding: 14px 22px; border-top: 1px solid var(--rule); }
 .pyx-form textarea { font: 400 15px/1.45 var(--sans); background: transparent; border: 0; border-bottom: 1px solid var(--rule); resize: none; color: var(--ink); padding: 6px 0; max-height: 140px; }
 .pyx-form textarea:focus { outline: none; border-bottom-color: var(--ink); }
-.pyx-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 22px 18px; }
+.pyx-foot { display: flex; justify-content: flex-end; align-items: center; gap: 12px; padding: 12px 22px 18px; }
 .pyx-setup { padding: 22px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; font: 400 17px/1.55 var(--serif); }
 .talk { padding: 16px 0; border-bottom: 1px solid var(--rule-soft); display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
 .talk p { font: 400 16px/1.55 var(--serif); }

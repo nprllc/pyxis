@@ -157,7 +157,7 @@
       top: sorted.slice(0, 3), bottom: sorted.slice(-3).reverse(),
     };
   }
-  const moverLink = (r) => `<a href="#fiche-${esc(r.o.ticker)}"><span>${esc(r.o.name)}</span><b class="num ${r.d >= 0 ? "gain" : "loss"}">${pct(r.d, 1)}</b></a>`;
+  const moverLink = (r) => `<a href="#fiche-${esc(r.o.ticker)}" class="mover"><span>${esc(r.o.name)}</span><b class="num ${r.d >= 0 ? "gain" : "loss"}">${pct(r.d, 1)}<span class="pyx-slot" data-scope="mover" data-ticker="${esc(r.o.ticker)}"></span></b></a>`;
 
   function viewHome() {
     const p = state.profile, sp = planSplit(p), b = book("real");
@@ -307,7 +307,7 @@
     <div class="table-scroll"><table class="table">
       <thead><tr><th>Titre</th><th class="hide-m">Tendance 3 mois</th><th class="r">1 mois</th><th class="r hide-m">${ex("rsi", "RSI")}</th><th class="r">${ex("score", "Score")}</th></tr></thead>
       <tbody>${rows.map((o) => `<tr data-go="#fiche-${o.ticker}" tabindex="0">
-        <td class="who"><b>${esc(o.name)}</b><span>${esc(o.ticker)} / ${esc(o.sector)}</span></td>
+        <td class="who"><b>${esc(o.name)}<span class="pyx-slot" data-scope="row" data-ticker="${esc(o.ticker)}"></span></b><span>${esc(o.ticker)} / ${esc(o.sector)}</span></td>
         <td class="hide-m">${C.sparkline(o.spark, { w: 120, h: 30 })}</td>
         <td class="r num ${o.chg1m >= 0 ? "gain" : "loss"}">${pct(o.chg1m)}</td>
         <td class="r num hide-m ${o.rsi < 30 ? "warn" : ""}">${o.rsi}</td>
@@ -397,9 +397,9 @@
         </section>
         <section class="panel">
           <div class="panel-head"><h2>Dans l'actualité</h2><p>Derniers articles</p></div>
-          ${relevantNews(o).length ? relevantNews(o).map((n) => `<a href="${esc(n.url)}" target="_blank" rel="noopener" style="display:block;padding:11px 0;border-bottom:1px solid var(--rule-soft);text-decoration:none">
+          ${relevantNews(o).length ? relevantNews(o).map((n) => `<a class="news-item" href="${esc(n.url)}" target="_blank" rel="noopener" style="display:block;padding:11px 0;border-bottom:1px solid var(--rule-soft);text-decoration:none">
               <span class="serif" style="font-size:16px;line-height:1.35">${esc(n.title)}</span>
-              <span class="label" style="display:block;margin-top:4px">${esc(n.publisher || "")}${n.date ? " / " + new Date(n.date).toLocaleDateString("fr-FR", { day: "numeric", month: "short" }) : ""}</span></a>`).join("")
+              <span class="label" style="display:block;margin-top:4px">${esc(n.publisher || "")}${n.date ? " / " + new Date(n.date).toLocaleDateString("fr-FR", { day: "numeric", month: "short" }) : ""}<span class="pyx-slot" data-scope="news"></span></span></a>`).join("")
             : `<p class="muted">${o.news?.length ? "Aucun article récent ne parle directement de ce titre." : "Les articles sont récupérés pour les idées du jour et ta liste de surveillance."}</p>`}
         </section>
       </div>` : ""}
@@ -472,7 +472,7 @@
           ${b.houses.map((h) => `<div style="padding:12px 0;border-bottom:1px solid var(--rule-soft)">
             <div class="row between"><b style="font-weight:500">${esc(h.name)}</b><span class="label" style="color:var(--${(STANCE[h.stance] || STANCE.neutre)[1]})">${(STANCE[h.stance] || STANCE.neutre)[0]}</span></div>
             <p class="small" style="margin-top:4px">${esc(h.view)}</p>
-            <p class="label" style="margin-top:4px">${h.date ? esc(h.date) + " / " : ""}${h.url ? `<a href="${esc(h.url)}" target="_blank" rel="noopener">lire</a>` : ""}</p></div>`).join("")}
+            <p class="label" style="margin-top:4px">${h.date ? esc(h.date) + " / " : ""}${h.url ? `<a href="${esc(h.url)}" target="_blank" rel="noopener">lire</a>` : ""}<span class="pyx-slot" data-scope="house"></span></p></div>`).join("")}
           <p class="muted small" style="margin-top:12px">Perspectives publiques de grands gérants et banques. Elles se trompent aussi : leur intérêt est de montrer où se situe le consensus.</p></section>` : ""}
       </div>
     </div>
@@ -918,7 +918,7 @@
     return head(esc(l.title), `Module ${mod.n} · ${esc(mod.title)} · leçon ${i + 1} sur ${M.lessons.length} · ${l.minutes} min`, "", `<a href="#apprendre">Apprendre</a> / ${esc(mod.title)}`) + `
     <article class="lesson">
       ${lessonHTML(l.body)}
-      <div class="keep"><span class="label">À retenir</span><p>${esc(l.keep)}</p></div>
+      <div class="keep"><span class="label">À retenir<span class="pyx-slot" data-scope="lesson"></span></span><p>${esc(l.keep)}</p></div>
       <section class="quiz" data-lesson="${l.id}">
         <span class="label">Petit quiz · ${l.quiz.length} questions</span>
         ${l.quiz.map((q, qi) => `<div class="q" data-q="${qi}"><p class="q-t">${qi + 1}. ${esc(q.q)}</p><div class="q-o">${q.o.map((o, oi) => `<button type="button" data-qa="${qi}:${oi}">${esc(o)}</button>`).join("")}</div><p class="q-why" hidden></p></div>`).join("")}
@@ -1221,7 +1221,7 @@
     window.Logo && Logo.align();
     runSims();
     typo(document.getElementById("app") || document.body);
-    if (window.PyxisAI) { if (r !== "reglages") PyxisAI.decorate(main); else PyxisAI.bindSettings(main); }
+    if (window.PyxisAI) { if (r === "reglages") PyxisAI.bindSettings(main); else if (r !== "journal") PyxisAI.decorate(main); }
     const inAccount = ACCOUNT.some(([k]) => k === r);
     document.querySelectorAll("[data-route]").forEach((a) => {
       const k = a.dataset.route;
@@ -1260,8 +1260,8 @@
       const b = e.target.closest("[data-ask]"); if (!b || !window.PyxisAI) return;
       e.preventDefault(); e.stopPropagation();
       const ctx = PyxisAI.contextOf(b);
-      const m = location.hash.match(/^#fiche-(.+)$/), link = b.closest('a[href^="#fiche-"]');
-      const tk = link ? decodeURIComponent(link.getAttribute("href").slice(7)) : m ? decodeURIComponent(m[1]) : "";
+      const m = location.hash.match(/^#fiche-(.+)$/), link = b.closest('a[href^="#fiche-"]'), slotTk = b.closest(".pyx-slot")?.dataset.ticker;
+      const tk = slotTk || (link ? decodeURIComponent(link.getAttribute("href").slice(7)) : m ? decodeURIComponent(m[1]) : "");
       const o = tk && (M.universe.find((x) => x.ticker === tk) || M.opportunities?.find((x) => x.ticker === tk));
       if (o) {
         ctx.ticker = tk;
