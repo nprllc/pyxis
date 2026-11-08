@@ -69,6 +69,11 @@
     timer = setTimeout(() => push().catch((e) => console.warn("Envoi impossible :", e.message)), 1200);
   }
 
+  /* Connexion avec Google : on part sur la page Google, puis on revient ici, connecté. */
+  async function google() {
+    const { error } = await sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname, queryParams: { prompt: "select_account" } } });
+    if (error) throw error;
+  }
   async function sendCode(email) {
     const { error } = await sb.auth.signInWithOtp({ email, options: { shouldCreateUser: true, emailRedirectTo: location.origin + location.pathname } });
     if (error) throw error;
@@ -95,7 +100,7 @@
   async function signOut() { await sb.auth.signOut(); user = null; localStorage.removeItem(SYNCED); notify(); }
 
   window.PyxisSync = {
-    configured, available, init, changed, sendCode, verify, verifyLink, signOut, push,
+    configured, available, init, changed, google, sendCode, verify, verifyLink, signOut, push,
     user: () => user,
     lastSync: () => localStorage.getItem(SYNCED),
     onChange: (f) => listeners.push(f),

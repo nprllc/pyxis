@@ -555,3 +555,8 @@ body.pyx-open .pyx-fab { opacity: 0; pointer-events: none; }
 @media (prefers-reduced-motion: reduce) { .pyx-fab, .pyx-fab-mark svg, .pyx-fab-label { transition: none; } }
 .pyx-log:has(+ .pyx-setup) { display: none; }
 .link-form { margin-top: 40px; border-top: 1px solid var(--rule-soft); padding-top: 18px; }
+
+/* Compte : connexion Google */
+.google-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
+.acct-alt { margin-top: 28px; border-top: 1px solid var(--rule-soft); padding-top: 16px; }
+.acct-alt summary { cursor: pointer; font-family: var(--mono, monospace); text-transform: uppercase; letter-spacing: .08em; }

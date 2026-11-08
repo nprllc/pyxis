@@ -977,23 +977,35 @@
     else if (u) body = `<p class="acct-who">Connecté en tant que <b>${esc(u.email)}</b></p>
         <p class="muted small">${last ? `Dernière synchronisation : ${new Date(last).toLocaleString("fr-FR", { dateStyle: "long", timeStyle: "short" })}.` : ""} Ton profil, ton portefeuille, ton journal, ta progression et ta clé de Pyxis suivent ce compte sur tous tes appareils.</p>
         <div class="row wrap"><button class="btn" type="button" data-action="sync-now">Synchroniser maintenant</button><button class="btn" type="button" data-action="sign-out">Se déconnecter</button></div>`;
-    else body = `<form id="loginForm" class="stack" style="gap:18px;max-width:460px">
-        <label class="field">Ton e-mail<input type="email" name="email" autocomplete="email" required></label>
-        <div class="row wrap"><button class="btn primary" type="submit">Recevoir le lien de connexion</button></div>
-        <p class="small" id="loginMsg" aria-live="polite"></p>
-      </form>
-      <form id="linkForm" class="stack link-form" style="gap:14px;max-width:460px" ${isStandalone() ? "" : "hidden"}>
-        <span class="label">Dans l'app de l'écran d'accueil</span>
-        <p class="small muted">Le lien s'ouvre dans Safari, pas ici. Dans l'e-mail, appuie longuement sur le lien, choisis « Copier le lien », puis colle-le ci-dessous.</p>
-        <label class="field">Lien reçu par e-mail<input type="url" name="link" autocomplete="off" spellcheck="false"></label>
-        <div class="row wrap"><button class="btn" type="submit">Se connecter avec ce lien</button></div>
-        <p class="small" id="linkMsg" aria-live="polite"></p>
-      </form>`;
+    else body = `<div class="stack" style="gap:14px;max-width:460px">
+        <button class="btn primary google-btn" type="button" data-action="google-login"><svg viewBox="0 0 18 18" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M17.6 9.2c0-.6-.1-1.2-.2-1.7H9v3.3h4.8a4.1 4.1 0 0 1-1.8 2.7v2.2h2.9c1.7-1.6 2.7-3.9 2.7-6.5zM9 18c2.4 0 4.5-.8 5.9-2.2L12 13.6c-.8.5-1.8.9-3 .9-2.3 0-4.3-1.6-5-3.7H1v2.3A9 9 0 0 0 9 18zM4 10.8a5.4 5.4 0 0 1 0-3.5V5H1a9 9 0 0 0 0 8.1l3-2.3zM9 3.6c1.3 0 2.5.5 3.4 1.3l2.6-2.6A9 9 0 0 0 1 5l3 2.3c.7-2.1 2.7-3.7 5-3.7z"/></svg>Continuer avec Google</button>
+        <p class="small" id="googleMsg" aria-live="polite"></p>
+      </div>
+      <details class="acct-alt">
+        <summary class="small">Autre moyen : lien par e-mail</summary>
+        <form id="loginForm" class="stack" style="gap:18px;max-width:460px;margin-top:16px">
+          <label class="field">Ton e-mail<input type="email" name="email" autocomplete="email" required></label>
+          <div class="row wrap"><button class="btn" type="submit">Recevoir le lien de connexion</button></div>
+          <p class="small" id="loginMsg" aria-live="polite"></p>
+        </form>
+        <form id="linkForm" class="stack link-form" style="gap:14px;max-width:460px" ${isStandalone() ? "" : "hidden"}>
+          <span class="label">Dans l'app de l'écran d'accueil</span>
+          <p class="small muted">Le lien s'ouvre dans Safari, pas ici. Dans l'e-mail, appuie longuement sur le lien, choisis « Copier le lien », puis colle-le ci-dessous.</p>
+          <label class="field">Lien reçu par e-mail<input type="url" name="link" autocomplete="off" spellcheck="false"></label>
+          <div class="row wrap"><button class="btn" type="submit">Se connecter avec ce lien</button></div>
+          <p class="small" id="linkMsg" aria-live="polite"></p>
+        </form>
+      </details>`;
     return head("Compte", "Connecte-toi une fois sur chaque appareil : tu restes connecté, et tout se synchronise.") + `
       <section class="panel acct">${body}</section>` + disclaimer;
   }
   const isStandalone = () => window.matchMedia?.("(display-mode: standalone)").matches || navigator.standalone === true;
   function bindAccount(root) {
+    root.querySelector("[data-action=google-login]")?.addEventListener("click", async (e) => {
+      e.currentTarget.disabled = true;
+      try { await PyxisSync.google(); }
+      catch (err) { root.querySelector("#googleMsg").innerHTML = `<b class="loss">${esc(err.message || "Erreur")}</b>`; e.currentTarget.disabled = false; }
+    });
     const lf = root.querySelector("#linkForm");
     lf?.addEventListener("submit", async (e) => {
       e.preventDefault();
