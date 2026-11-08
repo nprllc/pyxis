@@ -476,7 +476,7 @@
           <p class="muted small" style="margin-top:12px">Perspectives publiques de grands gérants et banques. Elles se trompent aussi : leur intérêt est de montrer où se situe le consensus.</p></section>` : ""}
       </div>
     </div>
-    <p class="label" style="margin-top:40px">Synthèse rédigée par une IA (Claude) à partir des sources citées, relue par aucun humain : en cas de doute, la source fait foi.</p>` + disclaimer;
+    <p class="label" style="margin-top:40px">${b.mode === "press" ? "Revue de presse automatique : titres et liens des sources, sans résumé." : `Synthèse rédigée par une IA (${esc(b.author || "Claude")}) à partir des sources citées, relue par aucun humain : en cas de doute, la source fait foi.`}</p>` + disclaimer;
   }
 
   function viewMacro() {
@@ -696,6 +696,17 @@
     const minOk = Math.ceil(f * 100);
     out.innerHTML = `<div class="num ${cls}" style="font-size:34px;font-weight:600">${c.toLocaleString("fr-FR", { maximumFractionDigits: 2 })} %</div>
       <p>${msg}</p><p class="muted small" style="margin-top:6px">Tu perds ce pourcentage dès l'achat : le titre doit monter d'autant pour que tu retrouves ta mise. Avec ${eur(f, 2)} de frais, il faut acheter au moins ${eur(minOk)} pour rester sous 1 %.</p>`;
+  }
+
+  /* Typographie française : espace insécable avant % € : ; ? ! » et après «, pour qu'aucun signe ne se retrouve seul en début de ligne. */
+  function typo(root) {
+    if (!root) return;
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: (n) => (n.parentElement && n.parentElement.closest("script,style,textarea,input,svg") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT) });
+    const nodes = []; while (w.nextNode()) nodes.push(w.currentNode);
+    nodes.forEach((n) => {
+      const t = n.nodeValue.replace(/ ([%€:;?!»])/g, "\u00a0$1").replace(/« /g, "«\u00a0").replace(/(\d) (?=\d{3}\b)/g, "$1\u00a0");
+      if (t !== n.nodeValue) n.nodeValue = t;
+    });
   }
 
   /* ======================= MÉTHODE : comment Pyxis note, et ce que ça aurait donné ======================= */
@@ -1199,6 +1210,7 @@
     main.innerHTML = `<div class="view">${html}</div>`;
     window.Logo && Logo.align();
     runSims();
+    typo(document.getElementById("app") || document.body);
     const inAccount = ACCOUNT.some(([k]) => k === r);
     document.querySelectorAll("[data-route]").forEach((a) => {
       const k = a.dataset.route;

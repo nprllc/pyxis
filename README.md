@@ -21,6 +21,8 @@ Le site est une simple page web : il lit ces fichiers JSON et n'a besoin d'aucun
 
 En plus, chaque matin de semaine vers 6 h 43 (heure de Madrid), une **tâche Claude planifiée** (« Pyxis – veille du matin ») lit la presse financière de référence, écrit `site/data/brief.json` et le pousse dans le dépôt : le site se republie tout seul avec la veille du jour.
 
+**Relais de la veille.** Si cette veille n'est pas arrivée à 9 h 15, `pipeline/veille.py` (workflow « Veille (relais) ») prend le relais : il récupère les articles des sources de référence (flux RSS de `config.yaml`) et, si une clé d'API est configurée, demande à un autre modèle de rédiger le digest ; sans clé, il publie une revue de presse (titres et liens). Le site ne dépend donc d'aucun fournisseur d'IA pour rester à jour.
+
 **Ton portefeuille et ton journal restent dans ton navigateur.** Ils ne sont jamais envoyés dans le dépôt, qui est public.
 
 ## Organisation
@@ -39,6 +41,7 @@ En plus, chaque matin de semaine vers 6 h 43 (heure de Madrid), une **tâche Cla
 | `pipeline/indicators.py` | Indicateurs techniques (RSI, tendance, volatilité, volumes…) |
 | `pipeline/scoring.py` | Score, fourchette, type de signal, thèse, « Pourquoi je pourrais avoir tort » |
 | `pipeline/macro.py` | Contexte économique et phase du cycle |
+| `pipeline/veille.py` | Relais de la veille (revue de presse, ou digest par le modèle de ton choix) |
 | `pipeline/backtest.py` | Test sur le passé de la partie « prix » du score (page Méthode) |
 | `pipeline/tests/` | Tests automatiques (sans réseau) |
 | `.github/workflows/update.yml` | La tâche automatique quotidienne |

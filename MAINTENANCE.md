@@ -8,6 +8,7 @@ Pyxis tourne tout seul. Ce guide dit ce qu'il faut regarder de temps en temps, e
 |---|---|---|
 | Chaque soir de semaine, 22 h 17 UTC | Cours, chiffres des entreprises, macro, score, test sur le passé, publication du site | GitHub → onglet **Actions** → « Mise à jour » |
 | Chaque matin de semaine, 6 h 43 (Madrid) | Veille de presse rédigée par Claude, poussée dans `site/data/brief.json` | claude.ai → tâches planifiées → « Pyxis – veille du matin » |
+| Chaque matin de semaine, 9 h 15 (Madrid, en hiver) | Relais : si la veille Claude manque, revue de presse ou digest par un autre modèle | GitHub → **Actions** → « Veille (relais) » |
 | À chaque modification du dépôt | Les tests, puis la mise à jour et la publication | GitHub → **Actions** |
 
 ## Le petit contrôle
@@ -43,9 +44,21 @@ Après chaque modification sur GitHub, le site se republie en deux à trois minu
 | Pastille rouge « Mise à jour échouée » | Yahoo a bloqué les serveurs de GitHub ce soir-là | Rien : le site garde les données de la veille. Si ça dure plus de 3 jours, voir la ligne suivante |
 | Échec plusieurs jours de suite | Yahoo a changé son format et la bibliothèque `yfinance` n'a pas encore suivi | La mise à jour installe toujours la dernière version de `yfinance` : en général, un correctif sort en quelques jours. Ouvre le détail de l'exécution en échec dans Actions et demande à Claude de regarder le message d'erreur |
 | Un titre a disparu du Scanner | Son code Yahoo a changé ou n'existe plus | Regarde `site/data/meta.json`, champ `failed`. Corrige ou retire le code dans `config.yaml` |
-| La veille date de plusieurs jours | La tâche planifiée n'a pas tourné, ou n'a pas pu pousser | claude.ai → tâches planifiées → « Pyxis – veille du matin » : regarde la dernière exécution, relance-la à la main |
+| La veille est une « Revue de presse du matin » | La tâche Claude n'a pas tourné ce matin : le relais a pris le relais | Rien d'urgent. Sur claude.ai → tâches planifiées → « Pyxis – veille du matin », regarde la dernière exécution |
+| La veille date de plusieurs jours | Ni la tâche Claude ni le relais n'ont pu publier (sources injoignables) | Actions → « Veille (relais) » : lis le journal de la dernière exécution |
 | La page Méthode dit que le test « se calcule à la prochaine mise à jour » | Le test sur le passé a échoué ou n'a pas encore tourné | Relance une mise à jour à la main (onglet Actions → Mise à jour → Run workflow) |
 | Mes positions ou mon journal ont disparu | Le navigateur a été vidé, ou tu es sur un autre appareil | Réglages → Tes données → Restaurer une sauvegarde. D'où l'intérêt d'en télécharger une de temps en temps |
+
+## Changer de modèle pour la veille
+
+La veille est écrite par ta tâche Claude (ton abonnement). Si un jour Claude ne te convient plus ou ne fonctionne plus, le relais peut écrire le digest avec un autre modèle :
+
+1. Crée une clé d'API chez le fournisseur choisi (Mistral, Google Gemini, OpenAI ou Anthropic).
+2. Sur GitHub : **Settings → Secrets and variables → Actions → New repository secret**. Nom : `MISTRAL_API_KEY` (ou `GEMINI_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`), valeur : la clé.
+3. Dans `pipeline/config.yaml`, bloc `veille: providers:`, mets ce fournisseur en premier et vérifie le nom du modèle (les fournisseurs en sortent de nouveaux régulièrement). Tout fournisseur compatible OpenAI marche aussi : `provider: openai-compatible`, avec `base_url`.
+4. Si tu arrêtes la tâche Claude, le relais écrira la veille chaque matin. Pour la décaler plus tôt, change l'heure `cron` dans `.github/workflows/veille.yml`.
+
+Pour essayer sans rien publier : **Actions → Veille (relais) → Run workflow**, coche « Essai », puis lis le résultat dans le journal de l'exécution.
 
 ## Relancer une mise à jour à la main
 
@@ -53,4 +66,4 @@ GitHub → onglet **Actions** → **Mise à jour** → bouton **Run workflow** �
 
 ## Ce qui coûte de l'argent
 
-Rien côté site : GitHub Pages et GitHub Actions sont gratuits pour un dépôt public, et les sources de données (Yahoo Finance, Stooq, FRED) sont gratuites. La veille utilise ton abonnement Claude.
+Rien côté site : GitHub Pages et GitHub Actions sont gratuits pour un dépôt public, et les sources de données (Yahoo Finance, Stooq, FRED) sont gratuites. La veille utilise ton abonnement Claude. Le relais est gratuit sans clé (revue de presse) ; avec une clé, il coûte ce que facture le fournisseur, en général quelques centimes par jour (Mistral et Gemini ont des offres gratuites).

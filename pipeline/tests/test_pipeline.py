@@ -183,3 +183,63 @@ def test_backtest_needs_enough_history():
     from pipeline import backtest
     prices = {f"S{i}": fake_prices(seed=i, n=200) for i in range(20)}
     assert backtest.run_backtest(prices, list(prices), None) is None
+
+
+RSS = """<?xml version="1.0"?><rss><channel>
+<item><title>ECB keeps rates unchanged</title><link>https://ex.com/a</link><description>The ECB held its deposit rate.</description><pubDate>Mon, 09 Nov 2026 07:00:00 GMT</pubDate></item>
+<item><title>Nvidia earnings beat estimates</title><link>https://ex.com/b</link><pubDate>Mon, 09 Nov 2026 06:00:00 GMT</pubDate></item>
+<item><title>Stocks slip at the open</title><link>https://ex.com/c</link><pubDate>Mon, 09 Nov 2026 05:00:00 GMT</pubDate></item>
+<item><title>Euro zone inflation picks up</title><link>https://ex.com/d</link><pubDate>Mon, 09 Nov 2026 04:00:00 GMT</pubDate></item>
+<item><title>Old news</title><link>https://ex.com/old</link><pubDate>Mon, 02 Nov 2026 04:00:00 GMT</pubDate></item>
+</channel></rss>"""
+ATOM = """<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom"><entry><title>Les marchés reculent</title><link href="https://ex.fr/e"/><updated>2026-11-09T06:30:00Z</updated></entry></feed>"""
+
+
+class _R:
+    def __init__(self, t): self.text = t
+    def raise_for_status(self): pass
+
+
+def _veille_env(tmp_path, monkeypatch):
+    from pipeline import veille
+    monkeypatch.setattr(veille, "DATA", tmp_path)
+    (tmp_path / "brief.json").write_text('{"date": "2026-11-06"}')
+    cfg = {"veille": {"feeds": [{"name": "A", "url": "rss"}, {"name": "B", "url": "atom", "lang": "fr"}, {"name": "C", "url": "down"}],
+                      "providers": [{"provider": "mistral", "model": "m", "key_env": "X_KEY"}]}}
+    def fetch(url):
+        if url == "down": raise OSError("hors ligne")
+        return _R(RSS if url == "rss" else ATOM)
+    return veille, cfg, fetch
+
+
+def test_veille_press_review_without_model(tmp_path, monkeypatch):
+    from datetime import datetime, timezone
+    veille, cfg, fetch = _veille_env(tmp_path, monkeypatch)
+    def no_model(p, prompt): raise RuntimeError("pas de clé")
+    mode = veille.run(cfg, now=datetime(2026, 11, 9, 8, 15, tzinfo=timezone.utc), fetch=fetch, model_call=no_model)
+    b = json.loads((tmp_path / "brief.json").read_text())
+    assert mode == "press" and b["mode"] == "press" and b["date"] == "2026-11-09"
+    urls = [s["url"] for sec in b["sections"] for p in sec["points"] for s in p["sources"]]
+    assert "https://ex.com/old" not in urls and "https://ex.fr/e" in urls
+    assert {sec["title"] for sec in b["sections"]} >= {"Banques centrales et taux", "Entreprises et secteurs"}
+
+
+def test_veille_model_digest_keeps_only_real_links(tmp_path, monkeypatch):
+    from datetime import datetime, timezone
+    veille, cfg, fetch = _veille_env(tmp_path, monkeypatch)
+    good = lambda u: {"text": "Point.", "sources": [{"name": "A", "url": u}]}
+    reply = json.dumps({"headline": "Titre", "summary": "Résumé.", "for_you": ["Rien ne change."],
+                        "sections": [{"title": "Marchés mondiaux", "points": [good("https://ex.com/a"), good("https://ex.com/b"), good("https://ex.com/c"), good("https://ex.com/d"),
+                                                                              {"text": "Inventé", "sources": [{"name": "Z", "url": "https://invente.com"}]}]}]})
+    mode = veille.run(cfg, now=datetime(2026, 11, 9, 8, 15, tzinfo=timezone.utc), fetch=fetch, model_call=lambda p, pr: "Voici :\n" + reply)
+    b = json.loads((tmp_path / "brief.json").read_text())
+    assert mode == "digest" and b["author"].startswith("mistral")
+    assert all(s["url"] != "https://invente.com" for sec in b["sections"] for p in sec["points"] for s in p["sources"])
+    assert len(b["sections"][0]["points"]) == 4
+
+
+def test_veille_skips_when_claude_brief_is_there(tmp_path, monkeypatch):
+    from datetime import datetime, timezone
+    veille, cfg, fetch = _veille_env(tmp_path, monkeypatch)
+    (tmp_path / "brief.json").write_text('{"date": "2026-11-09", "headline": "Claude"}')
+    assert veille.run(cfg, now=datetime(2026, 11, 9, 8, 15, tzinfo=timezone.utc), fetch=fetch) == "skip"
