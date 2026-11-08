@@ -517,7 +517,7 @@
     </div>
     <div class="grid g-2">
       <section class="panel">
-        <div class="panel-head"><h2>Positions</h2><button class="btn small" data-action="add-position">Ajouter une position</button></div>
+        <div class="panel-head"><h2>Positions</h2><div class="row" style="gap:8px"><button class="btn small" data-action="import-csv">Importer un relevé</button><button class="btn small" data-action="add-position">Ajouter une position</button></div></div>
         ${b.rows.length ? `<div class="table-scroll"><table class="table"><thead><tr><th>Titre</th><th class="r">Valeur</th><th class="r">Résultat</th><th></th></tr></thead><tbody>
           ${b.rows.map((r, i) => `<tr data-go="#fiche-${r.ticker}" tabindex="0"><td class="who"><b>${esc(r.name)}</b><span>${r.qty.toLocaleString("fr-FR")} part(s) / ${r.bucket === "coeur" ? "cœur" : "satellite"}${r.live ? "" : " / cours non suivi"}</span></td>
           <td class="r num">${eur(r.value, 2)}</td><td class="r num ${r.value >= r.invested ? "gain" : "loss"}">${pct(r.invested ? ((r.value - r.invested) / r.invested) * 100 : 0)}</td>
@@ -927,7 +927,132 @@
           <button class="btn" type="button" data-action="onboard">Refaire mon profil</button></div>
         <p class="muted small" id="saved" aria-live="polite"></p>
       </form>
+    </section>
+    <section class="panel" style="max-width:640px;margin-top:54px">
+      <div class="panel-head"><h2>Tes données</h2></div>
+      <p class="muted small" style="margin-bottom:16px">Ton profil, tes positions, ton journal et ta progression sont enregistrés uniquement dans ce navigateur. Fais une sauvegarde de temps en temps : si tu vides ton navigateur ou changes d'appareil, tu pourras tout récupérer.</p>
+      <div class="row wrap"><button class="btn" type="button" data-action="backup">Télécharger une sauvegarde</button>
+        <label class="btn" style="cursor:pointer">Restaurer une sauvegarde<input type="file" accept=".json,application/json" id="restoreFile" hidden></label></div>
+      <p class="muted small" id="backupMsg" aria-live="polite" style="margin-top:10px"></p>
     </section>`;
+  }
+
+  /* ======================= SAUVEGARDE ======================= */
+  function backup() {
+    const data = {};
+    for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith("investlab.")) data[k] = localStorage.getItem(k); }
+    const blob = new Blob([JSON.stringify({ app: "pyxis", version: 1, date: new Date().toISOString(), data }, null, 1)], { type: "application/json" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `pyxis-sauvegarde-${new Date().toISOString().slice(0, 10)}.json`; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }
+  function restore(file) {
+    const msg = $("#backupMsg");
+    file.text().then((txt) => {
+      const j = JSON.parse(txt);
+      if (j.app !== "pyxis" || !j.data) throw new Error("format");
+      Object.entries(j.data).forEach(([k, v]) => { if (k.startsWith("investlab.")) localStorage.setItem(k, v); });
+      msg.textContent = "Sauvegarde restaurée. La page se recharge…"; setTimeout(() => location.reload(), 800);
+    }).catch(() => { msg.textContent = "Ce fichier n'est pas une sauvegarde Pyxis."; });
+  }
+
+  /* ======================= IMPORT D'UN RELEVÉ (CSV) ======================= */
+  // Accepte l'export des transactions de la plupart des courtiers : on reconnaît les colonnes par leur nom
+  // (français, anglais, espagnol, allemand), puis on montre un aperçu à valider avant d'importer.
+  const COLS = {
+    date: ["date", "fecha", "datum", "time", "executed"],
+    isin: ["isin"],
+    sym: ["ticker", "symbol", "symbole", "símbolo", "simbolo", "code"],
+    name: ["name", "nom", "instrument", "produit", "product", "titre", "security", "valor", "nombre", "description"],
+    type: ["type", "side", "sens", "operation", "opération", "operación", "tipo", "transaction"],
+    qty: ["quantity", "qty", "quantité", "quantite", "shares", "parts", "cantidad", "títulos", "titulos", "anzahl", "stück"],
+    price: ["price per share", "price", "prix", "precio", "cours", "kurs", "unit price"],
+    total: ["total amount", "amount", "total", "montant", "importe", "betrag", "value"],
+  };
+  function parseCSV(txt) {
+    const first = txt.split(/\r?\n/)[0] || "";
+    const sep = [";", "\t", ","].map((c) => [c, first.split(c).length]).sort((a, b) => b[1] - a[1])[0][0];
+    const rows = []; let cur = [""], q = false;
+    for (let i = 0; i < txt.length; i++) {
+      const ch = txt[i];
+      if (q) { if (ch === '"' && txt[i + 1] === '"') { cur[cur.length - 1] += '"'; i++; } else if (ch === '"') q = false; else cur[cur.length - 1] += ch; }
+      else if (ch === '"') q = true;
+      else if (ch === sep) cur.push("");
+      else if (ch === "\n") { rows.push(cur); cur = [""]; }
+      else if (ch !== "\r") cur[cur.length - 1] += ch;
+    }
+    if (cur.length > 1 || cur[0]) rows.push(cur);
+    return rows.filter((r) => r.some((c) => c.trim()));
+  }
+  const toNum = (v) => {
+    if (v == null) return NaN;
+    let s = String(v).replace(/[^\d,.\-]/g, "");
+    if (s.includes(",") && s.includes(".")) s = s.lastIndexOf(",") > s.lastIndexOf(".") ? s.replace(/\./g, "").replace(",", ".") : s.replace(/,/g, "");
+    else s = s.replace(",", ".");
+    return parseFloat(s);
+  };
+  function matchItem(r) {
+    const U = M.universe, sym = (r.sym || "").toUpperCase().trim(), nm = (r.name || "").toLowerCase();
+    if (sym) { const u = U.find((o) => o.ticker.toUpperCase() === sym || o.ticker.split(".")[0].toUpperCase() === sym); if (u) return u.ticker; }
+    if (nm) {
+      const words = nm.replace(/[^a-z0-9àâçéèêëîïôûùüÿñ ]/g, " ").split(/\s+/).filter((w) => w.length > 2 && !["inc", "the", "plc", "corp", "ucits", "etf", "acc", "dist", "usd", "eur"].includes(w));
+      let best = null, bs = 0;
+      U.forEach((o) => { const on = o.name.toLowerCase(); const sc = words.filter((w) => on.includes(w)).length; if (sc > bs) { bs = sc; best = o.ticker; } });
+      if (bs >= 1) return best;
+    }
+    return "";
+  }
+  function readStatement(txt) {
+    const rows = parseCSV(txt); if (rows.length < 2) return null;
+    const hdr = rows[0].map((h) => h.trim().toLowerCase());
+    const col = {}; Object.entries(COLS).forEach(([k, names]) => { const i = hdr.findIndex((h) => names.some((n) => h === n || h.includes(n))); if (i >= 0 && !Object.values(col).includes(i)) col[k] = i; });
+    if (col.qty == null || (col.price == null && col.total == null)) return { error: "Je ne trouve pas les colonnes de quantité et de prix. Exporte l'historique des transactions (pas un relevé PDF) au format CSV." };
+    const agg = {};
+    rows.slice(1).forEach((r) => {
+      const get = (k) => (col[k] != null ? (r[col[k]] || "").trim() : "");
+      const type = get("type").toLowerCase();
+      const isSell = /sell|vente|venta|verkauf|sale/.test(type);
+      if (type && !isSell && !/buy|achat|compra|kauf|purchase|savings|plan|ahorro|order|market|limit/.test(type)) return; // dividendes, frais, virements…
+      const qty = Math.abs(toNum(get("qty"))); if (!qty) return;
+      const price = col.price != null ? Math.abs(toNum(get("price"))) : Math.abs(toNum(get("total"))) / qty;
+      if (!isFinite(price) || !price) return;
+      const key = get("isin") || get("sym") || get("name"); if (!key) return;
+      const a = (agg[key] ||= { key, sym: get("sym"), name: get("name") || get("sym") || key, qty: 0, cost: 0 });
+      if (isSell) { const avg = a.qty ? a.cost / a.qty : 0; a.qty = Math.max(0, a.qty - qty); a.cost = avg * a.qty; }
+      else { a.qty += qty; a.cost += qty * price; }
+    });
+    const list = Object.values(agg).filter((a) => a.qty > 1e-9).map((a) => ({ ...a, avg: a.cost / a.qty, ticker: matchItem(a) }));
+    return list.length ? { list } : { error: "Aucun achat reconnu dans ce fichier." };
+  }
+  function importModal() {
+    const opts = (sel) => `<option value="">Ne pas importer</option>` + M.universe.slice().sort((a, b) => a.name.localeCompare(b.name)).map((u) => `<option value="${esc(u.ticker)}"${u.ticker === sel ? " selected" : ""}>${esc(u.name)}</option>`).join("");
+    const back = document.createElement("div");
+    back.className = "modal-back";
+    back.innerHTML = `<div class="modal stack" role="dialog" aria-modal="true" aria-labelledby="it" style="gap:16px;max-width:720px">
+      <h2 id="it">Importer un relevé de transactions</h2>
+      <p class="muted small">Exporte l'historique de tes transactions depuis ton courtier au format CSV, puis choisis le fichier. Pyxis additionne les achats, retire les ventes, et te montre le résultat avant d'importer. Le fichier n'est envoyé nulle part.</p>
+      <label class="btn" style="cursor:pointer;align-self:flex-start">Choisir un fichier CSV<input type="file" accept=".csv,text/csv,.txt" hidden id="csvFile"></label>
+      <div id="csvOut"></div>
+      <div class="row"><button class="btn primary" type="button" id="csvGo" disabled>Importer dans le portefeuille ${state.book === "simulated" ? "simulé" : "réel"}</button><button class="btn" type="button" data-close>Annuler</button></div>
+    </div>`;
+    document.body.appendChild(back);
+    let res = null;
+    back.querySelector("[data-close]").onclick = () => back.remove();
+    back.querySelector("#csvFile").onchange = (e) => {
+      const f = e.target.files[0]; if (!f) return;
+      f.text().then((txt) => {
+        res = readStatement(txt); const out = back.querySelector("#csvOut");
+        if (!res || res.error) { out.innerHTML = `<p class="flag">${esc(res?.error || "Fichier illisible.")}</p>`; back.querySelector("#csvGo").disabled = true; return; }
+        out.innerHTML = `<table class="bt-table"><thead><tr><th>Dans le relevé</th><th>Parts</th><th>Prix moyen</th><th>Titre Pyxis</th></tr></thead><tbody>${res.list.map((a, i) => `<tr><td>${esc(a.name)}</td><td class="num">${num(a.qty, 4)}</td><td class="num">${num(a.avg, 2)}</td><td><select data-imp="${i}">${opts(a.ticker)}</select></td></tr>`).join("")}</tbody></table>
+          <p class="muted small" style="margin-top:8px">Vérifie la dernière colonne : seuls les titres suivis par Pyxis peuvent être importés. Les positions déjà présentes ne sont pas modifiées.</p>`;
+        back.querySelector("#csvGo").disabled = false;
+      });
+    };
+    back.querySelector("#csvGo").onclick = () => {
+      if (!res?.list) return;
+      let n = 0;
+      back.querySelectorAll("[data-imp]").forEach((sel) => { const a = res.list[+sel.dataset.imp]; if (!sel.value) return; state.positions[state.book].push({ ticker: sel.value, qty: +a.qty.toFixed(6), cost: +a.avg.toFixed(4) }); n++; });
+      store.set("positions", state.positions); back.remove(); render();
+    };
   }
 
   /* ======================= ONBOARDING ======================= */
@@ -1081,6 +1206,7 @@
   }
 
   function bindLearn() {
+    document.addEventListener("change", (e) => { if (e.target.id === "restoreFile" && e.target.files[0]) restore(e.target.files[0]); });
     document.addEventListener("click", (e) => {
       const qa = e.target.closest("[data-qa]"); if (qa) { answerQuiz(qa); return; }
       const lt = e.target.closest("[data-letter]");
@@ -1119,6 +1245,8 @@
       if (a === "journal-new") journalModal({ ticker: t.dataset.ticker, amount: t.dataset.amount, thesis: t.dataset.thesis });
       if (a === "onboard") onboarding(0);
       if (a === "add-position") positionModal();
+      if (a === "import-csv") importModal();
+      if (a === "backup") backup();
       if (a === "del-position") { e.stopPropagation(); state.positions[state.book].splice(+t.dataset.i, 1); store.set("positions", state.positions); render(); }
       if (a === "simple-tax") { state.simpleTax = !state.simpleTax; t.setAttribute("aria-pressed", state.simpleTax); $("#brokerRows").innerHTML = brokerTable(); }
       if (a === "clear-search") { state.query = ""; const g = $("#globalSearch"); if (g) g.value = ""; render(); }
