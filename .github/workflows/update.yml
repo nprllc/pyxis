@@ -77,7 +77,8 @@ jobs:
       # Supabase met en veille les projets gratuits sans activité depuis une semaine : une petite requête chaque soir l'évite.
       - name: Garder le service de comptes éveillé
         if: always()
-        run: curl -s -o /dev/null -w "Supabase : %{http_code}\n" "https://goeqoloebioyqvstohne.supabase.co/rest/v1/user_data?select=user_id&limit=1" -H "apikey: sb_publishable_niRKbLpqPk9q0BnppIgL1w_N9uwXxlb" || true
+        run: |
+          curl -s -o /dev/null -w "Supabase %{http_code}\n" "https://goeqoloebioyqvstohne.supabase.co/rest/v1/user_data?select=user_id&limit=1" -H "apikey: sb_publishable_niRKbLpqPk9q0BnppIgL1w_N9uwXxlb" || true
 
       # GitHub met en pause les tâches planifiées d'un dépôt public après 60 jours sans activité.
       # Se réactiver à chaque passage remet ce compteur à zéro : le site tourne sans limite de durée.
