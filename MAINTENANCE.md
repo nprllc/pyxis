@@ -41,7 +41,7 @@ Après chaque modification sur GitHub, le site se republie en deux à trois minu
 | Ce que tu vois | Cause probable | Que faire |
 |---|---|---|
 | Pastille rouge « Mise à jour échouée » | Yahoo a bloqué les serveurs de GitHub ce soir-là | Rien : le site garde les données de la veille. Si ça dure plus de 3 jours, voir la ligne suivante |
-| Échec plusieurs jours de suite | La bibliothèque `yfinance` doit être mise à jour (Yahoo change régulièrement son format) | Ouvre `pipeline/requirements.txt`, remplace la version de `yfinance` par la dernière (voir pypi.org/project/yfinance), commit. Ou demande à Claude de le faire |
+| Échec plusieurs jours de suite | Yahoo a changé son format et la bibliothèque `yfinance` n'a pas encore suivi | La mise à jour installe toujours la dernière version de `yfinance` : en général, un correctif sort en quelques jours. Ouvre le détail de l'exécution en échec dans Actions et demande à Claude de regarder le message d'erreur |
 | Un titre a disparu du Scanner | Son code Yahoo a changé ou n'existe plus | Regarde `site/data/meta.json`, champ `failed`. Corrige ou retire le code dans `config.yaml` |
 | La veille date de plusieurs jours | La tâche planifiée n'a pas tourné, ou n'a pas pu pousser | claude.ai → tâches planifiées → « Pyxis – veille du matin » : regarde la dernière exécution, relance-la à la main |
 | La page Méthode dit que le test « se calcule à la prochaine mise à jour » | Le test sur le passé a échoué ou n'a pas encore tourné | Relance une mise à jour à la main (onglet Actions → Mise à jour → Run workflow) |
