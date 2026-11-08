@@ -103,7 +103,7 @@
       <path d="${d}" class="cycle-wave" fill="none"/>
       ${phases.map(([k, l]) => {
         const [x, y] = P(at[k]); const on = k === phase;
-        const off = { reprise: [14, 6, "start"], expansion: [-14, 0, "end"], surchauffe: [0, -18, "middle"], ralentissement: [4, 26, "start"] }[k];
+        const off = { reprise: [14, 6, "start"], expansion: [-14, 0, "end"], surchauffe: [0, -18, "middle"], ralentissement: [14, -8, "start"] }[k];
         return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${on ? 8 : 4.5}" class="${on ? "cycle-on" : "cycle-off"}"/>
           <text x="${(x + off[0]).toFixed(1)}" y="${(y + off[1] + 4).toFixed(1)}" text-anchor="${off[2]}" class="${on ? "cycle-lbl on" : "cycle-lbl"}">${l}</text>`;
       }).join("")}
