@@ -66,6 +66,10 @@ Le signe Pyxis, en bas à droite de chaque page, ouvre une conversation sans qui
 
 Si Pyxis répond « erreur » : le nom du modèle a peut-être été retiré par le fournisseur (mets le nom du modèle actuel), ou la clé a expiré ou n'a plus de crédit. « Enregistrer et tester » vérifie tout en une seconde.
 
+## Ton compte (Supabase)
+
+La connexion et la synchronisation entre appareils passent par un projet Supabase gratuit, dont l'adresse et la clé publique sont dans `site/js/cloud-config.js`. Si le projet est mis en pause (Supabase met en veille les projets gratuits inactifs une semaine), ouvre supabase.com et clique sur **Restore** : rien n'est perdu. Sans compte, le site marche quand même, avec les données du navigateur.
+
 ## Relancer une mise à jour à la main
 
 GitHub → onglet **Actions** → **Mise à jour** → bouton **Run workflow** → **Run workflow**. Compte trois à cinq minutes.

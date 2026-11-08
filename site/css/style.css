@@ -7,8 +7,10 @@
 :root {
   --paper: #f3cebb;        /* pêche Syndicate */
   --paper-2: #f8ddcf;      /* pêche clair (cartes ouvertes, modales) */
-  --paper-deep: #d2b6a5;   /* pêche grisé (pied de page, relevé sur Syndicate) */
-  --taupe: #695b52;        /* taupe du logo de pied de page Syndicate */
+  --paper-deep: #d8b5a2;   /* pied de page Syndicate (relevé sur la maquette) */
+  --taupe: #725a4d;        /* brun du logo vertical du pied de page Syndicate */
+  --umber: #5e4031;        /* texte du pied de page Syndicate */
+  --umber-rule: #4a2a1a;   /* filets du pied de page Syndicate */
   --ink: #1e1b1a;          /* encre chaude */
   --ash: #3d3634;          /* cendre : élément actif du rail */
   --mute: #7d6359;         /* texte secondaire sur pêche */
@@ -406,10 +408,16 @@ body.explain-on [data-explain] { text-decoration: underline solid var(--gain); t
 
 /* ---------- Divers ---------- */
 .empty { padding: 30px; text-align: center; color: var(--mute); border: 1px dashed var(--rule); font-family: var(--serif); font-size: 16px; }
-.footer { margin-top: auto; background: var(--paper-deep); color: var(--taupe); padding: 54px; display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: start; }
+.footer { margin-top: auto; background: var(--paper-deep); color: var(--umber); padding: 54px 54px 90px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.ft-brand { display: flex; flex-direction: column; gap: 40px; }
+.ft-col p { font-size: 13px; margin-bottom: 14px; }
+.ft-col b { font-weight: 600; }
+.ft-menu { display: flex; flex-direction: column; gap: 4px; }
+.ft-menu a { color: var(--umber); text-decoration: none; font: 500 13.5px var(--sans); }
+.ft-menu a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-.footer p { font: 400 14px/1.6 var(--serif); color: var(--taupe); max-width: 72ch; }
-.footer .label { display: block; border-top: 1px solid var(--rule); padding-top: 8px; margin-bottom: 14px; max-width: 72ch; color: var(--mute); }
+.footer p { font: 400 14px/1.6 var(--sans); color: var(--umber); max-width: 72ch; }
+.footer .label { display: block; border-top: 1px solid var(--umber-rule); padding-top: 8px; margin-bottom: 14px; max-width: 72ch; color: var(--umber); }
 
 /* Transition de page : un rideau d'encre qui passe. */
 .curtain { position: fixed; inset: 0; z-index: 80; background: var(--ink); transform: translateY(100%); pointer-events: none; visibility: hidden; }
@@ -458,7 +466,7 @@ body.explain-on [data-explain] { text-decoration: underline solid var(--gain); t
   .modules { gap: 40px; }
   .lex-group { grid-template-columns: 1fr; gap: 6px; }
   .lex-group dl, .sim, .sim-out { grid-template-columns: 1fr; }
-  .footer { grid-template-columns: 1fr; padding: 34px 18px; }
+  .footer { grid-template-columns: 1fr; padding: 34px 18px 90px; }
 
   .facts { flex-wrap: wrap; }
   .hero, .wrong { padding: 22px; }

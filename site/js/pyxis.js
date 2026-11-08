@@ -18,7 +18,7 @@
     compatible: { label: "Autre (compatible OpenAI)", model: "", keyUrl: "" },
   };
   const getCfg = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } };
-  const setCfg = (c) => { try { localStorage.setItem(KEY, JSON.stringify(c)); } catch {} };
+  const setCfg = (c) => { try { localStorage.setItem(KEY, JSON.stringify(c)); window.PyxisSync?.changed(); } catch {} };
 
   const ready = () => { const c = getCfg(); return !!(c.provider && c.key && (c.model || PROVIDERS[c.provider]?.model) && (c.provider !== "compatible" || c.base)); };
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -201,7 +201,7 @@ ${ctx.text.slice(0, 6000)}
     const c = getCfg(), p = c.provider || "";
     return `<section class="panel" style="max-width:640px;margin-top:54px" id="pyxis-ai">
       <div class="panel-head"><h2>Pyxis, ton assistant</h2></div>
-      <p class="muted small" style="margin-bottom:8px">Choisis le fournisseur et colle ta clé. Elle reste dans ce navigateur.</p>
+      <p class="muted small" style="margin-bottom:8px">Choisis le fournisseur et colle ta clé. Connecté à ton compte, tu ne la colles qu'une fois : elle suit tes appareils.</p>
       <form id="aiForm" class="stack">
         <label class="field">Fournisseur<select name="provider"><option value="">Choisir…</option>${Object.entries(PROVIDERS).map(([k, v]) => `<option value="${k}"${k === p ? " selected" : ""}>${v.label}</option>`).join("")}</select></label>
         <label class="field">Clé d'API<input type="password" name="key" value="${esc(c.key || "")}" autocomplete="off" spellcheck="false"></label>

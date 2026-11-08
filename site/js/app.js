@@ -16,7 +16,7 @@
   /* ---------- Stockage local (navigateur), toujours protégé ---------- */
   const store = {
     get(k, fallback) { try { const v = localStorage.getItem("investlab." + k); return v ? JSON.parse(v) : fallback; } catch { return fallback; } },
-    set(k, v) { try { localStorage.setItem("investlab." + k, JSON.stringify(v)); } catch { /* stockage indisponible : on garde en mémoire */ } },
+    set(k, v) { try { localStorage.setItem("investlab." + k, JSON.stringify(v)); window.PyxisSync?.changed(); } catch { /* stockage indisponible : on garde en mémoire */ } },
   };
   const state = {
     profile: store.get("profile", { ...M.profile }),
@@ -49,7 +49,7 @@
   };
   const NAME = "Pyxis";
   const TOP = [["", "Aujourd'hui"], ["veille", "Veille"], ["scanner", "Scanner"], ["macro", "Macro"], ["apprendre", "Apprendre"], ["methode", "Méthode"]];
-  const ACCOUNT = [["portefeuille", "Portefeuille"], ["journal", "Journal"], ["courtiers", "Courtiers"], ["reglages", "Réglages"]];
+  const ACCOUNT = [["portefeuille", "Portefeuille"], ["journal", "Journal"], ["courtiers", "Courtiers"], ["reglages", "Réglages"], ["compte", "Compte"]];
 
   /* ---------- Calculs du profil ---------- */
   function planSplit(p) {
@@ -96,7 +96,13 @@
           </form>
           <main class="main" id="main" tabindex="-1"></main>
           <footer class="footer">
-            <div class="wm" aria-hidden="true">${Logo.lockup({ size: 56, color: "#695b52" })}</div>
+            <div class="ft-brand"><div class="wm" aria-hidden="true">${Logo.lockup({ size: 40, color: "#725a4d", vertical: true })}</div>
+              <div class="ft-col"><span class="label">Copyright</span><p>© ${new Date().getFullYear()} Pyxis</p></div></div>
+            <div class="ft-col"><span class="label">Infos</span>
+              <p><b>Données</b><br>Cours : Yahoo Finance, Stooq<br>Économie : FRED (Réserve fédérale de Saint-Louis)<br>Mise à jour chaque soir de semaine</p>
+              <p><b>Veille</b><br>Chaque matin de semaine, à partir de sources citées</p></div>
+            <div class="ft-col"><span class="label">Menu</span>
+              <nav class="ft-menu">${[...TOP, ...ACCOUNT].map(([k, l]) => `<a href="#${k || "accueil"}">${l}</a>`).join("")}</nav></div>
           </footer>
         </div>
       </div>
@@ -961,6 +967,49 @@
     </section>${window.PyxisAI ? PyxisAI.settingsHTML() : ""}`;
   }
 
+  /* ======================= COMPTE ======================= */
+  function viewAccount() {
+    const S = window.PyxisSync, u = S?.user?.();
+    const last = S?.lastSync?.();
+    let body;
+    if (!S?.configured()) body = `<p class="muted">La connexion n'est pas encore branchée sur ce site. En attendant, tes données restent dans ce navigateur (pense aux sauvegardes dans Réglages).</p>`;
+    else if (!S.available()) body = `<p class="muted">Le service de connexion ne répond pas pour l'instant. Réessaie dans un moment.</p>`;
+    else if (u) body = `<p class="acct-who">Connecté en tant que <b>${esc(u.email)}</b></p>
+        <p class="muted small">${last ? `Dernière synchronisation : ${new Date(last).toLocaleString("fr-FR", { dateStyle: "long", timeStyle: "short" })}.` : ""} Ton profil, ton portefeuille, ton journal, ta progression et ta clé de Pyxis suivent ce compte sur tous tes appareils.</p>
+        <div class="row wrap"><button class="btn" type="button" data-action="sync-now">Synchroniser maintenant</button><button class="btn" type="button" data-action="sign-out">Se déconnecter</button></div>`;
+    else body = `<form id="loginForm" class="stack" style="gap:18px">
+        <label class="field">Ton e-mail<input type="email" name="email" autocomplete="email" required></label>
+        <div class="code-step" hidden><label class="field">Code reçu par e-mail<input type="text" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="10"></label></div>
+        <div class="row wrap"><button class="btn primary" type="submit">Recevoir un code</button></div>
+        <p class="small" id="loginMsg" aria-live="polite"></p>
+      </form>`;
+    return head("Compte", "Connecte-toi une fois sur chaque appareil : tu restes connecté, et tout se synchronise.") + `
+      <section class="panel acct">${body}</section>` + disclaimer;
+  }
+  function bindAccount(root) {
+    const f = root.querySelector("#loginForm"); if (!f) return;
+    let step = "email";
+    f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const msg = root.querySelector("#loginMsg"), btn = f.querySelector("button[type=submit]"), email = f.email.value.trim();
+      btn.disabled = true;
+      try {
+        if (step === "email") {
+          msg.textContent = "Envoi du code…";
+          await PyxisSync.sendCode(email);
+          step = "code"; f.querySelector(".code-step").hidden = false; f.email.readOnly = true; btn.textContent = "Se connecter";
+          msg.textContent = `Code envoyé à ${email}. Regarde aussi dans les indésirables.`; f.code.focus();
+        } else {
+          msg.textContent = "Vérification…";
+          const replaced = await PyxisSync.verify(email, f.code.value);
+          msg.textContent = "Connecté.";
+          if (replaced) location.reload(); else render();
+        }
+      } catch (err) { msg.innerHTML = `<b class="loss">${esc(err.message || "Erreur")}</b>`; }
+      btn.disabled = false;
+    });
+  }
+
   /* ======================= SAUVEGARDE ======================= */
   function backup() {
     const data = {};
@@ -1199,7 +1248,7 @@
     const parts = cut > 0 && ["fiche", "apprendre"].includes(h.slice(0, cut)) ? [h.slice(0, cut), h.slice(cut + 1)] : [h];
     let r = parts[0] || "";
     if (r === "accueil") r = "";
-    const views = { "": viewHome, veille: viewVeille, scanner: viewScanner, macro: viewMacro, portefeuille: viewPortfolio, journal: viewJournal, courtiers: viewBrokers, reglages: viewSettings, methode: viewMethod };
+    const views = { "": viewHome, veille: viewVeille, scanner: viewScanner, macro: viewMacro, portefeuille: viewPortfolio, journal: viewJournal, courtiers: viewBrokers, reglages: viewSettings, methode: viewMethod, compte: viewAccount };
     let html;
     if (r === "fiche") html = viewFiche(parts[1] || "");
     else if (r === "apprendre") html = parts[1] ? viewLesson(parts[1]) : viewLearn();
@@ -1211,6 +1260,7 @@
     runSims();
     typo(document.getElementById("app") || document.body);
     if (window.PyxisAI && r === "reglages") PyxisAI.bindSettings(main);
+    if (r === "compte") bindAccount(main);
     const inAccount = ACCOUNT.some(([k]) => k === r);
     document.querySelectorAll("[data-route]").forEach((a) => {
       const k = a.dataset.route;
@@ -1301,6 +1351,8 @@
       if (a === "onboard") onboarding(0);
       if (a === "add-position") positionModal();
       if (a === "import-csv") importModal();
+      if (a === "sign-out") PyxisSync.signOut().then(render);
+      if (a === "sync-now") { t.disabled = true; PyxisSync.push().then(render).catch((e) => { t.disabled = false; t.textContent = "Échec : " + e.message; }); }
       if (a === "del-talk") { state.journal = state.journal.filter((x) => String(x.id) !== t.dataset.id); store.set("journal", state.journal); render(); }
       if (a === "sim-add") {
         const u = M.universe.find((x) => x.ticker === t.dataset.ticker);
@@ -1374,5 +1426,11 @@
   }
   shell(); bind(); window.Logo && Logo.align();
   window.PyxisAI && PyxisAI.mount({ context: pageContext, env: pyxEnv });
-  loadData().finally(go);
+  const syncReady = new Promise((res) => { // supabase-js est chargé en différé : on attend le chargement de la page
+    const start = () => (window.PyxisSync ? PyxisSync.init() : Promise.resolve()).catch(() => {}).finally(res);
+    document.readyState === "complete" ? start() : window.addEventListener("load", start, { once: true });
+    setTimeout(res, 4000);
+  });
+  Promise.all([loadData(), syncReady]).finally(go);
+  window.PyxisSync?.onChange(() => { if (/^#compte/.test(location.hash)) render(); });
 })();
