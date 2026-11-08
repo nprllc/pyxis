@@ -66,9 +66,20 @@ Le signe Pyxis, en bas à droite de chaque page, ouvre une conversation sans qui
 
 Si Pyxis répond « erreur » : le nom du modèle a peut-être été retiré par le fournisseur (mets le nom du modèle actuel), ou la clé a expiré ou n'a plus de crédit. « Enregistrer et tester » vérifie tout en une seconde.
 
-## Ton compte (Supabase)
+## Ton compte (Supabase + Google)
 
-La connexion et la synchronisation entre appareils passent par un projet Supabase gratuit, dont l'adresse et la clé publique sont dans `site/js/cloud-config.js`. Si le projet est mis en pause (Supabase met en veille les projets gratuits inactifs une semaine), ouvre supabase.com et clique sur **Restore** : rien n'est perdu. Sans compte, le site marche quand même, avec les données du navigateur.
+La connexion et la synchronisation entre appareils passent par un projet Supabase gratuit, dont l'adresse et la clé publique sont dans `site/js/cloud-config.js`. Le compte se trouve en haut de **Réglages**.
+
+- **Connexion avec Google** : client OAuth « Pyxis » dans la console Google Cloud (projet « My First Project », Google Auth Platform). Il renvoie vers `https://goeqoloebioyqvstohne.supabase.co/auth/v1/callback`. L'application est en mode « Test » : seules les adresses de la liste « Utilisateurs tests » (rubrique Cible) peuvent se connecter. Pour ajouter quelqu'un, ajoute son adresse Gmail là.
+- **Lien par e-mail** : solution de secours, toujours disponible sous le bouton Google.
+- **Inscriptions** : fermées dans Supabase (Authentication → Sign In / Providers → « Allow new users to sign up »). Seul ton compte existe.
+- **En pause** : Supabase met en veille les projets gratuits inactifs une semaine ; la mise à jour du soir le réveille. S'il est quand même en pause, ouvre supabase.com et clique sur **Restore** : rien n'est perdu.
+
+Sans compte, le site marche quand même, avec les données du navigateur.
+
+## L'app sur l'iPhone
+
+Safari → Partager → **Sur l'écran d'accueil**. L'app a son propre stockage, séparé de Safari : connecte-toi une fois dedans (Réglages → Continuer avec Google). Après une mise à jour du site, si l'app semble ancienne, ferme-la complètement puis rouvre-la. Les fichiers sont versionnés (`?v=…` dans `site/index.html`) : change ce numéro quand tu modifies le JS ou le CSS.
 
 ## Relancer une mise à jour à la main
 
