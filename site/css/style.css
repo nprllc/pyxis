@@ -199,9 +199,9 @@ a { color: inherit; }
 
 /* ---------- Idées (liste éditoriale) ---------- */
 .opps { list-style: none; margin: 0; padding: 0; }
-.opp { display: grid; grid-template-columns: 70px 1fr 120px; gap: 22px; align-items: center; padding: 18px 0; text-decoration: none; color: inherit; border-bottom: 1px solid var(--rule-soft); transition: padding 0.25s ease; }
+.opp { display: grid; grid-template-columns: 70px 1fr 120px; gap: 22px; align-items: center; padding: 18px 0; text-decoration: none; color: inherit; border-bottom: 1px solid var(--rule-soft); }
 .opps li:first-child .opp { padding-top: 4px; }
-.opp:hover { padding-left: 10px; }
+.opp:hover .t b { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .opp .t { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .opp .t b { font: 500 20px/1.15 var(--serif); letter-spacing: -0.01em; }
 .opp p { font-family: var(--serif); color: var(--mute); font-size: 15px; margin-top: 4px; max-width: 54ch; }
@@ -367,7 +367,7 @@ label.field b { font: 400 30px var(--sans); color: var(--ink); letter-spacing: -
 .quiz-end { border: 1px solid var(--gain); padding: 12px 14px; }
 .apply { display: block; margin: 34px 0 10px; padding: 16px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); color: var(--ink); text-decoration: none; font: 400 22px var(--serif); }
 .apply .label { display: block; margin-bottom: 4px; }
-.apply:hover { padding-left: 8px; }
+.apply:hover { text-decoration: underline; text-underline-offset: 4px; }
 .lesson-nav { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
 
 /* ---------- Explique-moi ---------- */
@@ -394,8 +394,8 @@ body.explain-on [data-explain] { text-decoration: underline solid var(--gain); t
 .modal select option { color: var(--ink); }
 .modal .dim { color: var(--on-ink-mute); }
 .opts { display: grid; gap: 0; margin: 24px 0 22px; border-top: 1px solid rgba(243, 206, 187, 0.25); }
-.opt { text-align: left; padding: 18px 4px; border: 0; border-bottom: 1px solid rgba(243, 206, 187, 0.25); background: transparent; color: var(--on-ink); font: 400 17px var(--sans); cursor: pointer; transition: padding 0.2s; }
-.opt:hover { padding-left: 14px; }
+.opt { text-align: left; padding: 18px 4px; border: 0; border-bottom: 1px solid rgba(243, 206, 187, 0.25); background: transparent; color: var(--on-ink); font: 400 17px var(--sans); cursor: pointer; transition: background 0.2s; }
+.opt:hover { background: rgba(243, 206, 187, 0.06); }
 .opt span { display: block; color: var(--on-ink-mute); font: 400 14px var(--serif); margin-top: 2px; }
 .opt[aria-pressed="true"] { color: var(--gain); }
 .dots { display: flex; gap: 6px; }
