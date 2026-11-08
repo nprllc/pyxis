@@ -62,16 +62,17 @@
   function geometry(D, vertical) {
     const fs = (CAP * D) / metrics.cap, capH = CAP * D, gap = GAPR * D, tw = metrics.width * fs;
     return vertical
-      // À la verticale, le nom se lit de haut en bas, juste après le cercle (le signe précède le nom).
-      ? { fs, w: D, h: D + gap + tw, tx: D / 2 - capH / 2, ty: D + gap, rot: true }
-      : { fs, w: D + gap + tw, h: D, tx: D + gap, ty: D / 2 + capH / 2, rot: false };
+      // À la verticale, le cercle est en bas et le nom monte au-dessus de lui (lecture de bas en haut) :
+      // le signe précède toujours le nom.
+      ? { fs, w: D, h: D + gap + tw, tx: D / 2 + capH / 2, ty: tw, my: tw + gap, rot: true }
+      : { fs, w: D + gap + tw, h: D, tx: D + gap, ty: D / 2 + capH / 2, my: 0, rot: false };
   }
   function lockup({ size = 48, color = "currentColor", vertical = false } = {}) {
     const g = geometry(size, vertical);
     const inner = mark({ size: 100, color, title: "" }).replace(/^<svg[^>]*>|<\/svg>$/g, "");
     return `<svg class="lockup" data-d="${size}" data-v="${vertical ? 1 : 0}" xmlns="http://www.w3.org/2000/svg" width="${g.w.toFixed(1)}" height="${g.h.toFixed(1)}" viewBox="0 0 ${g.w.toFixed(1)} ${g.h.toFixed(1)}" role="img" aria-label="Pyxis" style="display:block;overflow:visible">
-      <svg x="0" y="0" width="${size}" height="${size}" viewBox="0 0 100 100" overflow="visible">${inner}</svg>
-      <text x="${g.tx.toFixed(2)}" y="${g.ty.toFixed(2)}" ${g.rot ? `transform="rotate(90 ${g.tx.toFixed(2)} ${g.ty.toFixed(2)})"` : ""} fill="${color}" font-family="${FONT.replace(/"/g, "")}" font-weight="500" font-size="${g.fs.toFixed(2)}" letter-spacing="${(-0.035 * g.fs).toFixed(2)}">Pyxis</text>
+      <svg class="lk-mark" x="0" y="${g.my.toFixed(2)}" width="${size}" height="${size}" viewBox="0 0 100 100" overflow="visible">${inner}</svg>
+      <text x="${g.tx.toFixed(2)}" y="${g.ty.toFixed(2)}" ${g.rot ? `transform="rotate(-90 ${g.tx.toFixed(2)} ${g.ty.toFixed(2)})"` : ""} fill="${color}" font-family="${FONT.replace(/"/g, "")}" font-weight="500" font-size="${g.fs.toFixed(2)}" letter-spacing="${(-0.035 * g.fs).toFixed(2)}">Pyxis</text>
     </svg>`;
   }
   /** Recalcule l'alignement avec les vraies mesures de la police, une fois chargée. */
@@ -89,7 +90,8 @@
       el.setAttribute("viewBox", `0 0 ${g.w.toFixed(1)} ${g.h.toFixed(1)}`);
       t.setAttribute("x", g.tx.toFixed(2)); t.setAttribute("y", g.ty.toFixed(2));
       t.setAttribute("font-size", g.fs.toFixed(2)); t.setAttribute("letter-spacing", (-0.035 * g.fs).toFixed(2));
-      if (v) t.setAttribute("transform", `rotate(90 ${g.tx.toFixed(2)} ${g.ty.toFixed(2)})`);
+      if (v) t.setAttribute("transform", `rotate(-90 ${g.tx.toFixed(2)} ${g.ty.toFixed(2)})`);
+      const mk = el.querySelector(".lk-mark"); if (mk) mk.setAttribute("y", g.my.toFixed(2));
     });
   }
   if (typeof document !== "undefined" && document.fonts) document.fonts.ready.then(() => align());
