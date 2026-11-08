@@ -49,7 +49,7 @@
   };
   const NAME = "Pyxis";
   const TOP = [["", "Aujourd'hui"], ["veille", "Veille"], ["scanner", "Scanner"], ["macro", "Macro"], ["apprendre", "Apprendre"], ["methode", "Méthode"]];
-  const ACCOUNT = [["portefeuille", "Portefeuille"], ["journal", "Journal"], ["courtiers", "Courtiers"], ["reglages", "Réglages"], ["compte", "Compte"]];
+  const ACCOUNT = [["portefeuille", "Portefeuille"], ["journal", "Journal"], ["courtiers", "Courtiers"], ["reglages", "Réglages"]];
 
   /* ---------- Calculs du profil ---------- */
   function planSplit(p) {
@@ -943,8 +943,9 @@
 
   function viewSettings() {
     const p = state.profile;
-    return head("Réglages", "Ton profil et tes règles. Elles servent à calculer les montants suggérés et les alertes.") + `
-    <section class="panel" style="max-width:640px">
+    return head("Réglages", "Ton compte, ton profil et tes règles. Elles servent à calculer les montants suggérés et les alertes.") + accountPanel() + `
+    <section class="panel" style="max-width:640px;margin-top:54px">
+      <div class="panel-head"><h2>Profil</h2></div>
       <form id="profileForm" class="stack">
         <label class="field">Prénom<input type="text" name="name" value="${esc(p.name)}"></label>
         <div class="grid g-2">
@@ -960,7 +961,7 @@
     </section>
     <section class="panel" style="max-width:640px;margin-top:54px">
       <div class="panel-head"><h2>Tes données</h2></div>
-      <p class="muted small" style="margin-bottom:16px">Ton profil, tes positions, ton journal et ta progression sont enregistrés uniquement dans ce navigateur. Fais une sauvegarde de temps en temps : si tu vides ton navigateur ou changes d'appareil, tu pourras tout récupérer.</p>
+      <p class="muted small" style="margin-bottom:16px">${window.PyxisSync?.user?.() ? "Tes données suivent ton compte. Une sauvegarde reste utile pour garder une copie chez toi." : "Sans compte, ton profil, tes positions, ton journal et ta progression restent uniquement dans ce navigateur. Fais une sauvegarde de temps en temps pour pouvoir tout récupérer."}</p>
       <div class="row wrap"><button class="btn" type="button" data-action="backup">Télécharger une sauvegarde</button>
         <label class="btn" style="cursor:pointer">Restaurer une sauvegarde<input type="file" accept=".json,application/json" id="restoreFile" hidden></label></div>
       <p class="muted small" id="backupMsg" aria-live="polite" style="margin-top:10px"></p>
@@ -968,11 +969,11 @@
   }
 
   /* ======================= COMPTE ======================= */
-  function viewAccount() {
+  function accountPanel() {
     const S = window.PyxisSync, u = S?.user?.();
     const last = S?.lastSync?.();
     let body;
-    if (!S?.configured()) body = `<p class="muted">La connexion n'est pas encore branchée sur ce site. En attendant, tes données restent dans ce navigateur (pense aux sauvegardes dans Réglages).</p>`;
+    if (!S?.configured()) body = `<p class="muted">La connexion n'est pas encore branchée sur ce site. En attendant, tes données restent dans ce navigateur (pense aux sauvegardes ci-dessous).</p>`;
     else if (!S.available()) body = `<p class="muted">Le service de connexion ne répond pas pour l'instant. Réessaie dans un moment.</p>`;
     else if (u) body = `<p class="acct-who">Connecté en tant que <b>${esc(u.email)}</b></p>
         <p class="muted small">${last ? `Dernière synchronisation : ${new Date(last).toLocaleString("fr-FR", { dateStyle: "long", timeStyle: "short" })}.` : ""} Ton profil, ton portefeuille, ton journal, ta progression et ta clé de Pyxis suivent ce compte sur tous tes appareils.</p>
@@ -996,8 +997,9 @@
           <p class="small" id="linkMsg" aria-live="polite"></p>
         </form>
       </details>`;
-    return head("Compte", "Connecte-toi une fois sur chaque appareil : tu restes connecté, et tout se synchronise.") + `
-      <section class="panel acct">${body}</section>` + disclaimer;
+    return `<section class="panel acct" id="compte" style="max-width:640px">
+      <div class="panel-head"><h2>Compte</h2></div>
+      ${u ? "" : `<p class="muted small" style="margin-bottom:18px">Connecte-toi une fois sur chaque appareil : tu restes connecté, et tout se synchronise.</p>`}${body}</section>`;
   }
   const isStandalone = () => window.matchMedia?.("(display-mode: standalone)").matches || navigator.standalone === true;
   function bindAccount(root) {
@@ -1264,7 +1266,8 @@
     const parts = cut > 0 && ["fiche", "apprendre"].includes(h.slice(0, cut)) ? [h.slice(0, cut), h.slice(cut + 1)] : [h];
     let r = parts[0] || "";
     if (r === "accueil") r = "";
-    const views = { "": viewHome, veille: viewVeille, scanner: viewScanner, macro: viewMacro, portefeuille: viewPortfolio, journal: viewJournal, courtiers: viewBrokers, reglages: viewSettings, methode: viewMethod, compte: viewAccount };
+    if (r === "compte") { history.replaceState(null, "", location.pathname + location.search + "#reglages"); r = "reglages"; }
+    const views = { "": viewHome, veille: viewVeille, scanner: viewScanner, macro: viewMacro, portefeuille: viewPortfolio, journal: viewJournal, courtiers: viewBrokers, reglages: viewSettings, methode: viewMethod };
     let html;
     if (r === "fiche") html = viewFiche(parts[1] || "");
     else if (r === "apprendre") html = parts[1] ? viewLesson(parts[1]) : viewLearn();
@@ -1276,7 +1279,7 @@
     runSims();
     typo(document.getElementById("app") || document.body);
     if (window.PyxisAI && r === "reglages") PyxisAI.bindSettings(main);
-    if (r === "compte") bindAccount(main);
+    if (r === "reglages") bindAccount(main);
     const inAccount = ACCOUNT.some(([k]) => k === r);
     document.querySelectorAll("[data-route]").forEach((a) => {
       const k = a.dataset.route;
@@ -1448,5 +1451,5 @@
     setTimeout(res, 4000);
   });
   Promise.all([loadData(), syncReady]).finally(go);
-  window.PyxisSync?.onChange(() => { if (/^#compte/.test(location.hash)) render(); });
+  window.PyxisSync?.onChange(() => { if (/^#(compte|reglages)/.test(location.hash)) render(); });
 })();

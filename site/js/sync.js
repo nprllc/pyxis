@@ -51,7 +51,7 @@
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "implicit", storageKey: "pyxis.auth" },
     });
     const { data } = await sb.auth.getSession();
-    if (/access_token=|error_description=/.test(location.hash)) history.replaceState(null, "", location.pathname + "#compte");
+    if (/access_token=|error_description=/.test(location.hash)) history.replaceState(null, "", location.pathname + "#reglages");
     user = data.session?.user || null;
     sb.auth.onAuthStateChange((_e, s) => { user = s?.user || null; notify(); });
     if (user) {
