@@ -706,8 +706,12 @@
       <line x1="${P}" x2="${W - P}" y1="${Y(1)}" y2="${Y(1)}" stroke="var(--rule-soft)"/>
       <text x="${P}" y="${Y(1) + 16}" class="bt-ax">1 € investi</text>
       ${years.map(([y, i]) => `<text x="${X(i)}" y="${H - 8}" class="bt-ax">${y}</text>`).join("")}
-      ${keys.map(([k, c, dash]) => `<polyline fill="none" stroke="${c}" stroke-width="${k === "top" ? 2.4 : 1.5}" ${dash ? `stroke-dasharray="${dash}"` : ""} points="${bt.curves[k].map((v, i) => X(i).toFixed(1) + "," + Y(v).toFixed(1)).join(" ")}"/>
-        <text x="${W - P + 4}" y="${Y(bt.curves[k][n - 1]) + 4}" class="bt-ax" fill="${c}">${num(bt.curves[k][n - 1], 2)} €</text>`).join("")}
+      ${keys.map(([k, c, dash]) => `<polyline fill="none" stroke="${c}" stroke-width="${k === "top" ? 2.4 : 1.5}" ${dash ? `stroke-dasharray="${dash}"` : ""} points="${bt.curves[k].map((v, i) => X(i).toFixed(1) + "," + Y(v).toFixed(1)).join(" ")}"/>`).join("")}
+      ${(() => { // étiquettes de fin, écartées pour ne pas se chevaucher
+        const ls = keys.map(([k, c]) => ({ c, v: bt.curves[k][n - 1], y: Y(bt.curves[k][n - 1]) + 4 })).sort((a, b) => a.y - b.y);
+        ls.forEach((l, i) => { if (i && l.y - ls[i - 1].y < 14) l.y = ls[i - 1].y + 14; });
+        return ls.map((l) => `<text x="${W - P + 4}" y="${l.y.toFixed(1)}" class="bt-ax" fill="${l.c}">${num(l.v, 2)} €</text>`).join("");
+      })()}
     </svg>`;
   }
   function viewMethod() {
@@ -746,7 +750,8 @@
       </tbody></table>
       <div class="grid g-2" style="margin-top:28px;gap:24px 40px">
         <div><span class="label">Ce que ça dit</span>
-          <p class="small" style="margin-top:6px">Le tiers le mieux classé a fait mieux que la moyenne des actions suivies ${num(bt.beat_all_pct, 0)} % des mois${bt.beat_bench_pct != null ? `, et mieux que l'ETF monde ${num(bt.beat_bench_pct, 0)} % des mois` : ""}. Un mois typique, l'écart avec la moyenne allait de <b>${pct(bt.excess.p10, 1)}</b> à <b>${pct(bt.excess.p90, 1)}</b> (8 mois sur 10), avec un milieu à ${pct(bt.excess.median, 2)}. Autrement dit : même quand une méthode marche, elle se trompe souvent sur un mois donné.</p></div>
+          <p class="small" style="margin-top:6px">${(() => { const t = bt.strategies.top, a = bt.strategies.all, d = t.annual - a.annual;
+            return `<b>${Math.abs(d) < 1.5 ? "Un rendement proche de la moyenne, avec moins de risque" : d > 0 ? "Un peu mieux que la moyenne" : "Moins bien que la moyenne"}</b> : ${pct(t.annual)} par an contre ${pct(a.annual)} pour toutes les actions suivies, avec une pire baisse de ${pct(t.maxdd, 0)} contre ${pct(a.maxdd, 0)}. Le tiers le moins bien classé a fait nettement moins bien (${pct(bt.strategies.bottom.annual)} par an). `; })()}Le tiers le mieux classé a fait mieux que la moyenne des actions suivies ${num(bt.beat_all_pct, 0)} % des mois${bt.beat_bench_pct != null ? `, et mieux que l'ETF monde ${num(bt.beat_bench_pct, 0)} % des mois` : ""}. Un mois typique, l'écart avec la moyenne allait de <b>${pct(bt.excess.p10, 1)}</b> à <b>${pct(bt.excess.p90, 1)}</b> (8 mois sur 10), avec un milieu à ${pct(bt.excess.median, 2)}. Autrement dit : même quand une méthode marche, elle se trompe souvent sur un mois donné.</p></div>
         <div><span class="label">Ce que ça ne dit pas</span>
           <ul class="plain-list small" style="margin-top:6px">
             <li><b>${ex("survivant", "Biais du survivant")}</b> : on teste la liste d'aujourd'hui. Les entreprises disparues ou sorties des indices n'y sont pas, ce qui embellit tous les résultats.</li>

@@ -75,7 +75,7 @@ a { color: inherit; }
 .rail-foot { margin-top: auto; padding: 26px 34px; }
 
 .col { min-width: 0; display: flex; flex-direction: column; }
-.tabs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)) minmax(0, 1fr); height: var(--top); border-bottom: 1px solid var(--rule-soft); }
+.tabs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)) 0.3fr minmax(0, 1fr); height: var(--top); border-bottom: 1px solid var(--rule-soft); }
 .tabs a {
   display: flex; align-items: center; padding: 0 26px; text-decoration: none;
   border-right: 1px solid var(--rule-soft); font-size: 15px; transition: background 0.2s, color 0.2s;
