@@ -20,6 +20,8 @@
   };
   const state = {
     profile: store.get("profile", { ...M.profile }),
+    // Le plan n'existe que si la personne l'a réglé elle-même, dans son propre navigateur.
+    hasPlan: !!store.get("profile", null),
     journal: store.get("journal", []),
     positions: store.get("positions", { real: [], simulated: [] }),
     book: "real",
@@ -164,7 +166,7 @@
     const day = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
     return `
     <section class="pulse" aria-labelledby="pulse-t">
-      <div class="pulse-top"><span class="label">Bonjour ${esc(p.name)}, nous sommes ${day}</span>${dataChip(true)}</div>
+      <div class="pulse-top"><span class="label">${p.name && state.hasPlan ? `Bonjour ${esc(p.name)}, nous sommes` : "Nous sommes"} ${day}</span>${dataChip(true)}</div>
       <div class="pulse-grid">
         <div class="pulse-text">
           <span class="label">${ex("seance", "Séance")} du ${esc(hl.when)}, ${hl.n} titres suivis</span>
@@ -190,8 +192,8 @@
       </div>
     </section>
 
-    <section class="plan-band" aria-label="Ton plan">
-      <div><span class="label">Ton plan, lui, ne change pas</span>
+    ${state.hasPlan ? `    <section class="plan-band" aria-label="Ton plan">
+      <div><span class="label">Ton plan</span>
         <div class="pulse-amount num">${p.monthly} €<small>chaque mois</small></div></div>
       <div>
         <div class="split" role="img" aria-label="${sp.core} € en cœur, ${sp.sat} € en satellite"><span style="width:${p.core}%"></span><span style="width:${100 - p.core}%"></span></div>
@@ -202,7 +204,7 @@
         <p class="pulse-note">Mets la part satellite de côté jusqu'à environ 100 € avant d'acheter une ${ex("action", "action")} seule : avec 1 € de ${ex("frais", "frais")}, un achat de 20 € coûte déjà 5 %.</p>
       </div>
       <a class="btn" href="#portefeuille">Voir la projection</a>
-    </section>
+    </section>` : ""}
 
     ${M.brief ? `<section style="margin-top:64px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:end;border-top:1px solid var(--rule);padding-top:12px">
       <div><span class="label">La veille du ${new Date(M.brief.date + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</span>
@@ -790,7 +792,7 @@
       if (step + 1 < ONB.length) onboarding(step + 1, draft);
       else {
         if (draft.risk === "faible") { draft.core = 90; draft.maxLine = 5; } else if (draft.risk === "moyenne") { draft.core = 80; draft.maxLine = 8; } else { draft.core = 80; draft.maxLine = 10; }
-        state.profile = draft; state.sim.monthly = draft.monthly; store.set("profile", draft); store.set("onboarded", true); render();
+        state.profile = draft; state.sim.monthly = draft.monthly; store.set("profile", draft); state.hasPlan = true; store.set("onboarded", true); render();
       }
     }));
     back.querySelector(".opt").focus();
@@ -965,7 +967,7 @@
       e.preventDefault();
       const d = Object.fromEntries(new FormData(e.target));
       ["capital", "monthly", "core", "maxLine"].forEach((k) => (d[k] = +d[k]));
-      state.profile = { ...state.profile, ...d }; state.sim.monthly = d.monthly; store.set("profile", state.profile);
+      state.profile = { ...state.profile, ...d }; state.sim.monthly = d.monthly; store.set("profile", state.profile); state.hasPlan = true;
       $("#saved").textContent = "Profil enregistré.";
     });
     window.addEventListener("hashchange", go);
