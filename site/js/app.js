@@ -169,7 +169,7 @@
       <div class="pulse-top"><span class="label">${p.name && state.hasPlan ? `Bonjour ${esc(p.name)}, nous sommes` : "Nous sommes"} ${day}</span>${dataChip(true)}</div>
       <div class="pulse-grid">
         <div class="pulse-text">
-          <span class="label pyx-host">${ex("seance", "Séance")} du ${esc(hl.when)}, ${hl.n} titres suivis</span>
+          <span class="label">${ex("seance", "Séance")} du ${esc(hl.when)}, ${hl.n} titres suivis</span>
           <h1 class="pulse-title" id="pulse-t">${esc(hl.title)}</h1>
           <p class="pulse-sub">${hl.up} titres montent, ${hl.down} baissent. Variation médiane : <b class="${hl.median >= 0 ? "gain" : "loss"}">${pct(hl.median, 2)}</b>.${hl.world != null ? ` L'${ex("etfMonde", "ETF monde")} : <b class="${hl.world >= 0 ? "gain" : "loss"}">${pct(hl.world, 2)}</b>.` : ""}</p>
           <div class="health">
@@ -207,10 +207,10 @@
     </section>` : ""}
 
     ${M.brief && briefFresh() ? `<section class="brief-home">
-      <div><span class="label pyx-host">La veille du ${new Date(M.brief.date + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</span>
+      <div><span class="label">La veille du ${new Date(M.brief.date + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</span>
         <h2 class="serif" style="font-size:clamp(26px,3vw,40px);line-height:1.08;letter-spacing:-.02em;margin:14px 0 10px;max-width:30ch">${esc(M.brief.headline)}</h2>
         <p class="muted" style="max-width:70ch">${esc(M.brief.summary)}</p></div>
-      <a class="btn" href="#veille">Lire la veille</a></section>` : ""}
+      <div class="row" style="gap:10px"><a class="btn" href="#veille">Lire la veille</a><span class="pyx-slot" data-scope="brief"></span></div></section>` : ""}
     <div class="grid g-home" style="margin-top:64px">
       <section class="panel" aria-labelledby="top-t">
         <div class="panel-head"><span class="label">Idées du jour</span><a class="label" href="#scanner">Tout le scanner</a></div>
@@ -237,7 +237,7 @@
           <div class="row between"><span class="label">À apprendre ensuite · ${esc(moduleOf(next).title)}</span><span class="label">${next.minutes} min</span></div>
           <h3 id="lesson-t" class="serif" style="font-size:30px;line-height:1.08;font-weight:400;letter-spacing:-.02em;margin:22px 0 12px">${esc(next.title)}</h3>
           <p class="muted" style="margin-bottom:22px">${learnDone()} leçon${learnDone() > 1 ? "s" : ""} terminée${learnDone() > 1 ? "s" : ""} sur ${M.lessons.length}.</p>
-          <a class="btn" href="#apprendre-${next.id}">Commencer la leçon</a>
+          <div class="row" style="gap:10px"><a class="btn" href="#apprendre-${next.id}">Commencer la leçon</a><span class="pyx-slot" data-scope="hero"></span></div>
         </section>` : `<section class="hero"><span class="label">Parcours terminé</span><h3 class="serif" style="font-size:30px;font-weight:400;margin:22px 0 12px">Les ${M.lessons.length} leçons sont faites.</h3><a class="btn" href="#apprendre">Revoir une leçon</a></section>`}
       </div>
     </div>`;
@@ -251,7 +251,7 @@
   function oppRow(o) {
     return `<li><a class="opp" href="#fiche-${o.ticker}">
       ${C.orb(o.score, o.low, o.high, 60)}
-      <div><div class="t"><b>${esc(o.name)}</b><span class="tag ${o.type}">${TYPE_LABEL[o.type]}</span></div><p>${esc(o.thesis)}</p></div>
+      <div><div class="t"><b>${esc(o.name)}</b><span class="tag ${o.type}">${TYPE_LABEL[o.type]}</span><span class="pyx-slot" data-scope="opp"></span></div><p>${esc(o.thesis)}</p></div>
       ${C.sparkline(o.spark, { w: 110, h: 34 })}</a></li>`;
   }
 
@@ -347,7 +347,7 @@
       <section><div class="fiche-head">
         ${C.orb(o.score, o.low, o.high, 170)}
         <div>
-          <span class="tag ${o.type}">${TYPE_LABEL[o.type]}</span>
+          <span class="tag ${o.type}">${TYPE_LABEL[o.type]}</span><span class="pyx-slot" data-scope="page"></span>
           <p class="thesis">${esc(o.thesis)}</p>
           <p class="muted" style="max-width:60ch">Score de ${o.score} sur 100, probablement entre ${o.low} et ${o.high}. ${o.backtest ? (o.high - o.low > 20 ? "La fourchette est large : les cas passés similaires sont peu nombreux et assez dispersés." : "La fourchette est étroite : les données sont complètes et les cas passés cohérents.") : (o.high - o.low > 20 ? "La fourchette est large : des données manquent ou les facteurs se contredisent." : "La fourchette est assez étroite : les facteurs vont plutôt dans le même sens.") + " Seule la partie « prix » du score est testée sur le passé : voir la page " + `<a href="#methode">Méthode</a>.`}</p>
           <div class="facts">
@@ -1255,11 +1255,19 @@
   }
 
   function bindLearn() {
+    document.addEventListener("keydown", (e) => { const b = e.target.closest?.("[data-ask]"); if (b && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); b.click(); } });
     document.addEventListener("click", (e) => {
       const b = e.target.closest("[data-ask]"); if (!b || !window.PyxisAI) return;
       e.preventDefault(); e.stopPropagation();
       const ctx = PyxisAI.contextOf(b);
-      const m = location.hash.match(/^#fiche-(.+)$/); if (m) ctx.ticker = decodeURIComponent(m[1]);
+      const m = location.hash.match(/^#fiche-(.+)$/), link = b.closest('a[href^="#fiche-"]');
+      const tk = link ? decodeURIComponent(link.getAttribute("href").slice(7)) : m ? decodeURIComponent(m[1]) : "";
+      const o = tk && (M.universe.find((x) => x.ticker === tk) || M.opportunities?.find((x) => x.ticker === tk));
+      if (o) {
+        ctx.ticker = tk;
+        const f = o.factors || {};
+        ctx.text += `\n\nDonnées Pyxis sur ${o.name} (${o.ticker}, ${o.sector || ""}) : cours ${num(o.price, 2)} ${o.currency || ""} ; séance ${num(day1(o), 2)} % ; 1 mois ${num(o.chg1m)} % ; 12 mois ${num(o.chg12m)} % ; score ${o.score} (fourchette ${o.low}-${o.high}) ; critères valorisation ${f.valuation ?? "?"}, qualité ${f.quality ?? "?"}, momentum ${f.momentum ?? "?"}, risque ${f.risk ?? "?"}, macro ${f.macro ?? "?"} ; PER ${num(o.pe)} (secteur ${num(o.pe_sector)}) ; volatilité ${num(o.vol, 0)} % ; pire baisse 1 an ${num(o.maxdd_1y, 0)} %${o.analysts ? ` ; analystes : ${o.analysts.label}, objectif moyen ${num(o.analysts.target, 2)}` : ""}${o.thesis ? ` ; thèse : ${o.thesis}` : ""}${o.invalidation ? ` ; invalidation : ${o.invalidation}` : ""}.`;
+      }
       PyxisAI.open(ctx, pyxEnv());
     }, true);
     document.addEventListener("change", (e) => { if (e.target.id === "restoreFile" && e.target.files[0]) restore(e.target.files[0]); });

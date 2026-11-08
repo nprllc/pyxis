@@ -500,9 +500,14 @@ h1 .pyx-ask { width: 32px; height: 32px; }
 h1 .pyx-ask svg { width: 26px; height: 26px; }
 .label .pyx-ask { width: 20px; height: 20px; margin-left: 6px; }
 .label .pyx-ask svg { width: 16px; height: 16px; }
-.pyx-point { position: relative; }
-.pyx-point > .pyx-ask { position: absolute; top: 12px; right: -34px; }
-@media (max-width: 860px) { .pyx-point > .pyx-ask { position: static; margin: 6px 0 0; } }
+.pyx-slot { display: inline-flex; align-items: center; }
+.opp .t .pyx-ask, .pyx-slot .pyx-ask { margin-left: 2px; }
+.panel-head > .pyx-ask { margin-left: 12px; flex: none; }
+.topbar > .row > .pyx-ask { margin: 0 4px 0 0; }
+.pyx-paste { padding: 0 22px 6px; display: flex; flex-direction: column; gap: 8px; }
+.pyx-paste textarea { font: 400 14px/1.45 var(--sans); background: transparent; border: 1px solid var(--rule); color: var(--ink); padding: 10px; resize: vertical; }
+.pyx-paste textarea:focus { outline: none; border-color: var(--ink); }
+.pyx-body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
 .pyx-back { position: fixed; inset: 0; z-index: 60; background: rgba(30, 27, 26, 0.32); opacity: 0; transition: opacity 0.2s; }
 .pyx-back.on { opacity: 1; }
 .pyx { position: absolute; top: 0; right: 0; bottom: 0; width: min(520px, 100vw); background: var(--paper); color: var(--ink); border-left: 1px solid var(--ink); display: flex; flex-direction: column; transform: translateX(24px); transition: transform 0.2s; }
