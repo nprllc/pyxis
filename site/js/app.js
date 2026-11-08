@@ -157,7 +157,7 @@
       top: sorted.slice(0, 3), bottom: sorted.slice(-3).reverse(),
     };
   }
-  const moverLink = (r) => `<a href="#fiche-${esc(r.o.ticker)}" class="mover"><span>${esc(r.o.name)}</span><b class="num ${r.d >= 0 ? "gain" : "loss"}">${pct(r.d, 1)}<span class="pyx-slot" data-scope="mover" data-ticker="${esc(r.o.ticker)}"></span></b></a>`;
+  const moverLink = (r) => `<a href="#fiche-${esc(r.o.ticker)}" class="mover"><span>${esc(r.o.name)}</span><b class="num ${r.d >= 0 ? "gain" : "loss"}">${pct(r.d, 1)}</b></a>`;
 
   function viewHome() {
     const p = state.profile, sp = planSplit(p), b = book("real");
@@ -166,28 +166,17 @@
     const day = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
     return `
     <section class="pulse" aria-labelledby="pulse-t">
-      <div class="pulse-top"><span class="label">${p.name && state.hasPlan ? `Bonjour ${esc(p.name)}, nous sommes` : "Nous sommes"} ${day}</span>${dataChip(true)}</div>
       <div class="pulse-grid">
         <div class="pulse-text">
-          <span class="label">${ex("seance", "Séance")} du ${esc(hl.when)}, ${hl.n} titres suivis</span>
+          <div class="pulse-top"><span class="label">${ex("seance", "Séance")} du ${esc(hl.when)}</span>${dataChip(true)}</div>
           <h1 class="pulse-title" id="pulse-t">${esc(hl.title)}</h1>
-          <p class="pulse-sub">${hl.up} titres montent, ${hl.down} baissent. Variation médiane : <b class="${hl.median >= 0 ? "gain" : "loss"}">${pct(hl.median, 2)}</b>.${hl.world != null ? ` L'${ex("etfMonde", "ETF monde")} : <b class="${hl.world >= 0 ? "gain" : "loss"}">${pct(hl.world, 2)}</b>.` : ""}</p>
-          <div class="health">
-            <div class="hbar" role="img" aria-label="${hl.up} en hausse, ${hl.down} en baisse"><span class="up" style="width:${(100 * hl.up / (hl.n || 1)).toFixed(1)}%"></span><span class="dn" style="width:${(100 * hl.down / (hl.n || 1)).toFixed(1)}%"></span></div>
-            <dl>
-              <div><dt class="label">${ex("largeur", "Largeur")}</dt><dd class="num">${Math.round((100 * hl.up) / (hl.n || 1))} % en hausse</dd></div>
-              <div><dt class="label">Tendance de fond</dt><dd class="num">${hl.above200} % au-dessus de leur ${ex("ma200", "moyenne 200 j")}</dd></div>
-              ${hl.week != null ? `<div><dt class="label">Sur 5 séances</dt><dd class="num ${hl.week >= 0 ? "gain" : "loss"}">${pct(hl.week, 1)} (médiane)</dd></div>` : ""}
-            </dl>
-          </div>
-          <div class="movers">
-            <div><span class="label">Plus fortes hausses</span>${hl.top.map(moverLink).join("")}</div>
-            <div><span class="label">Plus fortes baisses</span>${hl.bottom.map(moverLink).join("")}</div>
-          </div>
+          <p class="pulse-sub">${hl.up} titres montent, ${hl.down} baissent${hl.world != null ? `. L'${ex("etfMonde", "ETF monde")} : <b class="${hl.world >= 0 ? "gain" : "loss"}">${pct(hl.world, 2)}</b>` : ""}.</p>
+          <div class="hbar" role="img" aria-label="${hl.up} en hausse, ${hl.down} en baisse"><span class="up" style="width:${(100 * hl.up / (hl.n || 1)).toFixed(1)}%"></span><span class="dn" style="width:${(100 * hl.down / (hl.n || 1)).toFixed(1)}%"></span></div>
+          <p class="pulse-note-ink">Tendance de fond : ${hl.above200} % des titres restent au-dessus de leur ${ex("ma200", "moyenne 200 jours")}.</p>
         </div>
         <figure class="sky-box">
           <canvas id="pulseCanvas" aria-hidden="true"></canvas>
-          <figcaption class="label">Chaque point est un titre suivi. À droite ceux qui ont monté pendant la séance, à gauche ceux qui ont baissé ; en haut ceux qui montent depuis un mois. Les plus fortes hausses et baisses du jour sont reliées. Survole un point, clique pour sa fiche.</figcaption>
+          <figcaption class="label">Chaque point est un titre. À droite, ceux qui ont monté ; en haut, ceux qui montent depuis un mois.</figcaption>
         </figure>
       </div>
     </section>
@@ -210,7 +199,7 @@
       <div><span class="label">La veille du ${new Date(M.brief.date + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</span>
         <h2 class="serif" style="font-size:clamp(26px,3vw,40px);line-height:1.08;letter-spacing:-.02em;margin:14px 0 10px;max-width:30ch">${esc(M.brief.headline)}</h2>
         <p class="muted" style="max-width:70ch">${esc(M.brief.summary)}</p></div>
-      <div class="row" style="gap:10px"><a class="btn" href="#veille">Lire la veille</a><span class="pyx-slot" data-scope="brief"></span></div></section>` : ""}
+      <a class="btn" href="#veille">Lire la veille</a></section>` : ""}
     <div class="grid g-home" style="margin-top:64px">
       <section class="panel" aria-labelledby="top-t">
         <div class="panel-head"><span class="label">Idées du jour</span><a class="label" href="#scanner">Tout le scanner</a></div>
@@ -252,7 +241,7 @@
     return `<li><a class="opp" href="#fiche-${o.ticker}">
       ${C.orb(o.score, o.low, o.high, 60)}
       <div><div class="t"><b>${esc(o.name)}</b><span class="tag ${o.type}">${TYPE_LABEL[o.type]}</span></div><p>${esc(o.thesis)}</p></div>
-      ${C.sparkline(o.spark, { w: 110, h: 34 })}<span class="pyx-slot" data-scope="opp"></span></a></li>`;
+      ${C.sparkline(o.spark, { w: 110, h: 34 })}</a></li>`;
   }
 
   /* Constellation : chaque titre est un cercle, sa taille suit le score.
@@ -307,7 +296,7 @@
     <div class="table-scroll"><table class="table">
       <thead><tr><th>Titre</th><th class="hide-m">Tendance 3 mois</th><th class="r">1 mois</th><th class="r hide-m">${ex("rsi", "RSI")}</th><th class="r">${ex("score", "Score")}</th></tr></thead>
       <tbody>${rows.map((o) => `<tr data-go="#fiche-${o.ticker}" tabindex="0">
-        <td class="who"><b>${esc(o.name)}<span class="pyx-slot" data-scope="row" data-ticker="${esc(o.ticker)}"></span></b><span>${esc(o.ticker)} / ${esc(o.sector)}</span></td>
+        <td class="who"><b>${esc(o.name)}</b><span>${esc(o.ticker)} / ${esc(o.sector)}</span></td>
         <td class="hide-m">${C.sparkline(o.spark, { w: 120, h: 30 })}</td>
         <td class="r num ${o.chg1m >= 0 ? "gain" : "loss"}">${pct(o.chg1m)}</td>
         <td class="r num hide-m ${o.rsi < 30 ? "warn" : ""}">${o.rsi}</td>
@@ -347,7 +336,7 @@
       <section><div class="fiche-head">
         ${C.orb(o.score, o.low, o.high, 170)}
         <div>
-          <span class="tag ${o.type}">${TYPE_LABEL[o.type]}</span><span class="pyx-slot" data-scope="page"></span>
+          <span class="tag ${o.type}">${TYPE_LABEL[o.type]}</span>
           <p class="thesis">${esc(o.thesis)}</p>
           <p class="muted" style="max-width:60ch">Score de ${o.score} sur 100, probablement entre ${o.low} et ${o.high}. ${o.backtest ? (o.high - o.low > 20 ? "La fourchette est large : les cas passés similaires sont peu nombreux et assez dispersés." : "La fourchette est étroite : les données sont complètes et les cas passés cohérents.") : (o.high - o.low > 20 ? "La fourchette est large : des données manquent ou les facteurs se contredisent." : "La fourchette est assez étroite : les facteurs vont plutôt dans le même sens.") + " Seule la partie « prix » du score est testée sur le passé : voir la page " + `<a href="#methode">Méthode</a>.`}</p>
           <div class="facts">
@@ -399,7 +388,7 @@
           <div class="panel-head"><h2>Dans l'actualité</h2><p>Derniers articles</p></div>
           ${relevantNews(o).length ? relevantNews(o).map((n) => `<a class="news-item" href="${esc(n.url)}" target="_blank" rel="noopener" style="display:block;padding:11px 0;border-bottom:1px solid var(--rule-soft);text-decoration:none">
               <span class="serif" style="font-size:16px;line-height:1.35">${esc(n.title)}</span>
-              <span class="label" style="display:block;margin-top:4px">${esc(n.publisher || "")}${n.date ? " / " + new Date(n.date).toLocaleDateString("fr-FR", { day: "numeric", month: "short" }) : ""}<span class="pyx-slot" data-scope="news"></span></span></a>`).join("")
+              <span class="label" style="display:block;margin-top:4px">${esc(n.publisher || "")}${n.date ? " / " + new Date(n.date).toLocaleDateString("fr-FR", { day: "numeric", month: "short" }) : ""}</span></a>`).join("")
             : `<p class="muted">${o.news?.length ? "Aucun article récent ne parle directement de ce titre." : "Les articles sont récupérés pour les idées du jour et ta liste de surveillance."}</p>`}
         </section>
       </div>` : ""}
@@ -472,7 +461,7 @@
           ${b.houses.map((h) => `<div style="padding:12px 0;border-bottom:1px solid var(--rule-soft)">
             <div class="row between"><b style="font-weight:500">${esc(h.name)}</b><span class="label" style="color:var(--${(STANCE[h.stance] || STANCE.neutre)[1]})">${(STANCE[h.stance] || STANCE.neutre)[0]}</span></div>
             <p class="small" style="margin-top:4px">${esc(h.view)}</p>
-            <p class="label" style="margin-top:4px">${h.date ? esc(h.date) + " / " : ""}${h.url ? `<a href="${esc(h.url)}" target="_blank" rel="noopener">lire</a>` : ""}<span class="pyx-slot" data-scope="house"></span></p></div>`).join("")}
+            <p class="label" style="margin-top:4px">${h.date ? esc(h.date) + " / " : ""}${h.url ? `<a href="${esc(h.url)}" target="_blank" rel="noopener">lire</a>` : ""}</p></div>`).join("")}
           <p class="muted small" style="margin-top:12px">Perspectives publiques de grands gérants et banques. Elles se trompent aussi : leur intérêt est de montrer où se situe le consensus.</p></section>` : ""}
       </div>
     </div>
@@ -918,7 +907,7 @@
     return head(esc(l.title), `Module ${mod.n} · ${esc(mod.title)} · leçon ${i + 1} sur ${M.lessons.length} · ${l.minutes} min`, "", `<a href="#apprendre">Apprendre</a> / ${esc(mod.title)}`) + `
     <article class="lesson">
       ${lessonHTML(l.body)}
-      <div class="keep"><span class="label">À retenir<span class="pyx-slot" data-scope="lesson"></span></span><p>${esc(l.keep)}</p></div>
+      <div class="keep"><span class="label">À retenir</span><p>${esc(l.keep)}</p></div>
       <section class="quiz" data-lesson="${l.id}">
         <span class="label">Petit quiz · ${l.quiz.length} questions</span>
         ${l.quiz.map((q, qi) => `<div class="q" data-q="${qi}"><p class="q-t">${qi + 1}. ${esc(q.q)}</p><div class="q-o">${q.o.map((o, oi) => `<button type="button" data-qa="${qi}:${oi}">${esc(o)}</button>`).join("")}</div><p class="q-why" hidden></p></div>`).join("")}
@@ -1221,7 +1210,7 @@
     window.Logo && Logo.align();
     runSims();
     typo(document.getElementById("app") || document.body);
-    if (window.PyxisAI) { if (r === "reglages") PyxisAI.bindSettings(main); else if (r !== "journal") PyxisAI.decorate(main); }
+    if (window.PyxisAI && r === "reglages") PyxisAI.bindSettings(main);
     const inAccount = ACCOUNT.some(([k]) => k === r);
     document.querySelectorAll("[data-route]").forEach((a) => {
       const k = a.dataset.route;
@@ -1254,22 +1243,24 @@
     };
   }
 
+  /* Ce que Pyxis voit quand on l'ouvre : la page affichée (ou le passage sélectionné), et les chiffres du titre sur une fiche. */
+  function pageContext(sel) {
+    const main = document.querySelector("#main"), clone = main.cloneNode(true);
+    clone.querySelectorAll("script, svg, canvas, button, .crumb").forEach((n) => n.remove());
+    const page = (main.querySelector(".topbar h1, .pulse-title")?.innerText || document.title).trim();
+    const ctx = { topic: sel ? `« ${sel.slice(0, 70)}${sel.length > 70 ? "…" : ""} »` : page, where: page,
+      text: (sel ? `Passage sélectionné : ${sel}\n\nReste de la page :\n` : "") + clone.innerText.replace(/\n{3,}/g, "\n\n").trim() };
+    const m = location.hash.match(/^#fiche-(.+)$/);
+    const o = m && M.universe.find((x) => x.ticker === decodeURIComponent(m[1]));
+    if (o) {
+      ctx.ticker = o.ticker;
+      const f = o.factors || {};
+      ctx.text = `Données Pyxis sur ${o.name} (${o.ticker}, ${o.sector || ""}) : cours ${num(o.price, 2)} ${o.currency || ""} ; séance ${num(day1(o), 2)} % ; 1 mois ${num(o.chg1m)} % ; 12 mois ${num(o.chg12m)} % ; score ${o.score} (fourchette ${o.low}-${o.high}) ; critères valorisation ${f.valuation ?? "?"}, qualité ${f.quality ?? "?"}, momentum ${f.momentum ?? "?"}, risque ${f.risk ?? "?"}, macro ${f.macro ?? "?"} ; PER ${num(o.pe)} (secteur ${num(o.pe_sector)}) ; volatilité ${num(o.vol, 0)} % ; pire baisse 1 an ${num(o.maxdd_1y, 0)} %${o.analysts ? ` ; analystes : ${o.analysts.label}, objectif moyen ${num(o.analysts.target, 2)}` : ""}.\n\n` + ctx.text;
+    }
+    return ctx;
+  }
+
   function bindLearn() {
-    document.addEventListener("keydown", (e) => { const b = e.target.closest?.("[data-ask]"); if (b && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); b.click(); } });
-    document.addEventListener("click", (e) => {
-      const b = e.target.closest("[data-ask]"); if (!b || !window.PyxisAI) return;
-      e.preventDefault(); e.stopPropagation();
-      const ctx = PyxisAI.contextOf(b);
-      const m = location.hash.match(/^#fiche-(.+)$/), link = b.closest('a[href^="#fiche-"]'), slotTk = b.closest(".pyx-slot")?.dataset.ticker;
-      const tk = slotTk || (link ? decodeURIComponent(link.getAttribute("href").slice(7)) : m ? decodeURIComponent(m[1]) : "");
-      const o = tk && (M.universe.find((x) => x.ticker === tk) || M.opportunities?.find((x) => x.ticker === tk));
-      if (o) {
-        ctx.ticker = tk;
-        const f = o.factors || {};
-        ctx.text += `\n\nDonnées Pyxis sur ${o.name} (${o.ticker}, ${o.sector || ""}) : cours ${num(o.price, 2)} ${o.currency || ""} ; séance ${num(day1(o), 2)} % ; 1 mois ${num(o.chg1m)} % ; 12 mois ${num(o.chg12m)} % ; score ${o.score} (fourchette ${o.low}-${o.high}) ; critères valorisation ${f.valuation ?? "?"}, qualité ${f.quality ?? "?"}, momentum ${f.momentum ?? "?"}, risque ${f.risk ?? "?"}, macro ${f.macro ?? "?"} ; PER ${num(o.pe)} (secteur ${num(o.pe_sector)}) ; volatilité ${num(o.vol, 0)} % ; pire baisse 1 an ${num(o.maxdd_1y, 0)} %${o.analysts ? ` ; analystes : ${o.analysts.label}, objectif moyen ${num(o.analysts.target, 2)}` : ""}${o.thesis ? ` ; thèse : ${o.thesis}` : ""}${o.invalidation ? ` ; invalidation : ${o.invalidation}` : ""}.`;
-      }
-      PyxisAI.open(ctx, pyxEnv());
-    }, true);
     document.addEventListener("change", (e) => { if (e.target.id === "restoreFile" && e.target.files[0]) restore(e.target.files[0]); });
     document.addEventListener("click", (e) => {
       const qa = e.target.closest("[data-qa]"); if (qa) { answerQuiz(qa); return; }
@@ -1382,5 +1373,6 @@
     if (hist) M.history = hist;
   }
   shell(); bind(); window.Logo && Logo.align();
+  window.PyxisAI && PyxisAI.mount({ context: pageContext, env: pyxEnv });
   loadData().finally(go);
 })();

@@ -104,7 +104,7 @@ ${ctx.text.slice(0, 6000)}
     panel.innerHTML = `<aside class="pyx" role="dialog" aria-modal="true" aria-label="Conversation avec Pyxis">
       <header class="pyx-head">
         <span class="pyx-mark">${window.Logo ? Logo.mark({ size: 26 }) : ""}</span>
-        <div><b>Pyxis</b><span class="label">À propos : ${esc(ctx.topic)}</span></div>
+        <div><b>Pyxis</b><span class="label">${esc(ctx.topic)}</span></div>
         <button type="button" class="pyx-x" data-pyx="close" aria-label="Fermer">Fermer</button>
       </header>
       <div class="pyx-body">
@@ -117,6 +117,7 @@ ${ctx.text.slice(0, 6000)}
       </div>
     </aside>`;
     document.body.appendChild(panel);
+    document.body.classList.add("pyx-open");
     requestAnimationFrame(() => panel.classList.add("on"));
     panel.addEventListener("click", onClick);
     document.addEventListener("keydown", onKey);
@@ -133,6 +134,7 @@ ${ctx.text.slice(0, 6000)}
   function close() {
     if (!panel) return;
     const p = panel; panel = null; convo = null;
+    document.body.classList.remove("pyx-open");
     p.classList.remove("on"); setTimeout(() => p.remove(), 200);
     document.removeEventListener("keydown", onKey);
   }
@@ -235,48 +237,20 @@ ${ctx.text.slice(0, 6000)}
     root.querySelector('[data-action="ai-forget"]')?.addEventListener("click", () => { setCfg({}); root.querySelector("#aiMsg").textContent = "Clé effacée."; f.key.value = ""; });
   }
 
-  /* ---------- Les boutons « Demander à Pyxis » ----------
-     Placés à côté des actions et des étiquettes (« Lire la veille », « Momentum », en-têtes de section),
-     soit dans un emplacement prévu (.pyx-slot), soit au bout des rangées d'en-tête. */
-  const btnHTML = (scope) => `<span role="button" tabindex="0" class="pyx-ask" data-ask data-scope="${scope}" aria-label="Demander à Pyxis" title="Demander à Pyxis">${window.Logo ? Logo.mark({ size: 18 }) : "P"}</span>`;
-  const HOSTS = [
-    [".pyx-point > .label:last-child", "point"],
-    [".lex-item dt", "lex"],
-  ];
-  function decorate(root) {
-    root.querySelectorAll(".pyx-slot:empty").forEach((el) => el.insertAdjacentHTML("beforeend", btnHTML(el.dataset.scope || "section")));
-    HOSTS.forEach(([sel, scope]) => root.querySelectorAll(sel).forEach((h) => {
-      if (h.querySelector(":scope > .pyx-ask, :scope > .pyx-slot")) return;
-      h.insertAdjacentHTML(scope === "page" ? "afterbegin" : "beforeend", btnHTML(scope));
-    }));
-  }
-  const SCOPES = { panel: ".panel", point: ".pyx-point", lex: ".lex-item", opp: ".opp", brief: ".brief-home", hero: ".hero", row: "tr", mover: ".mover", news: ".news-item", house: "div", lesson: "article", section: "section" };
-  const firstLine = (el) => (el?.innerText || "").trim().split("\n")[0].trim();
-  function contextOf(btn) {
-    const scope = btn.dataset.scope || "section";
-    const main = document.querySelector("#main");
-    const unit = scope === "page" ? main : btn.closest(SCOPES[scope] || "section") || main;
-    const clone = unit.cloneNode(true);
-    clone.querySelectorAll(".pyx-ask, script, svg, canvas, button, .pyx-slot").forEach((n) => n.remove());
-    const text = clone.innerText.replace(/\n{3,}/g, "\n\n").trim();
-    const h1 = firstLine(main.querySelector(".topbar h1"));
-    let topic = {
-      page: h1,
-      panel: firstLine(unit.querySelector(".panel-head")),
-      opp: firstLine(unit.querySelector(".t b")),
-      brief: "La veille : " + firstLine(unit.querySelector("h2")),
-      pulse: "La séance du jour",
-      lex: firstLine(unit.querySelector("dt")),
-      hero: firstLine(unit.querySelector("h3, h2")),
-      row: firstLine(unit.querySelector(".who b")),
-      mover: firstLine(unit.querySelector("span")),
-      news: firstLine(unit),
-      house: firstLine(unit.querySelector("b")),
-      lesson: h1,
-    }[scope] || firstLine(unit);
-    if (scope === "point") topic = text.slice(0, 90) + (text.length > 90 ? "…" : "");
-    return { topic: (topic || h1 || "Pyxis").slice(0, 120), text, where: document.title.replace(/ · Pyxis| — Pyxis/, "") };
+  /* ---------- Le signe flottant, en bas à droite ----------
+     Un seul point d'entrée, sur toutes les pages. Pyxis reçoit la page affichée comme contexte ;
+     si un passage est sélectionné, c'est de ce passage qu'on parle. */
+  function mount({ context, env }) {
+    if (document.querySelector(".pyx-fab")) return;
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "pyx-fab"; b.setAttribute("aria-label", "Parler à Pyxis");
+    b.innerHTML = `<span class="pyx-fab-mark">${window.Logo ? Logo.mark({ size: 30 }) : ""}</span><span class="pyx-fab-label">Pyxis</span>`;
+    let sel = "";
+    // la sélection disparaît au clic : on la mémorise juste avant
+    b.addEventListener("pointerdown", () => { sel = String(window.getSelection?.() || "").trim(); });
+    b.addEventListener("click", () => { open(context(sel), env()); sel = ""; });
+    document.body.appendChild(b);
   }
 
-  window.PyxisAI = { open, close, ready, decorate, contextOf, settingsHTML, bindSettings, KEY };
+  window.PyxisAI = { open, close, ready, mount, settingsHTML, bindSettings, KEY };
 })();

@@ -161,9 +161,10 @@ a { color: inherit; }
 /* ---------- La séance : santé du marché + carte du ciel ---------- */
 .pulse { background: var(--ink); color: var(--on-ink); margin: -26px -54px 0; padding: 30px 54px 44px; }
 .pulse .label { color: var(--on-ink-mute); }
-.pulse-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 34px; }
+.pulse-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
 .pulse-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 48px; align-items: stretch; }
-.pulse-text { display: flex; flex-direction: column; gap: 22px; }
+.pulse-text { display: flex; flex-direction: column; gap: 26px; justify-content: center; }
+.pulse-note-ink { font-size: 14px; color: var(--on-ink-mute); max-width: 46ch; }
 .pulse-title { font: 400 clamp(38px, 4.4vw, 70px)/0.98 var(--serif); letter-spacing: -0.035em; max-width: 13ch; }
 .pulse-sub { font-size: 17px; line-height: 1.5; max-width: 44ch; }
 .pulse-sub b { font-weight: 500; }
@@ -181,7 +182,7 @@ a { color: inherit; }
 .movers > div { min-width: 0; }
 .movers a b { flex: none; white-space: nowrap; }
 .sky-box { margin: 0; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.sky-box canvas { display: block; width: 100%; flex: 1; min-height: 430px; border: 1px solid rgba(243, 206, 187, 0.18); }
+.sky-box canvas { display: block; width: 100%; flex: 1; min-height: 430px; }
 .sky-box figcaption { max-width: 70ch; line-height: 1.55; }
 .pulse [data-explain] { text-decoration-color: rgba(243, 206, 187, 0.5); }
 
@@ -199,7 +200,7 @@ a { color: inherit; }
 
 /* ---------- Idées (liste éditoriale) ---------- */
 .opps { list-style: none; margin: 0; padding: 0; }
-.opp { display: grid; grid-template-columns: 70px 1fr 120px 26px; gap: 22px; align-items: center; padding: 18px 0; text-decoration: none; color: inherit; border-bottom: 1px solid var(--rule-soft); }
+.opp { display: grid; grid-template-columns: 70px 1fr 120px; gap: 22px; align-items: center; padding: 18px 0; text-decoration: none; color: inherit; border-bottom: 1px solid var(--rule-soft); }
 .opps li:first-child .opp { padding-top: 4px; }
 .opp:hover .t b { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .opp .t { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
@@ -447,7 +448,7 @@ body.explain-on [data-explain] { text-decoration: underline solid var(--gain); t
   .brief-home .btn { justify-self: start; }
   .fiche-head { grid-template-columns: 1fr; gap: 20px; }
   .fx summary, .factor { grid-template-columns: 112px 1fr 32px; gap: 12px; }
-  .opp { grid-template-columns: 56px 1fr 26px; gap: 14px; }
+  .opp { grid-template-columns: 56px 1fr; gap: 16px; }
   .opp .spark { display: none; }
   .hide-m { display: none; }
   .g-3 { grid-template-columns: 1fr; }
@@ -493,21 +494,7 @@ body.explain-on [data-explain] { text-decoration: underline solid var(--gain); t
 @media (max-width: 860px) { .jstats { gap: 26px; } }
 
 /* ---------- Pyxis, l'assistant ---------- */
-.pyx-ask { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; margin-left: 10px; padding: 0; border: 0; background: none; color: inherit; opacity: 0.5; cursor: pointer; vertical-align: middle; border-radius: 50%; transition: opacity 0.15s; }
-.pyx-ask svg { width: 20px; height: 20px; }
-.pyx-ask:hover, .pyx-ask:focus-visible { opacity: 1; }
-h1 .pyx-ask { width: 32px; height: 32px; }
-h1 .pyx-ask svg { width: 26px; height: 26px; }
-.label .pyx-ask { width: 20px; height: 20px; margin-left: 6px; }
-.label .pyx-ask svg { width: 16px; height: 16px; }
-.pyx-slot { display: inline-flex; align-items: center; }
-.pyx-slot .pyx-ask { margin-left: 2px; }
-.opp > .pyx-slot { align-self: center; justify-self: end; }
-.opp > .pyx-slot .pyx-ask { margin: 0; }
-.panel-head > .pyx-ask { margin-left: 12px; flex: none; }
-.topbar > .row > .pyx-ask { margin: 0 4px 0 0; }
-.pyx-paste { padding: 0 22px 6px; display: flex; flex-direction: column; gap: 8px; }
-.pyx-paste textarea { font: 400 14px/1.45 var(--sans); background: transparent; border: 1px solid var(--rule); color: var(--ink); padding: 10px; resize: vertical; }
+h1 h1 .label .label .pyx-paste textarea { font: 400 14px/1.45 var(--sans); background: transparent; border: 1px solid var(--rule); color: var(--ink); padding: 10px; resize: vertical; }
 .pyx-paste textarea:focus { outline: none; border-color: var(--ink); }
 .pyx-body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
 .pyx-back { position: fixed; inset: 0; z-index: 60; background: rgba(30, 27, 26, 0.32); opacity: 0; transition: opacity 0.2s; }
@@ -546,3 +533,15 @@ h1 .pyx-ask svg { width: 26px; height: 26px; }
 .pyx-adv[open] summary { margin-bottom: 14px; }
 .pyx-adv .field + .field { margin-top: 14px; }
 #aiForm { gap: 18px; }
+
+/* ---------- Le signe Pyxis flottant ---------- */
+.pyx-fab { position: fixed; right: 26px; bottom: 26px; z-index: 55; display: flex; align-items: center; gap: 0; height: 58px; padding: 0 13px 0 13px; border-radius: 29px; border: 1px solid rgba(243, 206, 187, 0.45); background: var(--ink); color: var(--on-ink); cursor: pointer; box-shadow: 0 10px 30px rgba(30, 27, 26, 0.22); transition: gap 0.25s ease, padding 0.25s ease, border-color 0.2s; }
+.pyx-fab-mark svg { width: 30px; height: 30px; display: block; transition: transform 0.6s ease; }
+.pyx-fab-label { font: 400 12px var(--mono); letter-spacing: 0.04em; max-width: 0; overflow: hidden; white-space: nowrap; transition: max-width 0.25s ease; }
+.pyx-fab:hover, .pyx-fab:focus-visible { gap: 10px; padding-right: 20px; border-color: var(--on-ink); }
+.pyx-fab:hover .pyx-fab-label, .pyx-fab:focus-visible .pyx-fab-label { max-width: 60px; }
+.pyx-fab:hover .pyx-fab-mark svg { transform: rotate(-24deg); }
+body.pyx-open .pyx-fab { opacity: 0; pointer-events: none; }
+@media (max-width: 860px) { .pyx-fab { right: 16px; bottom: 16px; height: 52px; padding: 0 10px; } .pyx-fab-mark svg { width: 30px; height: 30px; } }
+@media (prefers-reduced-motion: reduce) { .pyx-fab, .pyx-fab-mark svg, .pyx-fab-label { transition: none; } }
+.pyx-log:has(+ .pyx-setup) { display: none; }

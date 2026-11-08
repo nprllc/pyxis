@@ -99,7 +99,7 @@ python -m http.server 8000 -d site      # puis ouvrir http://localhost:8000
 
 ## Pyxis, l'assistant
 
-Pyxis est aussi l'intelligence de la plateforme : son signe, à côté de chaque section, ouvre une conversation sur ce sujet (`site/js/pyxis.js`). Le contenu de la section, la séance du jour et ton profil lui servent de contexte. « Ajouter au Journal » enregistre la conclusion datée de l'échange. Le modèle est au choix (Réglages) et la clé reste dans le navigateur.
+Pyxis est aussi l'intelligence de la plateforme : son signe, en bas à droite de chaque page, ouvre une conversation (`site/js/pyxis.js`). La page affichée (ou le passage sélectionné), la séance du jour et ton profil lui servent de contexte. « Ajouter au Journal » enregistre la conclusion datée de l'échange. Le modèle est au choix (Réglages) et la clé reste dans le navigateur.
 
 ## Tes données personnelles
 

@@ -62,7 +62,7 @@ Pour essayer sans rien publier : **Actions → Veille (relais) → Run workflow*
 
 ## Pyxis, l'assistant
 
-Le signe Pyxis, à côté de chaque information (point de la veille, idée, valeur du scanner, article, section), ouvre une conversation sur ce sujet, sans quitter le site. Le modèle se règle dans **Réglages → Pyxis, ton assistant** : fournisseur (Claude, Mistral, Gemini, OpenAI, ou tout service compatible OpenAI), nom du modèle, clé d'API. « Ajouter au Journal » enregistre la conclusion datée. La clé reste dans ton navigateur, jamais dans le dépôt ni dans les sauvegardes : sur un autre appareil, il faut la recoller.
+Le signe Pyxis, en bas à droite de chaque page, ouvre une conversation sans quitter le site : Pyxis voit la page affichée, ou le passage que tu as sélectionné. Le modèle se règle dans **Réglages → Pyxis, ton assistant** : fournisseur (Claude, Mistral, Gemini, OpenAI, ou tout service compatible OpenAI), nom du modèle, clé d'API. « Ajouter au Journal » enregistre la conclusion datée. La clé reste dans ton navigateur, jamais dans le dépôt ni dans les sauvegardes : sur un autre appareil, il faut la recoller.
 
 Si Pyxis répond « erreur » : le nom du modèle a peut-être été retiré par le fournisseur (mets le nom du modèle actuel), ou la clé a expiré ou n'a plus de crédit. « Enregistrer et tester » vérifie tout en une seconde.
 

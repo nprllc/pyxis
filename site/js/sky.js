@@ -49,7 +49,7 @@
     }));
     const dust = Array.from({ length: 90 }, () => ({ x: rnd(), y: rnd(), r: rnd() * 0.8 + 0.2, a: rnd() * 0.12 + 0.03, p: rnd() * 6 }));
 
-    const box = () => ({ l: 38, r: W - 24, t: 34, b: H - 52 });
+    const box = () => ({ l: 18, r: W - 18, t: 18, b: H - 46 });
     function place(s) {
       const B = box();
       return {
@@ -64,30 +64,17 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
+    // Axes réduits au strict nécessaire : le zéro de la séance, l'horizon du mois, deux légendes.
     function axes() {
       const B = box(), zx = (B.l + B.r) / 2, zy = (B.t + B.b) / 2;
-      const tk = W < 560 ? ticks.filter((k) => k === 2 || k === 10 || k === ticks[ticks.length - 1]) : ticks; // moins de repères sur petit écran
-      // Demi-plans teintés : moitié droite verte, moitié gauche rouge, très léger.
-      let g = ctx.createLinearGradient(B.l, 0, B.r, 0);
-      g.addColorStop(0, rgba(RED, 0.07)); g.addColorStop(0.5, rgba(PEACH, 0)); g.addColorStop(1, rgba(GREEN, 0.07));
-      ctx.fillStyle = g; ctx.fillRect(B.l, B.t, B.r - B.l, B.b - B.t);
-      ctx.lineWidth = 1; ctx.strokeStyle = rgba(PEACH, 0.08);
-      tk.forEach((k) => [k, -k].forEach((v) => {
-        const x = zx + sx(v) * (zx - B.l - PAD);
-        ctx.beginPath(); ctx.moveTo(x, B.t); ctx.lineTo(x, B.b); ctx.stroke();
-      }));
-      ctx.strokeStyle = rgba(PEACH, 0.3);
+      ctx.lineWidth = 1; ctx.strokeStyle = rgba(PEACH, 0.22);
       ctx.beginPath(); ctx.moveTo(zx, B.t); ctx.lineTo(zx, B.b); ctx.stroke();
-      ctx.setLineDash([2, 5]); ctx.strokeStyle = rgba(PEACH, 0.2);
+      ctx.setLineDash([2, 6]); ctx.strokeStyle = rgba(PEACH, 0.12);
       ctx.beginPath(); ctx.moveTo(B.l, zy); ctx.lineTo(B.r, zy); ctx.stroke(); ctx.setLineDash([]);
-      ctx.font = "10px 'IBM Plex Mono', monospace"; ctx.fillStyle = rgba(PEACH, 0.6);
-      ctx.textAlign = "left"; ctx.fillText("← baisse sur la séance", B.l, B.b + 34);
-      ctx.textAlign = "right"; ctx.fillText("hausse sur la séance →", B.r, B.b + 34);
-      ctx.textAlign = "center";
-      tk.forEach((k) => [k, -k].forEach((v) => ctx.fillText(fmt(v, 0), zx + sx(v) * (zx - B.l - PAD), B.t - 12)));
-      ctx.fillText("0 %", zx, B.t - 12);
-      ctx.save(); ctx.translate(B.l - 16, zy); ctx.rotate(-Math.PI / 2);
-      ctx.fillText("↓ baisse sur un mois · hausse sur un mois ↑", 0, 0); ctx.restore();
+      ctx.font = "10px 'IBM Plex Mono', monospace"; ctx.fillStyle = rgba(PEACH, 0.45);
+      ctx.textAlign = "left"; ctx.fillText("← baisse", B.l, B.b + 30);
+      ctx.textAlign = "right"; ctx.fillText("hausse →", B.r, B.b + 30);
+      ctx.textAlign = "center"; ctx.fillText("0 %", zx, B.b + 30);
     }
 
     function chain(list, col, draw) {
@@ -108,10 +95,6 @@
       const t = reduce ? 3 : (now - t0) / 1000;
       ctx.clearRect(0, 0, W, H);
       ctx.fillStyle = INK; ctx.fillRect(0, 0, W, H);
-      dust.forEach((d) => {
-        ctx.fillStyle = rgba(PEACH, d.a * (0.7 + 0.3 * Math.sin(t * 0.7 + d.p)));
-        ctx.beginPath(); ctx.arc(d.x * W, d.y * H, d.r, 0, Math.PI * 2); ctx.fill();
-      });
       axes();
 
       const pts = stars.map((s) => ({ s, ...place(s) }));
