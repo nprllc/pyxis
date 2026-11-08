@@ -97,8 +97,6 @@
           <main class="main" id="main" tabindex="-1"></main>
           <footer class="footer">
             <div class="wm" aria-hidden="true">${Logo.lockup({ size: 56, color: "#f3cebb" })}</div>
-            <div><span class="label">À lire</span>
-              <p>Analyses automatisées à but éducatif. Ce n'est pas un conseil en investissement personnalisé au sens réglementaire. Les performances passées ne préjugent pas des performances futures. Pour les décisions fiscales importantes, consulte un professionnel (gestor ou asesor fiscal).</p></div>
           </footer>
         </div>
       </div>
@@ -473,8 +471,6 @@
             <p class="small" style="margin-top:4px">${esc(h.view)}</p>
             <p class="label" style="margin-top:4px">${h.date ? esc(h.date) + " / " : ""}${h.url ? `<a href="${esc(h.url)}" target="_blank" rel="noopener">lire</a>` : ""}</p></div>`).join("")}
           <p class="muted small" style="margin-top:12px">Perspectives publiques de grands gérants et banques. Elles se trompent aussi : leur intérêt est de montrer où se situe le consensus.</p></section>` : ""}
-        ${b.glossary?.length ? `<section class="panel"><div class="panel-head"><h2>Les mots du jour</h2></div>
-          ${b.glossary.map((g) => `<div style="padding:8px 0"><b style="font-weight:500">${esc(g.term)}</b><p class="serif small" style="font-size:15px">${esc(g.def)}</p></div>`).join("")}</section>` : ""}
       </div>
     </div>
     <p class="label" style="margin-top:40px">Synthèse rédigée par une IA (Claude) à partir des sources citées, relue par aucun humain : en cas de doute, la source fait foi.</p>` + disclaimer;
