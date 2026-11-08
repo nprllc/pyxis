@@ -7,7 +7,7 @@
   const $ = (s, el = document) => el.querySelector(s);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const eur = (v, d = 0) => (v ?? 0).toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }) + " €";
-  const pct = (v, d = 1) => v == null || isNaN(v) ? "—" : (v > 0 ? "+" : "") + v.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }) + " %";
+  const pct = (v, d = 1) => v == null || isNaN(v) ? "—" : (v > 0 ? "+" : "") + v.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }) + "\u00a0%";
   const CUR = { EUR: "€", USD: "$", GBp: "p", GBP: "£", CHF: "CHF", DKK: "DKK" };
   const money = (v, cur = "EUR", d = 2) => v == null ? "—" : v.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }) + " " + (CUR[cur] || cur || "€");
   const num = (v, d = 1) => v == null ? "—" : v.toLocaleString("fr-FR", { maximumFractionDigits: d });
@@ -131,32 +131,77 @@
 
   /* ======================= ÉCRANS ======================= */
 
+  /* Santé du marché sur la dernière séance, calculée sur tous les titres suivis. */
+  function day1(o) {
+    if (o.chg1d != null) return o.chg1d;
+    const sp = o.spark || []; // repli : les deux derniers points de la courbe sont deux séances consécutives
+    return sp.length > 1 && sp[sp.length - 2] ? (sp[sp.length - 1] / sp[sp.length - 2] - 1) * 100 : null;
+  }
+  function median(a) { if (!a.length) return 0; const b = [...a].sort((x, y) => x - y), m = b.length >> 1; return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; }
+  function marketHealth() {
+    const rows = M.universe.map((o) => ({ o, d: day1(o) })).filter((r) => r.d != null && isFinite(r.d));
+    const n = rows.length || 1, up = rows.filter((r) => r.d > 0).length, down = rows.filter((r) => r.d < 0).length;
+    const share = up / n, med = median(rows.map((r) => r.d));
+    const title = share >= 0.68 ? "Séance nettement haussière." : share >= 0.55 ? "Séance plutôt positive." : share > 0.45 ? "Séance partagée." : share > 0.32 ? "Séance plutôt négative." : "Séance nettement baissière.";
+    const ma = M.universe.filter((o) => o.dist_ma200 != null), w5 = M.universe.map((o) => o.chg5d).filter((v) => v != null);
+    const sorted = [...rows].sort((a, b) => b.d - a.d);
+    const world = M.universe.find((o) => o.ticker === "EUNL.DE");
+    const when = M.asOf ? new Date(M.asOf + "T12:00:00").toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" }) : "jour";
+    return {
+      n: rows.length, up, down, median: med, title, when,
+      above200: ma.length ? Math.round((100 * ma.filter((o) => o.dist_ma200 > 0).length) / ma.length) : 0,
+      week: w5.length ? median(w5) : null,
+      world: world ? day1(world) : null,
+      top: sorted.slice(0, 3), bottom: sorted.slice(-3).reverse(),
+    };
+  }
+  const moverLink = (r) => `<a href="#fiche-${esc(r.o.ticker)}"><span>${esc(r.o.name)}</span><b class="num ${r.d >= 0 ? "gain" : "loss"}">${pct(r.d, 1)}</b></a>`;
+
   function viewHome() {
     const p = state.profile, sp = planSplit(p), b = book("real");
     const next = M.lessons.find((l) => !l.done);
-    const mood = { expansion: "Le marché accélère.", surchauffe: "Le marché s'emballe.", ralentissement: "Le marché ralentit.", reprise: "Le marché repart." }[M.macro?.phase] || "Le marché bouge.";
+    const hl = marketHealth();
     const day = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
     return `
     <section class="pulse" aria-labelledby="pulse-t">
-      <canvas id="pulseCanvas" aria-hidden="true"></canvas>
-      <div class="pulse-inner">
-        <div class="row between wrap"><span class="label">Bonjour ${esc(p.name)}, nous sommes ${day}</span>
-          ${dataChip(true)}</div>
-        <p class="label sky-legend">Chaque étoile est un titre suivi : à droite ceux qui montent sur un mois, en haut les meilleurs scores. Les idées du jour forment la constellation. Survole une étoile, clique pour sa fiche.</p>
-        <h1 class="pulse-title" id="pulse-t"><span>${mood}</span><span>Ton plan, lui, ne change pas.</span></h1>
-        <div class="pulse-foot">
-          <div class="pulse-amount num">${p.monthly} €<small>chaque mois</small></div>
-          <div>
-            <div class="split" role="img" aria-label="${sp.core} € en cœur, ${sp.sat} € en satellite"><span style="width:${p.core}%"></span><span style="width:${100 - p.core}%"></span></div>
-            <div class="legend">
-              <span><i style="background:var(--on-ink)"></i>${sp.core} € dans l'${ex("etfMonde", "ETF monde")}, via un ${ex("dca", "plan programmé")}</span>
-              <span><i style="background:var(--gain)"></i>${sp.sat} € de côté pour le ${ex("coeur", "satellite")}</span>
-            </div>
-            <p class="pulse-note">Mets la part satellite de côté jusqu'à environ 100 € avant d'acheter une ${ex("action", "action")} seule : avec 1 € de ${ex("frais", "frais")}, un achat de 20 € coûte déjà 5 %.</p>
+      <div class="pulse-top"><span class="label">Bonjour ${esc(p.name)}, nous sommes ${day}</span>${dataChip(true)}</div>
+      <div class="pulse-grid">
+        <div class="pulse-text">
+          <span class="label">${ex("seance", "Séance")} du ${esc(hl.when)}, ${hl.n} titres suivis</span>
+          <h1 class="pulse-title" id="pulse-t">${esc(hl.title)}</h1>
+          <p class="pulse-sub">${hl.up} titres montent, ${hl.down} baissent. Variation médiane : <b class="${hl.median >= 0 ? "gain" : "loss"}">${pct(hl.median, 2)}</b>.${hl.world != null ? ` L'${ex("etfMonde", "ETF monde")} : <b class="${hl.world >= 0 ? "gain" : "loss"}">${pct(hl.world, 2)}</b>.` : ""}</p>
+          <div class="health">
+            <div class="hbar" role="img" aria-label="${hl.up} en hausse, ${hl.down} en baisse"><span class="up" style="width:${(100 * hl.up / (hl.n || 1)).toFixed(1)}%"></span><span class="dn" style="width:${(100 * hl.down / (hl.n || 1)).toFixed(1)}%"></span></div>
+            <dl>
+              <div><dt class="label">${ex("largeur", "Largeur")}</dt><dd class="num">${Math.round((100 * hl.up) / (hl.n || 1))} % en hausse</dd></div>
+              <div><dt class="label">Tendance de fond</dt><dd class="num">${hl.above200} % au-dessus de leur ${ex("ma200", "moyenne 200 j")}</dd></div>
+              ${hl.week != null ? `<div><dt class="label">Sur 5 séances</dt><dd class="num ${hl.week >= 0 ? "gain" : "loss"}">${pct(hl.week, 1)} (médiane)</dd></div>` : ""}
+            </dl>
           </div>
-          <a class="btn" href="#portefeuille" style="color:var(--on-ink);border-color:var(--on-ink)">Voir la projection</a>
+          <div class="movers">
+            <div><span class="label">Plus fortes hausses</span>${hl.top.map(moverLink).join("")}</div>
+            <div><span class="label">Plus fortes baisses</span>${hl.bottom.map(moverLink).join("")}</div>
+          </div>
         </div>
+        <figure class="sky-box">
+          <canvas id="pulseCanvas" aria-hidden="true"></canvas>
+          <figcaption class="label">Chaque point est un titre suivi. À droite ceux qui ont monté pendant la séance, à gauche ceux qui ont baissé ; en haut ceux qui montent depuis un mois. Les plus fortes hausses et baisses du jour sont reliées. Survole un point, clique pour sa fiche.</figcaption>
+        </figure>
       </div>
+    </section>
+
+    <section class="plan-band" aria-label="Ton plan">
+      <div><span class="label">Ton plan, lui, ne change pas</span>
+        <div class="pulse-amount num">${p.monthly} €<small>chaque mois</small></div></div>
+      <div>
+        <div class="split" role="img" aria-label="${sp.core} € en cœur, ${sp.sat} € en satellite"><span style="width:${p.core}%"></span><span style="width:${100 - p.core}%"></span></div>
+        <div class="legend">
+          <span><i style="background:var(--ink)"></i>${sp.core} € dans l'${ex("etfMonde", "ETF monde")}, via un ${ex("dca", "plan programmé")}</span>
+          <span><i style="background:var(--gain)"></i>${sp.sat} € de côté pour le ${ex("coeur", "satellite")}</span>
+        </div>
+        <p class="pulse-note">Mets la part satellite de côté jusqu'à environ 100 € avant d'acheter une ${ex("action", "action")} seule : avec 1 € de ${ex("frais", "frais")}, un achat de 20 € coûte déjà 5 %.</p>
+      </div>
+      <a class="btn" href="#portefeuille">Voir la projection</a>
     </section>
 
     ${M.brief ? `<section style="margin-top:64px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:end;border-top:1px solid var(--rule);padding-top:12px">
@@ -859,7 +904,7 @@
     const cv = $("#pulseCanvas");
     if (cv && window.Sky) {
       stopPulse = window.Sky.mount(cv, {
-        items: M.universe, ideas: M.opportunities.map((o) => o.ticker),
+        items: M.universe.map((o) => ({ ...o, chg1d: day1(o) })),
         onPick: (t) => { location.hash = "#fiche-" + t; },
       });
     }

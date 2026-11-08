@@ -129,6 +129,8 @@ def compute_all(df: pd.DataFrame) -> dict:
     close = df["Close"]
     return {
         "price": round(float(_clean(close).iloc[-1]), 4),
+        "chg1d": pct_change(close, 1),
+        "chg5d": pct_change(close, 5),
         "chg1m": pct_change(close, 21),
         "chg3m": pct_change(close, 63),
         "chg12m": pct_change(close, TRADING_DAYS),
