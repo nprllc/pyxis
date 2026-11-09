@@ -1,100 +1,57 @@
 {
-  "date": "2026-11-07",
-  "generated_at": "2026-11-07T23:03:13+01:00",
-  "headline": "Semaine agitée pour les Bourses mondiales, secouées par les valeurs de l'IA ; l'inflation américaine sera le rendez-vous clé de la semaine prochaine.",
-  "summary": "Jeudi 5 novembre, le S&P 500 (les 500 grandes entreprises américaines) a perdu plus de 4 %, sa pire séance depuis avril 2025, entraîné par les actions liées à l'intelligence artificielle. Vendredi, il a regagné 0,3 %, mais termine la semaine en baisse de 2,7 %. Les marchés s'inquiètent de l'effet des élections de mi-mandat américaines sur les dépenses en centres de données. En parallèle, l'emploi américain reste solide, ce qui pousse les investisseurs à anticiper une hausse des taux de la Fed en décembre. En Europe, la BCE a laissé son taux à 2,5 % fin octobre, tandis que la Banque d'Angleterre a relevé le sien à 4 %. La semaine prochaine, l'indice des prix américain d'octobre (mardi 10 novembre) sera scruté pour savoir si la Fed relèvera ses taux en décembre.",
+  "date": "2026-11-09",
+  "generated_at": "2026-11-09T06:52:53+01:00",
+  "headline": "Les Bourses asiatiques rebondissent après une semaine difficile pour les valeurs de l'IA ; l'inflation américaine de mardi est le prochain rendez-vous.",
+  "summary": "La semaine dernière, Wall Street a connu sa pire semaine depuis avril 2025 (S&P 500 −2,7 %), à cause d'une forte chute des valeurs liées à l'intelligence artificielle jeudi. Vendredi et ce lundi matin en Asie, ces valeurs ont en partie rebondi : le Nikkei japonais gagne environ 3,4 %. L'emploi américain très solide en octobre renforce l'idée d'une hausse des taux de la Fed en décembre. Le pétrole a fortement baissé sur la semaine, sur des espoirs d'apaisement au Moyen-Orient. Mardi 10 novembre, l'indice des prix américain d'octobre sera publié.",
   "sections": [
     {
       "title": "Marchés mondiaux",
       "points": [
         {
-          "text": "Jeudi 5 novembre, le S&P 500 a chuté de plus de 4 % et le Nasdaq (indice riche en valeurs technologiques) de plus de 5,5 %, leurs pires séances depuis avril 2025. Le Nasdaq est entré en « correction » (baisse de plus de 10 % depuis son record).",
+          "text": "Vendredi 6 novembre, le S&P 500 (les 500 grandes entreprises américaines) a gagné 0,3 % à 7 376,86 points et le Nasdaq (riche en valeurs technologiques) 1,1 %, tandis que le Dow Jones a perdu 0,5 %. Sur la semaine, le S&P 500 recule de 2,7 %, sa pire semaine depuis avril 2025, et reste 5,7 % sous son record d'octobre.",
           "sources": [
             {
-              "name": "TheStreet",
-              "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-nov-06-2026"
-            },
-            {
-              "name": "Yahoo Finance",
-              "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-6-dow-sp-500-nasdaq-jobs-report-earnings-135953863.html"
+              "name": "AP (via Philadelphia Inquirer)",
+              "url": "https://www.inquirer.com/business/markets-wall-street-ai-stocks-economy-20261106.html"
             }
           ]
         },
         {
-          "text": "Vendredi, rebond partiel : Nasdaq +1,1 %, S&P 500 +0,3 % (7 376,86 points), Dow Jones −0,5 %. Sur la semaine, le S&P 500 recule de 2,7 % et se situe 5,7 % sous son record.",
+          "text": "Jeudi 5 novembre, le S&P 500 avait chuté de 4,4 % et le Nasdaq de 5,5 %. L'indice des fabricants de puces a perdu plus de 12 %, sa plus forte baisse en une journée depuis plus de six ans. En cause : la crainte qu'après les victoires démocrates aux élections de mi-mandat, la construction de centres de données ralentisse, ajoutée à la peur d'une « bulle » de l'IA.",
           "sources": [
             {
-              "name": "AP",
-              "url": "https://www.clickondetroit.com/business/2026/11/06/japans-stock-benchmark-nikkei-tumbles-more-than-6-after-trading-opens/"
+              "name": "BFM Bourse",
+              "url": "https://www.tradingsat.com/cac-40-FR0003500008/actualites/cac-40-malgre-des-chiffres-de-l-emploi-solides-et-un-sursaut-du-nasdaq-le-cac-40-finit-la-semaine-en-baisse-1173355.html"
             },
             {
-              "name": "Yahoo Finance",
-              "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-6-dow-sp-500-nasdaq-jobs-report-earnings-135953863.html"
+              "name": "Reuters (via Business Recorder)",
+              "url": "https://www.brecorder.com/news/40448058/wall-street-week-ahead-as-tech-swoon-roils-market-us-inflation-data-on-tap"
+            },
+            {
+              "name": "AP (via Philadelphia Inquirer)",
+              "url": "https://www.inquirer.com/business/markets-wall-street-ai-stocks-economy-20261106.html"
             }
           ]
         },
         {
-          "text": "Les investisseurs s'inquiètent qu'après la victoire des démocrates aux élections de mi-mandat, la construction de centres de données et les dépenses dans l'IA ralentissent (régulation, oppositions locales).",
+          "text": "Ce lundi matin, l'Asie rebondit : le Nikkei japonais prend environ 3,4 % et l'indice de Taïwan plus de 5,5 %, après avoir fortement reculé vendredi (Nikkei −6 % environ). Les contrats à terme sur le S&P 500 (paris sur l'ouverture de Wall Street) gagnaient environ 0,6 %.",
           "sources": [
             {
-              "name": "Yahoo Finance",
-              "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-6-dow-sp-500-nasdaq-jobs-report-earnings-135953863.html"
-            },
-            {
-              "name": "TheStreet",
-              "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-nov-06-2026"
+              "name": "Al Jazeera",
+              "url": "https://www.aljazeera.com/economy/2026/11/9/asian-stock-markets-climb-after-earlier-tech-rout"
             }
           ]
         },
         {
-          "text": "En Asie, les indices de Tokyo et de Séoul ont perdu environ 6 % dans la foulée de Wall Street ; le Nikkei japonais est entré en « marché baissier » (baisse de plus de 20 % depuis son sommet).",
+          "text": "Le pétrole Brent (référence mondiale) a perdu environ 16 % sur la semaine, sa plus forte baisse hebdomadaire depuis 2020, autour de 98 dollars le baril, sur des espoirs d'apaisement dans la guerre avec l'Iran.",
           "sources": [
             {
-              "name": "AP",
-              "url": "https://www.clickondetroit.com/business/2026/11/06/japans-stock-benchmark-nikkei-tumbles-more-than-6-after-trading-opens/"
+              "name": "Reuters (via RTÉ)",
+              "url": "https://www.rte.ie/news/business/2026/1106/1598252-world-oil-prices/"
             },
             {
-              "name": "StockTitan (d'après CNBC)",
-              "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-6-2026"
-            }
-          ]
-        },
-        {
-          "text": "Le VIX (l'« indice de la peur », qui mesure la nervosité attendue) a reculé vendredi vers 24-25 après avoir bondi jeudi.",
-          "sources": [
-            {
-              "name": "Yahoo Finance",
-              "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-6-dow-sp-500-nasdaq-jobs-report-earnings-135953863.html"
-            },
-            {
-              "name": "TheStreet",
-              "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-nov-06-2026"
-            }
-          ]
-        },
-        {
-          "text": "Le pétrole Brent est repassé sous 100 dollars le baril vendredi, après une forte baisse sur la semaine, les marchés pesant les espoirs de fin de la guerre entre les États-Unis et l'Iran.",
-          "sources": [
-            {
-              "name": "Yahoo Finance",
-              "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-6-dow-sp-500-nasdaq-jobs-report-earnings-135953863.html"
-            },
-            {
-              "name": "ADVFN via Yahoo Finance UK",
-              "url": "https://uk.finance.yahoo.com/news/european-stocks-fall-technology-sell-100031092.html"
-            }
-          ]
-        },
-        {
-          "text": "Semaine prochaine aux États-Unis : l'inflation (indice des prix CPI) d'octobre est publiée mardi 10 novembre, et les prix à la production (PPI, les prix payés par les entreprises) vendredi 13. Mercredi 11 est le Veterans Day, mais la Bourse reste ouverte.",
-          "sources": [
-            {
-              "name": "FinancialJuice",
-              "url": "https://features.financialjuice.com/2026/11/06/week-ahead-economic-indicators-9th-13th-november-us/"
-            },
-            {
-              "name": "StockTitan",
-              "url": "https://www.stocktitan.net/articles/earnings-calendar-week-of-november-9-2026"
+              "name": "Reuters (via Boursorama)",
+              "url": "https://www.boursorama.com/bourse/actualites/l-europe-finit-dans-le-rouge-seance-plus-tranquille-a-wall-street-337fffc859f97adfbf7b960dd169657b"
             }
           ]
         }
@@ -104,55 +61,72 @@
       "title": "Taux et banques centrales",
       "points": [
         {
-          "text": "Emploi américain : 165 000 créations d'emplois en octobre, bien au-dessus des prévisions ; le taux de chômage est descendu à 4,1 %. Les salaires horaires progressent de 3,1 % sur un an.",
+          "text": "Emploi américain : 165 000 créations d'emplois en octobre, contre environ 65 000 attendues ; le chômage baisse de 4,2 % à 4,1 %. Les salaires horaires progressent de 3,1 % sur un an.",
           "sources": [
             {
-              "name": "Bloomberg via CPA Practice Advisor",
-              "url": "https://www.cpapracticeadvisor.com/2026/11/06/u-s-adds-165000-jobs-topping-all-forecasts-in-broad-advance/193433/"
+              "name": "Bureau of Labor Statistics",
+              "url": "https://www.bls.gov/news.release/archives/empsit_11062026.htm"
             },
             {
-              "name": "TheStreet",
-              "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-nov-06-2026"
+              "name": "Reuters (via Devdiscourse)",
+              "url": "https://www.devdiscourse.com/article/international/4002856-wrapup-3-us-job-growth-surges-in-october-unemployment-rate-falls-to-41"
             }
           ]
         },
         {
-          "text": "La Fed (banque centrale américaine) a maintenu son taux entre 3,75 % et 4,00 % le 28 octobre, avec deux membres favorables à une hausse. Après ces chiffres d'emploi, les marchés jugent probable une hausse en décembre.",
+          "text": "La Fed (banque centrale américaine) a gardé son taux entre 3,75 % et 4 % le 28 octobre, mais deux membres voulaient déjà le relever. Après les chiffres de l'emploi, les marchés estimaient à environ 77 % la probabilité d'une hausse de 0,25 point en décembre.",
           "sources": [
             {
-              "name": "Admirals",
-              "url": "https://admiralmarkets.com/analytics/traders-blog/fomc-october-2026-fed-holds-rates"
+              "name": "Réserve fédérale (Fed)",
+              "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm"
             },
             {
-              "name": "StockTitan (d'après Reuters)",
-              "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-6-2026"
+              "name": "Reuters (via Devdiscourse)",
+              "url": "https://www.devdiscourse.com/article/international/4002856-wrapup-3-us-job-growth-surges-in-october-unemployment-rate-falls-to-41"
             }
           ]
         },
         {
-          "text": "Le taux à 10 ans américain (le coût d'emprunt de l'État sur 10 ans) termine la semaine vers 4,86 %, un niveau élevé.",
+          "text": "Le taux à 10 ans américain (ce que paie l'État pour emprunter sur 10 ans) a fini la semaine à 4,86 %, un niveau élevé.",
           "sources": [
             {
-              "name": "AP",
-              "url": "https://www.clickondetroit.com/business/2026/11/06/japans-stock-benchmark-nikkei-tumbles-more-than-6-after-trading-opens/"
+              "name": "AP (via Philadelphia Inquirer)",
+              "url": "https://www.inquirer.com/business/markets-wall-street-ai-stocks-economy-20261106.html"
             }
           ]
         },
         {
-          "text": "La BCE a laissé son taux de dépôt à 2,5 % le 29 octobre, après deux hausses cette année. Christine Lagarde a annoncé qu'elle quitterait la présidence de la BCE le 7 février 2027.",
+          "text": "L'indice des prix à la consommation (CPI) américain d'octobre sera publié mardi 10 novembre. En septembre, la hausse des prix était de 3,7 % sur un an.",
           "sources": [
             {
-              "name": "Euronews",
-              "url": "https://fr.euronews.com/2026/10/29/la-bce-maintient-les-taux-a-25-alors-que-lagarde-annonce-un-depart-anticipe"
+              "name": "Bureau of Labor Statistics",
+              "url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+            },
+            {
+              "name": "Bureau of Labor Statistics",
+              "url": "https://www.bls.gov/cpi/"
             }
           ]
         },
         {
-          "text": "La Banque d'Angleterre a relevé son taux de 3,75 % à 4 % le 5 novembre, sa première hausse depuis août 2023.",
+          "text": "La BCE a laissé son taux de dépôt à 2,50 % le 29 octobre, en soulignant que la hausse des prix de l'énergie est un risque pour l'inflation. Christine Lagarde quittera la présidence de la BCE le 7 février 2027, plus tôt que prévu.",
           "sources": [
             {
-              "name": "Sovereign Magazine",
-              "url": "https://www.sovereignmagazine.com/article/bank-of-england-rate-rise-november-2026-mortgage"
+              "name": "BCE",
+              "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp261029~9a493adf17.en.html"
+            },
+            {
+              "name": "Al Jazeera (AFP, Reuters)",
+              "url": "https://www.aljazeera.com/amp/news/2026/10/29/european-central-bank-president-lagarde-to-step-down-early"
+            }
+          ]
+        },
+        {
+          "text": "La Banque d'Angleterre a relevé son taux de 3,75 % à 4 % le 5 novembre ; elle s'attend à une inflation britannique proche de 5 % mi-2027.",
+          "sources": [
+            {
+              "name": "Banque d'Angleterre",
+              "url": "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/november-2026"
             }
           ]
         }
@@ -162,46 +136,29 @@
       "title": "Entreprises et secteurs",
       "points": [
         {
-          "text": "Jeudi, l'indice des semi-conducteurs (fabricants de puces) a perdu environ 12 % et Nvidia 9 %. Vendredi, une partie des pertes a été effacée : Nvidia +2,8 %, AMD +11 %.",
+          "text": "Vendredi, les valeurs de puces ont repris des couleurs : Nvidia +2,8 % après deux séances de forte baisse, Micron +5,1 %, Lam Research +8,2 % après l'annonce d'un rachat d'actions (l'entreprise rachète ses propres titres) pouvant atteindre 25 milliards de dollars.",
           "sources": [
             {
-              "name": "Yahoo Finance",
-              "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-6-dow-sp-500-nasdaq-jobs-report-earnings-135953863.html"
-            },
-            {
-              "name": "StockTitan",
-              "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-6-2026"
+              "name": "AP (via Philadelphia Inquirer)",
+              "url": "https://www.inquirer.com/business/markets-wall-street-ai-stocks-economy-20261106.html"
             }
           ]
         },
         {
-          "text": "Sur la semaine, le secteur technologique américain (ETF XLK) a reculé d'environ 7 % et celui de l'énergie (XLE) d'environ 11 %, dans le sillage du pétrole.",
+          "text": "Sur le mois écoulé, le secteur technologique américain a fait nettement moins bien que le reste du marché, un écart jamais vu depuis 2002 selon le courtier Truist.",
           "sources": [
             {
-              "name": "Yahoo Finance",
-              "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-6-dow-sp-500-nasdaq-jobs-report-earnings-135953863.html"
+              "name": "Reuters (via Business Recorder)",
+              "url": "https://www.brecorder.com/news/40448058/wall-street-week-ahead-as-tech-swoon-roils-market-us-inflation-data-on-tap"
             }
           ]
         },
         {
-          "text": "Vendredi, la santé, l'énergie et l'industrie faisaient partie des secteurs en hausse.",
+          "text": "Cette semaine, plusieurs résultats suivis de près dans l'IA : CoreWeave, Applied Materials et Cisco.",
           "sources": [
             {
-              "name": "TheStreet",
-              "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-nov-06-2026"
-            }
-          ]
-        },
-        {
-          "text": "Côté résultats la semaine prochaine : KKR et Occidental lundi, CoreWeave mardi, puis Cisco et Applied Materials (un fabricant d'équipements pour puces) jeudi soir, ces deux derniers étant des tests pour le secteur technologique.",
-          "sources": [
-            {
-              "name": "StockTitan",
-              "url": "https://www.stocktitan.net/articles/earnings-calendar-week-of-november-9-2026"
-            },
-            {
-              "name": "eOption",
-              "url": "https://www.eoption.com/weekly-event-calendar-11-09-2026-11-13-2026/"
+              "name": "Reuters (via Business Recorder)",
+              "url": "https://www.brecorder.com/news/40448058/wall-street-week-ahead-as-tech-swoon-roils-market-us-inflation-data-on-tap"
             }
           ]
         }
@@ -211,37 +168,50 @@
       "title": "Europe et Espagne",
       "points": [
         {
-          "text": "Vendredi matin, le STOXX 600 (600 grandes entreprises européennes) a perdu jusqu'à 1,6 % ; le DAX allemand −1,7 %, le CAC 40 −1,4 %, l'IBEX 35 espagnol −1 %. Le STOXX 600 reste en hausse de plus de 10 % depuis janvier, contre environ 7 % pour le S&P 500.",
+          "text": "Vendredi, le CAC 40 a perdu 0,81 % à 8 139 points mais gagne 2,1 % sur la semaine. Le STOXX 600 (600 grandes entreprises européennes) a reculé de 1,05 % sur la séance et finit la semaine presque stable (+0,19 %).",
           "sources": [
             {
-              "name": "ADVFN via Yahoo Finance UK",
-              "url": "https://uk.finance.yahoo.com/news/european-stocks-fall-technology-sell-100031092.html"
+              "name": "Reuters (via Boursorama)",
+              "url": "https://www.boursorama.com/bourse/actualites/l-europe-finit-dans-le-rouge-seance-plus-tranquille-a-wall-street-337fffc859f97adfbf7b960dd169657b"
+            },
+            {
+              "name": "BFM Bourse",
+              "url": "https://www.tradingsat.com/cac-40-FR0003500008/actualites/cac-40-malgre-des-chiffres-de-l-emploi-solides-et-un-sursaut-du-nasdaq-le-cac-40-finit-la-semaine-en-baisse-1173355.html"
             }
           ]
         },
         {
-          "text": "Inflation en zone euro : 3,8 % sur un an en septembre (contre 3,2 % en août), bien au-dessus de l'objectif de 2 % de la BCE.",
+          "text": "Zone euro : selon l'estimation rapide d'Eurostat, l'inflation est montée à 4,0 % sur un an en octobre (3,8 % en septembre), tirée par l'énergie (+20,8 %).",
           "sources": [
             {
-              "name": "Eurostat",
-              "url": "https://ec.europa.eu/eurostat/product?code=2-16102026-ap"
-            },
-            {
-              "name": "Euronews",
-              "url": "https://fr.euronews.com/2026/10/29/la-bce-maintient-les-taux-a-25-alors-que-lagarde-annonce-un-depart-anticipe"
+              "name": "Eunews (estimation rapide Eurostat)",
+              "url": "https://www.eunews.it/en/?p=470144"
             }
           ]
         },
         {
-          "text": "Espagne : le PIB (la richesse produite) a progressé de 0,6 % au 3e trimestre 2026 (2,7 % sur un an), un peu moins vite qu'au 2e trimestre (0,7 %). BBVA Research maintient une croissance de 2,6 % pour 2026.",
+          "text": "Espagne : le PIB (la richesse produite) a progressé de 0,6 % au 3e trimestre (+2,7 % sur un an). L'inflation est restée à 4,9 % sur un an en octobre selon l'estimation rapide de l'INE.",
           "sources": [
-            {
-              "name": "Trading Economics",
-              "url": "https://tradingeconomics.com/spain/gdp-growth/news/596708"
-            },
             {
               "name": "BBVA Research",
-              "url": "https://www.bbvaresearch.com/en/publicaciones/spain-gdp-advances-by-06-in-3q26-and-consolidates-the-outlook-for-2026"
+              "url": "https://www.bbvaresearch.com/en/publicaciones/spain-gdp-advances-by-06-in-3q26-and-consolidates-the-outlook-for-2026/"
+            },
+            {
+              "name": "CaixaBank Research",
+              "url": "https://www.caixabankresearch.com/es/publicaciones/notas-breves-actualidad-economica-y-financiera/espana/inflacion-se-mantiene-49"
+            }
+          ]
+        },
+        {
+          "text": "Emploi en Espagne : le taux de chômage de l'enquête EPA atteint 10,18 % au 3e trimestre ; le chômage inscrit a augmenté de 43 128 personnes en octobre, à 2,42 millions, son plus bas niveau pour un mois d'octobre depuis 2007.",
+          "sources": [
+            {
+              "name": "INE",
+              "url": "https://www.ine.es/dyngs/Prensa/en/EPA3T26.pdf"
+            },
+            {
+              "name": "Seguridad Social",
+              "url": "https://revista.seg-social.es/-/el-paro-registrado-aumenta-en-43.128-personas-en-octubre-y-se-situa-en-2.422.633-la-cifra-mas-baja-en-este-mes-desde-2007"
             }
           ]
         }
@@ -251,77 +221,84 @@
   "houses": [
     {
       "name": "BlackRock Investment Institute",
-      "view": "A ramené les actions américaines à « neutre » en octobre pour sécuriser des gains ; garde sa conviction sur l'IA mais note que les investisseurs examinent de plus près la rentabilité des investissements, et reste à l'achat sur les pays émergents.",
+      "view": "Reste neutre sur les actions américaines et positif sur les pays émergents. Croit toujours à l'IA mais de façon sélective, et s'attend à des taux longs durablement élevés car les dépenses d'IA sont de plus en plus financées par la dette.",
       "stance": "neutre",
       "date": "2026-11-02",
-      "url": "https://www.blackrock.com/corporate/insights/blackrock-investment-institute/publications/weekly-commentary"
+      "url": "https://www.blackrock.com/corporate/insights/blackrock-investment-institute/global-weekly-commentary"
     },
     {
       "name": "Goldman Sachs Asset Management",
-      "view": "Reste favorable aux actions, tout en attendant un ralentissement de la croissance des bénéfices en 2027 ; prudent sur les obligations d'entreprises tech et anticipe une hausse de taux de la Fed en décembre.",
+      "view": "Voit une croissance des bénéfices plus lente en 2027 mais toujours favorable aux actions ; recommande de diversifier dans le monde, notamment vers les émergents, et attend une hausse de taux de la Fed en décembre.",
       "stance": "positif",
       "date": "2026-11-05",
       "url": "https://am.gs.com/en-us/advisors/insights/article/market-pulse"
     },
     {
-      "name": "Morgan Stanley",
-      "view": "Après les élections de mi-mandat, maintient une surpondération (plus que la normale) des actions mondiales et une sous-pondération des obligations d'État.",
+      "name": "UBS CIO",
+      "view": "Conseille de rester diversifié en actions et juge attractives les obligations de bonne qualité à échéance courte ou moyenne ; attend des hausses de la Fed en décembre et en mars.",
       "stance": "positif",
-      "date": "2026-11-04",
-      "url": "https://www.morganstanley.com/insights/articles/2026-us-midterm-election-results-market-impact"
+      "date": "2026-11-02",
+      "url": "https://www.ubs.com/global/en/wealthmanagement/insights/chief-investment-office/house-view/2026/weekly-key-messages.html"
     },
     {
-      "name": "Amundi Investment Institute",
-      "view": "Légèrement favorable au risque, avec un fort accent sur la diversification ; prudent sur les actions américaines, plus positif sur l'Europe, le Japon et les émergents.",
-      "stance": "positif",
-      "date": "2026-10-06",
-      "url": "https://research-center.amundi.com/article/global-investment-views-october-2026"
+      "name": "Pictet Asset Management",
+      "view": "Réduit son exposition aux actions d'ici la fin d'année, car des conditions financières moins favorables et les risques géopolitiques pèsent plus que la bonne croissance des bénéfices.",
+      "stance": "prudent",
+      "date": "2026-11-03",
+      "url": "https://pictet.com/uk/en/insights/markets"
     },
     {
       "name": "Vanguard",
-      "view": "Souligne la vigueur de l'investissement des entreprises américaines, mais note qu'une inflation tenace augmente le risque de nouvelles hausses de taux de la Fed.",
-      "stance": "prudent",
+      "view": "Juge probable une nouvelle hausse de taux de la Fed cette année, avec un risque croissant de deux hausses ; souligne que les obligations offrent à nouveau des rendements intéressants.",
+      "stance": "neutre",
       "date": "2026-10-27",
-      "url": "https://advisors.vanguard.com/insights/article/series/market-perspectives"
+      "url": "https://advisors.vanguard.com/insights/article/series/market-perspectives?stream=business"
+    },
+    {
+      "name": "Amundi Investment Institute",
+      "view": "Légèrement favorable au risque ; préfère l'Europe, le Japon et les émergents aux États-Unis et reste prudent sur les obligations les plus longues.",
+      "stance": "positif",
+      "date": "2026-10-06",
+      "url": "https://research-center.amundi.com/article/global-investment-views-october-2026"
     }
   ],
   "for_you": [
-    "Une semaine comme celle-ci fait partie de la vie normale de la Bourse : une baisse de 4 % en un jour est impressionnante, mais le S&P 500 reste à environ 6 % de son record.",
-    "Pour un plan mensuel sur un ETF monde, les baisses signifient que chaque versement achète un peu plus de parts : c'est le principe de l'investissement programmé (DCA).",
-    "La hausse des taux et la nervosité autour de l'IA peuvent durer quelques semaines ; elles ne changent pas l'idée d'un placement diversifié sur 10 ans ou plus.",
-    "Si vos actions « satellites » vous inquiètent, vérifiez surtout qu'elles restent une petite part de l'ensemble, plutôt que de réagir au jour le jour."
+    "Une semaine à −2,7 % pour Wall Street, suivie d'un rebond partiel, fait partie de la vie normale des marchés : sur 10 ou 20 ans, ces secousses pèsent peu pour un plan mensuel.",
+    "Ton ETF monde contient beaucoup de grandes entreprises américaines de la tech, donc il ressent ces mouvements de l'IA ; c'est justement sa diversification (des centaines d'entreprises de nombreux pays) qui amortit le choc.",
+    "Avec un versement chaque mois, les baisses permettent d'acheter des parts moins cher : le plus important reste la régularité, pas le moment.",
+    "Les taux qui montent rendent les placements sans risque (livrets, obligations courtes) plus rémunérateurs : c'est un bon moment pour vérifier que ton épargne de précaution est bien en place, à côté de ton plan."
   ],
   "ideas_notes": {
-    "SHEL.L": "Au 3e trimestre, Shell a doublé son bénéfice ajusté à 10,8 milliards de dollars grâce à des marges de raffinage record, et lancé un nouveau rachat d'actions de 5 milliards de dollars (AJ Bell, Hargreaves Lansdown).",
-    "V": "Visa a publié un chiffre d'affaires trimestriel de 12,1 milliards de dollars (+13 %) et relevé son dividende de 16 % (communiqué Visa, SEC).",
-    "KO": "Coca-Cola a vu ses ventes progresser de 7 % au 3e trimestre et a relevé ses objectifs pour 2026 (communiqué Coca-Cola).",
-    "ABBV": "AbbVie a augmenté ses ventes de 10,3 % au 3e trimestre, portées par Skyrizi (+22,7 %) et Rinvoq (+23,9 %), a relevé ses prévisions 2026 et son dividende de 5,2 % (communiqué AbbVie, SEC).",
-    "EUNL.DE": "Cet ETF monde est très exposé aux grandes entreprises américaines, dont la tech : la semaine difficile de Wall Street (S&P 500 −2,7 %) pèse sur lui (AP)."
+    "SHEL.L": "Au 3e trimestre, Shell a dégagé un bénéfice ajusté de 10,8 milliards de dollars et lancé un nouveau rachat d'actions de 5 milliards ; la baisse du pétrole la semaine dernière est un point à suivre (Oil & Gas Journal, Reuters).",
+    "V": "Visa a publié un chiffre d'affaires trimestriel de 12,1 milliards de dollars (+13 %) et relevé son dividende de 16 % ; pour le recevoir, il faut être actionnaire au 10 novembre (communiqué Visa, SEC).",
+    "KO": "Coca-Cola a vu ses revenus progresser de 7 % au 3e trimestre et a relevé ses objectifs pour 2026, dont une hausse du bénéfice par action d'au moins 11 % (communiqué Coca-Cola).",
+    "ABBV": "AbbVie a augmenté ses ventes de 10,3 % au 3e trimestre grâce à Skyrizi et Rinvoq, relevé ses prévisions 2026 et son dividende de 5,2 % (communiqué AbbVie).",
+    "EUNL.DE": "Cet ETF monde, très exposé aux grandes valeurs américaines, a subi la semaine difficile de Wall Street (S&P 500 −2,7 %) avant le rebond de vendredi et de ce lundi en Asie (AP, Al Jazeera)."
   },
   "glossary": [
     {
-      "term": "Correction",
-      "def": "Baisse d'au moins 10 % d'un indice par rapport à son plus haut récent."
-    },
-    {
-      "term": "Marché baissier",
-      "def": "Baisse d'au moins 20 % par rapport au plus haut, souvent signe d'un pessimisme durable."
-    },
-    {
-      "term": "Semi-conducteurs",
-      "def": "Les puces électroniques, et par extension les entreprises qui les conçoivent ou les fabriquent, comme Nvidia."
+      "term": "Contrats à terme (futures)",
+      "def": "Paris négociés avant l'ouverture qui donnent une idée de la direction probable de la Bourse."
     },
     {
       "term": "Rachat d'actions",
-      "def": "Une entreprise rachète ses propres actions en Bourse, ce qui augmente la part de bénéfice revenant à chaque action restante."
+      "def": "Une entreprise rachète ses propres actions, ce qui réduit leur nombre et augmente la part de chaque actionnaire restant."
     },
     {
-      "term": "Taux à 10 ans",
-      "def": "Le taux auquel un État emprunte sur 10 ans ; quand il monte, les placements risqués deviennent souvent moins attrayants."
+      "term": "CPI",
+      "def": "Indice des prix à la consommation : il mesure l'évolution des prix payés par les ménages, donc l'inflation."
     },
     {
-      "term": "CPI (indice des prix)",
-      "def": "L'indice qui mesure l'évolution des prix payés par les ménages, donc l'inflation."
+      "term": "Taux directeur",
+      "def": "Le taux fixé par une banque centrale ; quand il monte, emprunter coûte plus cher et l'économie ralentit."
+    },
+    {
+      "term": "Correction",
+      "def": "Baisse d'au moins 10 % d'un indice par rapport à son record."
+    },
+    {
+      "term": "Estimation rapide",
+      "def": "Premier chiffre publié rapidement par un institut statistique, qui peut être légèrement révisé ensuite."
     }
   ]
 }
