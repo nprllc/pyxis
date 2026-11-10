@@ -1,304 +1,267 @@
 {
-  "date": "2026-11-09",
-  "generated_at": "2026-11-09T06:52:53+01:00",
-  "headline": "Les Bourses asiatiques rebondissent après une semaine difficile pour les valeurs de l'IA ; l'inflation américaine de mardi est le prochain rendez-vous.",
-  "summary": "La semaine dernière, Wall Street a connu sa pire semaine depuis avril 2025 (S&P 500 −2,7 %), à cause d'une forte chute des valeurs liées à l'intelligence artificielle jeudi. Vendredi et ce lundi matin en Asie, ces valeurs ont en partie rebondi : le Nikkei japonais gagne environ 3,4 %. L'emploi américain très solide en octobre renforce l'idée d'une hausse des taux de la Fed en décembre. Le pétrole a fortement baissé sur la semaine, sur des espoirs d'apaisement au Moyen-Orient. Mardi 10 novembre, l'indice des prix américain d'octobre sera publié.",
-  "sections": [
+ "date": "2026-11-10",
+ "generated_at": "2026-11-10T10:04:51+01:00",
+ "mode": "press",
+ "author": "Revue automatique (sans IA)",
+ "headline": "Revue de presse du matin",
+ "summary": "La synthèse rédigée n'a pas pu être produite ce matin. Voici les derniers titres des sources de référence, classés par thème : clique sur un titre pour lire l'article.",
+ "sections": [
+  {
+   "title": "Banques centrales et taux",
+   "points": [
     {
-      "title": "Marchés mondiaux",
-      "points": [
-        {
-          "text": "Vendredi 6 novembre, le S&P 500 (les 500 grandes entreprises américaines) a gagné 0,3 % à 7 376,86 points et le Nasdaq (riche en valeurs technologiques) 1,1 %, tandis que le Dow Jones a perdu 0,5 %. Sur la semaine, le S&P 500 recule de 2,7 %, sa pire semaine depuis avril 2025, et reste 5,7 % sous son record d'octobre.",
-          "sources": [
-            {
-              "name": "AP (via Philadelphia Inquirer)",
-              "url": "https://www.inquirer.com/business/markets-wall-street-ai-stocks-economy-20261106.html"
-            }
-          ]
-        },
-        {
-          "text": "Jeudi 5 novembre, le S&P 500 avait chuté de 4,4 % et le Nasdaq de 5,5 %. L'indice des fabricants de puces a perdu plus de 12 %, sa plus forte baisse en une journée depuis plus de six ans. En cause : la crainte qu'après les victoires démocrates aux élections de mi-mandat, la construction de centres de données ralentisse, ajoutée à la peur d'une « bulle » de l'IA.",
-          "sources": [
-            {
-              "name": "BFM Bourse",
-              "url": "https://www.tradingsat.com/cac-40-FR0003500008/actualites/cac-40-malgre-des-chiffres-de-l-emploi-solides-et-un-sursaut-du-nasdaq-le-cac-40-finit-la-semaine-en-baisse-1173355.html"
-            },
-            {
-              "name": "Reuters (via Business Recorder)",
-              "url": "https://www.brecorder.com/news/40448058/wall-street-week-ahead-as-tech-swoon-roils-market-us-inflation-data-on-tap"
-            },
-            {
-              "name": "AP (via Philadelphia Inquirer)",
-              "url": "https://www.inquirer.com/business/markets-wall-street-ai-stocks-economy-20261106.html"
-            }
-          ]
-        },
-        {
-          "text": "Ce lundi matin, l'Asie rebondit : le Nikkei japonais prend environ 3,4 % et l'indice de Taïwan plus de 5,5 %, après avoir fortement reculé vendredi (Nikkei −6 % environ). Les contrats à terme sur le S&P 500 (paris sur l'ouverture de Wall Street) gagnaient environ 0,6 %.",
-          "sources": [
-            {
-              "name": "Al Jazeera",
-              "url": "https://www.aljazeera.com/economy/2026/11/9/asian-stock-markets-climb-after-earlier-tech-rout"
-            }
-          ]
-        },
-        {
-          "text": "Le pétrole Brent (référence mondiale) a perdu environ 16 % sur la semaine, sa plus forte baisse hebdomadaire depuis 2020, autour de 98 dollars le baril, sur des espoirs d'apaisement dans la guerre avec l'Iran.",
-          "sources": [
-            {
-              "name": "Reuters (via RTÉ)",
-              "url": "https://www.rte.ie/news/business/2026/1106/1598252-world-oil-prices/"
-            },
-            {
-              "name": "Reuters (via Boursorama)",
-              "url": "https://www.boursorama.com/bourse/actualites/l-europe-finit-dans-le-rouge-seance-plus-tranquille-a-wall-street-337fffc859f97adfbf7b960dd169657b"
-            }
-          ]
-        }
-      ]
+     "text": "Le chômage se stabilise au troisième trimestre en France, à 8,2 %",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/politique/article/2026/11/10/le-chomage-se-stabilise-au-troisieme-trimestre-a-8-2_6808794_823448.html"
+      }
+     ]
     },
     {
-      "title": "Taux et banques centrales",
-      "points": [
-        {
-          "text": "Emploi américain : 165 000 créations d'emplois en octobre, contre environ 65 000 attendues ; le chômage baisse de 4,2 % à 4,1 %. Les salaires horaires progressent de 3,1 % sur un an.",
-          "sources": [
-            {
-              "name": "Bureau of Labor Statistics",
-              "url": "https://www.bls.gov/news.release/archives/empsit_11062026.htm"
-            },
-            {
-              "name": "Reuters (via Devdiscourse)",
-              "url": "https://www.devdiscourse.com/article/international/4002856-wrapup-3-us-job-growth-surges-in-october-unemployment-rate-falls-to-41"
-            }
-          ]
-        },
-        {
-          "text": "La Fed (banque centrale américaine) a gardé son taux entre 3,75 % et 4 % le 28 octobre, mais deux membres voulaient déjà le relever. Après les chiffres de l'emploi, les marchés estimaient à environ 77 % la probabilité d'une hausse de 0,25 point en décembre.",
-          "sources": [
-            {
-              "name": "Réserve fédérale (Fed)",
-              "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm"
-            },
-            {
-              "name": "Reuters (via Devdiscourse)",
-              "url": "https://www.devdiscourse.com/article/international/4002856-wrapup-3-us-job-growth-surges-in-october-unemployment-rate-falls-to-41"
-            }
-          ]
-        },
-        {
-          "text": "Le taux à 10 ans américain (ce que paie l'État pour emprunter sur 10 ans) a fini la semaine à 4,86 %, un niveau élevé.",
-          "sources": [
-            {
-              "name": "AP (via Philadelphia Inquirer)",
-              "url": "https://www.inquirer.com/business/markets-wall-street-ai-stocks-economy-20261106.html"
-            }
-          ]
-        },
-        {
-          "text": "L'indice des prix à la consommation (CPI) américain d'octobre sera publié mardi 10 novembre. En septembre, la hausse des prix était de 3,7 % sur un an.",
-          "sources": [
-            {
-              "name": "Bureau of Labor Statistics",
-              "url": "https://www.bls.gov/schedule/news_release/cpi.htm"
-            },
-            {
-              "name": "Bureau of Labor Statistics",
-              "url": "https://www.bls.gov/cpi/"
-            }
-          ]
-        },
-        {
-          "text": "La BCE a laissé son taux de dépôt à 2,50 % le 29 octobre, en soulignant que la hausse des prix de l'énergie est un risque pour l'inflation. Christine Lagarde quittera la présidence de la BCE le 7 février 2027, plus tôt que prévu.",
-          "sources": [
-            {
-              "name": "BCE",
-              "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp261029~9a493adf17.en.html"
-            },
-            {
-              "name": "Al Jazeera (AFP, Reuters)",
-              "url": "https://www.aljazeera.com/amp/news/2026/10/29/european-central-bank-president-lagarde-to-step-down-early"
-            }
-          ]
-        },
-        {
-          "text": "La Banque d'Angleterre a relevé son taux de 3,75 % à 4 % le 5 novembre ; elle s'attend à une inflation britannique proche de 5 % mi-2027.",
-          "sources": [
-            {
-              "name": "Banque d'Angleterre",
-              "url": "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/november-2026"
-            }
-          ]
-        }
-      ]
+     "text": "Emmanuel Moulin (Banque de France) : Le chômage quasiment stable au T3 - 10/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/emmanuel-moulin-banque-de-france-le-chomage-quasiment-stable-au-t3-10-11_EN-202611100243.html"
+      }
+     ]
     },
     {
-      "title": "Entreprises et secteurs",
-      "points": [
-        {
-          "text": "Vendredi, les valeurs de puces ont repris des couleurs : Nvidia +2,8 % après deux séances de forte baisse, Micron +5,1 %, Lam Research +8,2 % après l'annonce d'un rachat d'actions (l'entreprise rachète ses propres titres) pouvant atteindre 25 milliards de dollars.",
-          "sources": [
-            {
-              "name": "AP (via Philadelphia Inquirer)",
-              "url": "https://www.inquirer.com/business/markets-wall-street-ai-stocks-economy-20261106.html"
-            }
-          ]
-        },
-        {
-          "text": "Sur le mois écoulé, le secteur technologique américain a fait nettement moins bien que le reste du marché, un écart jamais vu depuis 2002 selon le courtier Truist.",
-          "sources": [
-            {
-              "name": "Reuters (via Business Recorder)",
-              "url": "https://www.brecorder.com/news/40448058/wall-street-week-ahead-as-tech-swoon-roils-market-us-inflation-data-on-tap"
-            }
-          ]
-        },
-        {
-          "text": "Cette semaine, plusieurs résultats suivis de près dans l'IA : CoreWeave, Applied Materials et Cisco.",
-          "sources": [
-            {
-              "name": "Reuters (via Business Recorder)",
-              "url": "https://www.brecorder.com/news/40448058/wall-street-week-ahead-as-tech-swoon-roils-market-us-inflation-data-on-tap"
-            }
-          ]
-        }
-      ]
+     "text": "Assurance-vie : la remontée des taux obligataires relance le pari des fonds datés",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/argent/article/2026/11/10/assurance-vie-la-remontee-des-taux-obligataires-relance-le-pari-des-fonds-dates_6808783_1657007.html"
+      }
+     ]
     },
     {
-      "title": "Europe et Espagne",
-      "points": [
-        {
-          "text": "Vendredi, le CAC 40 a perdu 0,81 % à 8 139 points mais gagne 2,1 % sur la semaine. Le STOXX 600 (600 grandes entreprises européennes) a reculé de 1,05 % sur la séance et finit la semaine presque stable (+0,19 %).",
-          "sources": [
-            {
-              "name": "Reuters (via Boursorama)",
-              "url": "https://www.boursorama.com/bourse/actualites/l-europe-finit-dans-le-rouge-seance-plus-tranquille-a-wall-street-337fffc859f97adfbf7b960dd169657b"
-            },
-            {
-              "name": "BFM Bourse",
-              "url": "https://www.tradingsat.com/cac-40-FR0003500008/actualites/cac-40-malgre-des-chiffres-de-l-emploi-solides-et-un-sursaut-du-nasdaq-le-cac-40-finit-la-semaine-en-baisse-1173355.html"
-            }
-          ]
-        },
-        {
-          "text": "Zone euro : selon l'estimation rapide d'Eurostat, l'inflation est montée à 4,0 % sur un an en octobre (3,8 % en septembre), tirée par l'énergie (+20,8 %).",
-          "sources": [
-            {
-              "name": "Eunews (estimation rapide Eurostat)",
-              "url": "https://www.eunews.it/en/?p=470144"
-            }
-          ]
-        },
-        {
-          "text": "Espagne : le PIB (la richesse produite) a progressé de 0,6 % au 3e trimestre (+2,7 % sur un an). L'inflation est restée à 4,9 % sur un an en octobre selon l'estimation rapide de l'INE.",
-          "sources": [
-            {
-              "name": "BBVA Research",
-              "url": "https://www.bbvaresearch.com/en/publicaciones/spain-gdp-advances-by-06-in-3q26-and-consolidates-the-outlook-for-2026/"
-            },
-            {
-              "name": "CaixaBank Research",
-              "url": "https://www.caixabankresearch.com/es/publicaciones/notas-breves-actualidad-economica-y-financiera/espana/inflacion-se-mantiene-49"
-            }
-          ]
-        },
-        {
-          "text": "Emploi en Espagne : le taux de chômage de l'enquête EPA atteint 10,18 % au 3e trimestre ; le chômage inscrit a augmenté de 43 128 personnes en octobre, à 2,42 millions, son plus bas niveau pour un mois d'octobre depuis 2007.",
-          "sources": [
-            {
-              "name": "INE",
-              "url": "https://www.ine.es/dyngs/Prensa/en/EPA3T26.pdf"
-            },
-            {
-              "name": "Seguridad Social",
-              "url": "https://revista.seg-social.es/-/el-paro-registrado-aumenta-en-43.128-personas-en-octubre-y-se-situa-en-2.422.633-la-cifra-mas-baja-en-este-mes-desde-2007"
-            }
-          ]
-        }
-      ]
+     "text": "Gold Drops as Traders Look to Inflation Data After Fed Remarks (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-10/gold-holds-gain-above-4-100-as-lower-oil-eases-inflation-woes"
+      }
+     ]
+    },
+    {
+     "text": "Faltering Philippine Growth Spurs Calls for State Action, Pause in Rate Hikes (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-09/faltering-philippine-growth-spurs-calls-for-state-action-pause-in-rate-hikes"
+      }
+     ]
+    },
+    {
+     "text": "US Stock Rebound Slows Ahead of Inflation Data: Markets Wrap (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-09/stock-market-today-dow-s-p-live-updates"
+      }
+     ]
+    },
+    {
+     "text": "Succession de Christine Lagarde à la tête de la BCE : Paris pourrait soutenir Pablo Hernandez de Cos face à Klaas Knot dans la course à la présidence",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/09/succession-de-christine-lagarde-a-la-tete-de-la-bce-paris-pourrait-soutenir-pablo-hernandez-de-cos-face-a-klaas-knot-dans-la-course-a-la-presidence_6808703_3234.html"
+      }
+     ]
+    },
+    {
+     "text": "The stock-market rally keeps spreading beyond Big Tech. October inflation data could put it to the test. (en anglais)",
+     "sources": [
+      {
+       "name": "MarketWatch",
+       "url": "https://www.marketwatch.com/story/the-stock-market-rally-keeps-spreading-beyond-big-tech-october-inflation-data-could-put-it-to-the-test-c1b87dcd?mod=mw_rss_topstories"
+      }
+     ]
     }
-  ],
-  "houses": [
-    {
-      "name": "BlackRock Investment Institute",
-      "view": "Reste neutre sur les actions américaines et positif sur les pays émergents. Croit toujours à l'IA mais de façon sélective, et s'attend à des taux longs durablement élevés car les dépenses d'IA sont de plus en plus financées par la dette.",
-      "stance": "neutre",
-      "date": "2026-11-02",
-      "url": "https://www.blackrock.com/corporate/insights/blackrock-investment-institute/global-weekly-commentary"
-    },
-    {
-      "name": "Goldman Sachs Asset Management",
-      "view": "Voit une croissance des bénéfices plus lente en 2027 mais toujours favorable aux actions ; recommande de diversifier dans le monde, notamment vers les émergents, et attend une hausse de taux de la Fed en décembre.",
-      "stance": "positif",
-      "date": "2026-11-05",
-      "url": "https://am.gs.com/en-us/advisors/insights/article/market-pulse"
-    },
-    {
-      "name": "UBS CIO",
-      "view": "Conseille de rester diversifié en actions et juge attractives les obligations de bonne qualité à échéance courte ou moyenne ; attend des hausses de la Fed en décembre et en mars.",
-      "stance": "positif",
-      "date": "2026-11-02",
-      "url": "https://www.ubs.com/global/en/wealthmanagement/insights/chief-investment-office/house-view/2026/weekly-key-messages.html"
-    },
-    {
-      "name": "Pictet Asset Management",
-      "view": "Réduit son exposition aux actions d'ici la fin d'année, car des conditions financières moins favorables et les risques géopolitiques pèsent plus que la bonne croissance des bénéfices.",
-      "stance": "prudent",
-      "date": "2026-11-03",
-      "url": "https://pictet.com/uk/en/insights/markets"
-    },
-    {
-      "name": "Vanguard",
-      "view": "Juge probable une nouvelle hausse de taux de la Fed cette année, avec un risque croissant de deux hausses ; souligne que les obligations offrent à nouveau des rendements intéressants.",
-      "stance": "neutre",
-      "date": "2026-10-27",
-      "url": "https://advisors.vanguard.com/insights/article/series/market-perspectives?stream=business"
-    },
-    {
-      "name": "Amundi Investment Institute",
-      "view": "Légèrement favorable au risque ; préfère l'Europe, le Japon et les émergents aux États-Unis et reste prudent sur les obligations les plus longues.",
-      "stance": "positif",
-      "date": "2026-10-06",
-      "url": "https://research-center.amundi.com/article/global-investment-views-october-2026"
-    }
-  ],
-  "for_you": [
-    "Une semaine à −2,7 % pour Wall Street, suivie d'un rebond partiel, fait partie de la vie normale des marchés : sur 10 ou 20 ans, ces secousses pèsent peu pour un plan mensuel.",
-    "Ton ETF monde contient beaucoup de grandes entreprises américaines de la tech, donc il ressent ces mouvements de l'IA ; c'est justement sa diversification (des centaines d'entreprises de nombreux pays) qui amortit le choc.",
-    "Avec un versement chaque mois, les baisses permettent d'acheter des parts moins cher : le plus important reste la régularité, pas le moment.",
-    "Les taux qui montent rendent les placements sans risque (livrets, obligations courtes) plus rémunérateurs : c'est un bon moment pour vérifier que ton épargne de précaution est bien en place, à côté de ton plan."
-  ],
-  "ideas_notes": {
-    "SHEL.L": "Au 3e trimestre, Shell a dégagé un bénéfice ajusté de 10,8 milliards de dollars et lancé un nouveau rachat d'actions de 5 milliards ; la baisse du pétrole la semaine dernière est un point à suivre (Oil & Gas Journal, Reuters).",
-    "V": "Visa a publié un chiffre d'affaires trimestriel de 12,1 milliards de dollars (+13 %) et relevé son dividende de 16 % ; pour le recevoir, il faut être actionnaire au 10 novembre (communiqué Visa, SEC).",
-    "KO": "Coca-Cola a vu ses revenus progresser de 7 % au 3e trimestre et a relevé ses objectifs pour 2026, dont une hausse du bénéfice par action d'au moins 11 % (communiqué Coca-Cola).",
-    "ABBV": "AbbVie a augmenté ses ventes de 10,3 % au 3e trimestre grâce à Skyrizi et Rinvoq, relevé ses prévisions 2026 et son dividende de 5,2 % (communiqué AbbVie).",
-    "EUNL.DE": "Cet ETF monde, très exposé aux grandes valeurs américaines, a subi la semaine difficile de Wall Street (S&P 500 −2,7 %) avant le rebond de vendredi et de ce lundi en Asie (AP, Al Jazeera)."
+   ]
   },
-  "glossary": [
+  {
+   "title": "Économie",
+   "points": [
     {
-      "term": "Contrats à terme (futures)",
-      "def": "Paris négociés avant l'ouverture qui donnent une idée de la direction probable de la Bourse."
+     "text": "\"La France va échapper à la récession\": le gouverneur de la Banque de France revoit malgré tout la croissance à la baisse à 0,3% et s'inquiète des coups de pouce au Smic",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/la-france-va-echapper-a-la-recession-le-gouverneur-de-la-banque-de-france-revoit-malgre-tout-la-croissance-a-la-baisse-a-0-3-et-s-inquiete-des-coups-de-pouce-au-smic_AV-202611100283.html"
+      }
+     ]
     },
     {
-      "term": "Rachat d'actions",
-      "def": "Une entreprise rachète ses propres actions, ce qui réduit leur nombre et augmente la part de chaque actionnaire restant."
+     "text": "« On n’achète de la viande que si c’est à moins 30 %, on fait attention à tout » : avec l’inflation, Lidl n’attire pas seulement les clients les plus modestes",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/10/on-n-achete-de-la-viande-que-si-c-est-a-moins-30-on-fait-attention-a-tout-avec-l-inflation-lidl-n-attire-pas-seulement-les-clients-les-plus-modestes_6808787_3234.html"
+      }
+     ]
     },
     {
-      "term": "CPI",
-      "def": "Indice des prix à la consommation : il mesure l'évolution des prix payés par les ménages, donc l'inflation."
+     "text": "3 unexpected reasons the October jobs report was so strong (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Économie",
+       "url": "https://www.cnbc.com/2026/11/09/october-jobs-report-hiring-by-sector.html"
+      }
+     ]
     },
     {
-      "term": "Taux directeur",
-      "def": "Le taux fixé par une banque centrale ; quand il monte, emprunter coûte plus cher et l'économie ralentit."
-    },
-    {
-      "term": "Correction",
-      "def": "Baisse d'au moins 10 % d'un indice par rapport à son record."
-    },
-    {
-      "term": "Estimation rapide",
-      "def": "Premier chiffre publié rapidement par un institut statistique, qui peut être légèrement révisé ensuite."
+     "text": "A key report for where inflation stood in October comes out Tuesday. Here's what to expect (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Économie",
+       "url": "https://www.cnbc.com/2026/11/09/october-cpi-report-2026-inflation.html"
+      }
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "title": "Entreprises et secteurs",
+   "points": [
+    {
+     "text": "En portefeuille : Anthropic, beaucoup d'interrogations avant l'IPO - 10/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-anthropic-cafouillage-avant-l-ipo-10-11_EN-202611100352.html"
+      }
+     ]
+    },
+    {
+     "text": "Nomadia : « La performance des équipes terrain ne se joue plus sur le rendement, mais sur la capacité à mieux utiliser des ressources devenues rares »",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/grand-angle-paroles-d-entreprises/nomadia-la-performance-des-equipes-terrain-ne-se-joue-plus-sur-le-rendement-mais-sur-la-capacite-a-mieux-utiliser-des-ressources-devenues-rares_AB-202611100041.html"
+      }
+     ]
+    },
+    {
+     "text": "Investors pile into defensive stocks amid fears AI bull market may be over (en anglais)",
+     "sources": [
+      {
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/efe9653b-6802-485e-8eae-97fa2e6df770?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "Jensen Huang exit odds are low on prediction markets after Nvidia probe (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Marchés",
+       "url": "https://www.cnbc.com/2026/11/09/jensen-huang-nvidia-exit-prediction-markets.html"
+      }
+     ]
+    },
+    {
+     "text": "Goldman CEO Solomon says AI financing remains strong despite market jitters (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Marchés",
+       "url": "https://www.cnbc.com/2026/11/09/goldman-ceo-ai-financing-market.html"
+      }
+     ]
+    },
+    {
+     "text": "Tech sell-off raises risks for SoftBank’s massive AI bet (en anglais)",
+     "sources": [
+      {
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/e19c86dc-9437-4827-a5ae-14bd4033037b?syn-25a6b1a6=1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Marchés",
+   "points": [
+    {
+     "text": "Waller, The Economic Outlook and Some Thoughts on Labor Market Dynamism (en anglais)",
+     "sources": [
+      {
+       "name": "Réserve fédérale (discours)",
+       "url": "https://www.federalreserve.gov/newsevents/speech/waller20261110a.htm"
+      }
+     ]
+    },
+    {
+     "text": "\"On continuera s'il le faut\": après la baisse spectaculaire de 22 centimes à la pompe, le gouvernement ouvert à un nouveau déblocage des stocks stratégiques de carburant",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/entreprises/energie/on-continuera-s-il-le-faut-apres-la-baisse-spectaculaire-de-22-centimes-a-la-pompe-le-gouvernement-ouvert-a-un-nouveau-deblocage-des-stocks-strategiques-de-carburant_AD-202611100373.html"
+      }
+     ]
+    },
+    {
+     "text": "Brent Crude Falls Below $90 a Barrel for First Time Since August (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-10/brent-crude-falls-below-90-a-barrel-for-first-time-since-august"
+      }
+     ]
+    },
+    {
+     "text": "L'intégrale de Good Morning Market du mardi 10 novembre",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-mardi-10-novembre_EN-202611100354.html"
+      }
+     ]
+    },
+    {
+     "text": "US Gasoline Prices Drop Below $4 a Gallon After Months of Pain (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-10/us-gasoline-prices-drop-below-4-a-gallon-after-months-of-pain"
+      }
+     ]
+    },
+    {
+     "text": "Italy’s Open Fiber Said to Start Planning €8 Billion Refinancing (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-10/italy-s-open-fiber-said-to-start-planning-8-billion-refinancing"
+      }
+     ]
+    },
+    {
+     "text": "Morning Meeting : Bourse, les indices retrouvent des couleurs avec la baisse du pétrole - 10/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/morning-meeting-le-nasdaq-100-sort-de-4-semaines-negatives-10-11_EN-202611100343.html"
+      }
+     ]
+    },
+    {
+     "text": "UK’s Top Rolex Retailer Improves Outlook After US Sales Jump (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-10/uk-s-top-rolex-retailer-improves-outlook-after-us-sales-jump"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "for_you": [],
+ "houses": [],
+ "glossary": []
 }
