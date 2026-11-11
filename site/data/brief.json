@@ -1,6 +1,6 @@
 {
- "date": "2026-11-10",
- "generated_at": "2026-11-10T10:04:51+01:00",
+ "date": "2026-11-11",
+ "generated_at": "2026-11-11T10:09:22+01:00",
  "mode": "press",
  "author": "Revue automatique (sans IA)",
  "headline": "Revue de presse du matin",
@@ -10,74 +10,74 @@
    "title": "Banques centrales et taux",
    "points": [
     {
-     "text": "Le chômage se stabilise au troisième trimestre en France, à 8,2 %",
+     "text": "Immobilier : les transactions ralentissent sur fond de hausse des taux d’intérêt",
      "sources": [
       {
        "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/politique/article/2026/11/10/le-chomage-se-stabilise-au-troisieme-trimestre-a-8-2_6808794_823448.html"
+       "url": "https://www.lemonde.fr/economie/article/2026/11/11/immobilier-les-transactions-ralentissent-sur-fond-de-hausse-des-taux-d-interet_6808945_3234.html"
       }
      ]
     },
     {
-     "text": "Emmanuel Moulin (Banque de France) : Le chômage quasiment stable au T3 - 10/11",
+     "text": "Taylor Wimpey Sees Lower Profit as Rates Squeeze Buyers (en anglais)",
      "sources": [
       {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/emmanuel-moulin-banque-de-france-le-chomage-quasiment-stable-au-t3-10-11_EN-202611100243.html"
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-11/taylor-wimpey-sees-lower-profit-as-mortgage-rates-squeeze-buyers"
       }
      ]
     },
     {
-     "text": "Assurance-vie : la remontée des taux obligataires relance le pari des fonds datés",
+     "text": "UK Gilts Get Pulled into US Bond Selloff (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/newsletters/2026-11-11/uk-gilts-get-pulled-into-us-bond-selloff"
+      }
+     ]
+    },
+    {
+     "text": "« Un programme sérieux de développement social et écologique peut réduire le ratio dette/PIB »",
      "sources": [
       {
        "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/argent/article/2026/11/10/assurance-vie-la-remontee-des-taux-obligataires-relance-le-pari-des-fonds-dates_6808783_1657007.html"
+       "url": "https://www.lemonde.fr/idees/article/2026/11/11/un-programme-serieux-de-developpement-social-et-ecologique-peut-reduire-le-ratio-dette-pib_6808935_3232.html"
       }
      ]
     },
     {
-     "text": "Gold Drops as Traders Look to Inflation Data After Fed Remarks (en anglais)",
+     "text": "France and Belgium fall foul of Eurozone bond market’s new divide (en anglais)",
+     "sources": [
+      {
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/5263808c-e8ac-44b8-baa3-af7e8c788684?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "Japanese savers go on record government bond spree (en anglais)",
+     "sources": [
+      {
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/d17e5179-59e2-4b8e-9a65-e985b99645df?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "Korea Fines Bond Dealers Record $1.2 Billion Over Collusion (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-10/gold-holds-gain-above-4-100-as-lower-oil-eases-inflation-woes"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-11/korea-fines-bond-dealers-record-1-2-billion-over-collusion"
       }
      ]
     },
     {
-     "text": "Faltering Philippine Growth Spurs Calls for State Action, Pause in Rate Hikes (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-09/faltering-philippine-growth-spurs-calls-for-state-action-pause-in-rate-hikes"
-      }
-     ]
-    },
-    {
-     "text": "US Stock Rebound Slows Ahead of Inflation Data: Markets Wrap (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-09/stock-market-today-dow-s-p-live-updates"
-      }
-     ]
-    },
-    {
-     "text": "Succession de Christine Lagarde à la tête de la BCE : Paris pourrait soutenir Pablo Hernandez de Cos face à Klaas Knot dans la course à la présidence",
-     "sources": [
-      {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/economie/article/2026/11/09/succession-de-christine-lagarde-a-la-tete-de-la-bce-paris-pourrait-soutenir-pablo-hernandez-de-cos-face-a-klaas-knot-dans-la-course-a-la-presidence_6808703_3234.html"
-      }
-     ]
-    },
-    {
-     "text": "The stock-market rally keeps spreading beyond Big Tech. October inflation data could put it to the test. (en anglais)",
+     "text": "One reason Children’s Place is filing for bankruptcy? Not enough children. (en anglais)",
      "sources": [
       {
        "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/the-stock-market-rally-keeps-spreading-beyond-big-tech-october-inflation-data-could-put-it-to-the-test-c1b87dcd?mod=mw_rss_topstories"
+       "url": "https://www.marketwatch.com/story/one-reason-the-childrens-place-is-going-bankrupt-not-enough-children-b275eab0?mod=mw_rss_topstories"
       }
      ]
     }
@@ -87,38 +87,29 @@
    "title": "Économie",
    "points": [
     {
-     "text": "\"La France va échapper à la récession\": le gouverneur de la Banque de France revoit malgré tout la croissance à la baisse à 0,3% et s'inquiète des coups de pouce au Smic",
+     "text": "Pour \"soutenir la croissance de son réseau régional\", la compagnie hongkongaise Cathay Pacific investit 5,1 milliards de dollars dans 11 nouveaux Airbus",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/la-france-va-echapper-a-la-recession-le-gouverneur-de-la-banque-de-france-revoit-malgre-tout-la-croissance-a-la-baisse-a-0-3-et-s-inquiete-des-coups-de-pouce-au-smic_AV-202611100283.html"
+       "url": "https://www.bfmtv.com/economie/entreprises/aeronautique/pour-soutenir-la-croissance-de-son-reseau-regional-la-compagnie-hongkongaise-cathay-pacific-investit-5-1-milliards-de-dollars-dans-11-nouveaux-airbus_AD-202611110254.html"
       }
      ]
     },
     {
-     "text": "« On n’achète de la viande que si c’est à moins 30 %, on fait attention à tout » : avec l’inflation, Lidl n’attire pas seulement les clients les plus modestes",
+     "text": "Oil traders give peace a chance (but should they?) (en anglais)",
+     "sources": [
+      {
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/aa40cb43-4d0f-4f3c-a7aa-fbc2606f5719?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "Parcoursup : « La sélection n’est pas l’ennemie de l’égalité des chances »",
      "sources": [
       {
        "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/economie/article/2026/11/10/on-n-achete-de-la-viande-que-si-c-est-a-moins-30-on-fait-attention-a-tout-avec-l-inflation-lidl-n-attire-pas-seulement-les-clients-les-plus-modestes_6808787_3234.html"
-      }
-     ]
-    },
-    {
-     "text": "3 unexpected reasons the October jobs report was so strong (en anglais)",
-     "sources": [
-      {
-       "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/09/october-jobs-report-hiring-by-sector.html"
-      }
-     ]
-    },
-    {
-     "text": "A key report for where inflation stood in October comes out Tuesday. Here's what to expect (en anglais)",
-     "sources": [
-      {
-       "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/09/october-cpi-report-2026-inflation.html"
+       "url": "https://www.lemonde.fr/idees/article/2026/11/11/parcoursup-la-selection-n-est-pas-l-ennemie-de-l-egalite-des-chances_6808921_3232.html"
       }
      ]
     }
@@ -128,56 +119,74 @@
    "title": "Entreprises et secteurs",
    "points": [
     {
-     "text": "En portefeuille : Anthropic, beaucoup d'interrogations avant l'IPO - 10/11",
+     "text": "Odd Lots: The Perfect Storm That Clobbered Hedge Funds (Podcast) (en anglais)",
      "sources": [
       {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-anthropic-cafouillage-avant-l-ipo-10-11_EN-202611100352.html"
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/audio/2026-11-11/odd-lots-the-perfect-storm-that-clobbered-hedge-funds-podcast"
       }
      ]
     },
     {
-     "text": "Nomadia : « La performance des équipes terrain ne se joue plus sur le rendement, mais sur la capacité à mieux utiliser des ressources devenues rares »",
+     "text": "CSG Shares Plunge as Defense Firm Cuts Full-Year Margin Outlook (en anglais)",
      "sources": [
       {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/grand-angle-paroles-d-entreprises/nomadia-la-performance-des-equipes-terrain-ne-se-joue-plus-sur-le-rendement-mais-sur-la-capacite-a-mieux-utiliser-des-ressources-devenues-rares_AB-202611100041.html"
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-11/csg-cuts-full-year-margin-outlook-as-revenue-misses-estimates"
       }
      ]
     },
     {
-     "text": "Investors pile into defensive stocks amid fears AI bull market may be over (en anglais)",
+     "text": "Anthropic IPO valuation calculator: How much is it really worth? (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/efe9653b-6802-485e-8eae-97fa2e6df770?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/8281fcde-bcf7-4145-b785-bc0d12616c27?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "Jensen Huang exit odds are low on prediction markets after Nvidia probe (en anglais)",
+     "text": "CoreWeave’s stock pops as new financing playbook eases debt concerns (en anglais)",
      "sources": [
       {
-       "name": "CNBC Marchés",
-       "url": "https://www.cnbc.com/2026/11/09/jensen-huang-nvidia-exit-prediction-markets.html"
+       "name": "MarketWatch",
+       "url": "https://www.marketwatch.com/story/coreweaves-stock-pops-as-new-financing-playbook-eases-debt-concerns-70241525?mod=mw_rss_topstories"
       }
      ]
     },
     {
-     "text": "Goldman CEO Solomon says AI financing remains strong despite market jitters (en anglais)",
-     "sources": [
-      {
-       "name": "CNBC Marchés",
-       "url": "https://www.cnbc.com/2026/11/09/goldman-ceo-ai-financing-market.html"
-      }
-     ]
-    },
-    {
-     "text": "Tech sell-off raises risks for SoftBank’s massive AI bet (en anglais)",
+     "text": "Anthropic bankers prepare to increase IPO valuation to $1.5tn or more (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/e19c86dc-9437-4827-a5ae-14bd4033037b?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/68bcba57-0575-44ee-80f4-2e5ea23a431e?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "AI Trade Lifts Stocks as CoreWeave Defies Skeptics: Markets Wrap (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-10/stock-market-today-dow-s-p-live-updates"
+      }
+     ]
+    },
+    {
+     "text": "Meet the former prosecutor Nvidia hired to investigate the Jensen Huang spy scandal (en anglais)",
+     "sources": [
+      {
+       "name": "MarketWatch",
+       "url": "https://www.marketwatch.com/story/meet-the-former-prosecutor-nvidia-hired-to-investigate-the-jensen-huang-spy-scandal-e8078f67?mod=mw_rss_topstories"
+      }
+     ]
+    },
+    {
+     "text": "A la Guadeloupe, les dérives de la « Sécu » examinées par la Cour des comptes : 1,2 milliard d’euros perdus, une désorganisation interne et des délais qui s’allongent",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/outre-mer/article/2026/11/10/a-la-guadeloupe-les-derives-de-la-secu-examinees-par-la-cour-des-comptes-1-2-milliard-d-euros-perdus-une-desorganisation-interne-et-des-delais-qui-s-allongent_6808903_1840826.html"
       }
      ]
     }
@@ -187,74 +196,74 @@
    "title": "Marchés",
    "points": [
     {
-     "text": "Waller, The Economic Outlook and Some Thoughts on Labor Market Dynamism (en anglais)",
+     "text": "Why Hedge Funds Did So Poorly in October (en anglais)",
      "sources": [
       {
-       "name": "Réserve fédérale (discours)",
-       "url": "https://www.federalreserve.gov/newsevents/speech/waller20261110a.htm"
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-11/why-hedge-funds-did-so-poorly-in-october"
       }
      ]
     },
     {
-     "text": "\"On continuera s'il le faut\": après la baisse spectaculaire de 22 centimes à la pompe, le gouvernement ouvert à un nouveau déblocage des stocks stratégiques de carburant",
+     "text": "India Equity Fund Inflows Cool as Stocks Sink to 18-Month Low (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-11/india-equity-fund-inflows-cool-as-stocks-sink-to-18-month-low"
+      }
+     ]
+    },
+    {
+     "text": "En portefeuille : Anthropic précise son introduction en Bourse - 11/11",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/entreprises/energie/on-continuera-s-il-le-faut-apres-la-baisse-spectaculaire-de-22-centimes-a-la-pompe-le-gouvernement-ouvert-a-un-nouveau-deblocage-des-stocks-strategiques-de-carburant_AD-202611100373.html"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-anthropic-precise-son-introduction-en-bourse-11-11_EN-202611110323.html"
       }
      ]
     },
     {
-     "text": "Brent Crude Falls Below $90 a Barrel for First Time Since August (en anglais)",
+     "text": "Adler Pelzer in Talks With Investment Funds to Close Refinancing (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-10/brent-crude-falls-below-90-a-barrel-for-first-time-since-august"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-11/adler-pelzer-in-talks-with-investment-funds-to-close-refinancing"
       }
      ]
     },
     {
-     "text": "L'intégrale de Good Morning Market du mardi 10 novembre",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-mardi-10-novembre_EN-202611100354.html"
-      }
-     ]
-    },
-    {
-     "text": "US Gasoline Prices Drop Below $4 a Gallon After Months of Pain (en anglais)",
+     "text": "European Stocks Set for Record as Miners and Tech Rally (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-10/us-gasoline-prices-drop-below-4-a-gallon-after-months-of-pain"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-11/european-stocks-set-for-record-as-miners-and-tech-rally"
       }
      ]
     },
     {
-     "text": "Italy’s Open Fiber Said to Start Planning €8 Billion Refinancing (en anglais)",
+     "text": "Chery Recalls Thousands of Vehicles in South Africa Over Safety (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-10/italy-s-open-fiber-said-to-start-planning-8-billion-refinancing"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-11/chery-recalls-thousands-of-vehicles-in-south-africa-over-safety-mwbuqw8g"
       }
      ]
     },
     {
-     "text": "Morning Meeting : Bourse, les indices retrouvent des couleurs avec la baisse du pétrole - 10/11",
+     "text": "Alibaba announces plans to list T-Head, its Nvidia chip rival (en anglais)",
      "sources": [
       {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/morning-meeting-le-nasdaq-100-sort-de-4-semaines-negatives-10-11_EN-202611100343.html"
+       "name": "CNBC Marchés",
+       "url": "https://www.cnbc.com/2026/11/11/alibaba-pr.html"
       }
      ]
     },
     {
-     "text": "UK’s Top Rolex Retailer Improves Outlook After US Sales Jump (en anglais)",
+     "text": "Unilever-McCormick Deal Facing In Depth Review From UK Watchdog (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-10/uk-s-top-rolex-retailer-improves-outlook-after-us-sales-jump"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-11/unilever-mccormick-deal-facing-in-depth-review-from-uk-watchdog"
       }
      ]
     }
