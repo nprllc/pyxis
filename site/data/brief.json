@@ -1,6 +1,6 @@
 {
- "date": "2026-11-12",
- "generated_at": "2026-11-12T10:15:08+01:00",
+ "date": "2026-11-13",
+ "generated_at": "2026-11-13T10:13:26+01:00",
  "mode": "press",
  "author": "Revue automatique (sans IA)",
  "headline": "Revue de presse du matin",
@@ -10,74 +10,74 @@
    "title": "Banques centrales et taux",
    "points": [
     {
-     "text": "Aussie Falls to Lowest Since January on RBA Outlook, AI Concern (en anglais)",
+     "text": "Morning Meeting : Le taux à 10 ans américain décolle au-delà des 5,1% - 13/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/morning-meeting-le-taux-a-10-ans-americain-decolle-au-dela-des-5-1-13-11_EN-202611130354.html"
+      }
+     ]
+    },
+    {
+     "text": "Emmanuel Lechypre face à Marc Fiorentino : Christine Lagarde est-elle la femme providentielle ? - 13/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/emmanuel-lechypre-face-a-marc-fiorentino-christine-lagarde-est-elle-la-femme-providentielle-13-11_EN-202611130346.html"
+      }
+     ]
+    },
+    {
+     "text": "(USD:ZWG) Zimbabwe Moves to Rebuild Local Bond Market After Currency Turmoil (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-12/aussie-falls-to-lowest-since-january-on-rba-slowdown-ai-fears"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-13/-usd-zwg-zimbabwe-moves-to-rebuild-local-bond-market-after-currency-turmoil"
       }
      ]
     },
     {
-     "text": "Your holiday credit-card bills are going up. What you can do to ease the pain. (en anglais)",
+     "text": "Don’t scoff at the dangers of tokenisation (en anglais)",
+     "sources": [
+      {
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/91e8c6d1-54ab-48b6-a6ad-ea3b8dc3843f?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "Copper Set for Worst Run in Two Years on Nvidia and Rates Unease (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-13/copper-climbs-from-three-month-low-after-rough-week-for-metals"
+      }
+     ]
+    },
+    {
+     "text": "Analysis: Nvidia’s leadership crisis tests the chipmaker’s role as the ‘central bank of AI’ (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Économie",
+       "url": "https://www.cnbc.com/2026/11/11/nvidia-jensen-huang-ai-financial-system-risk.html"
+      }
+     ]
+    },
+    {
+     "text": "Stocks Slip Before Inflation Test of Fed-Hike Bets: Markets Wrap (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-12/stock-market-today-dow-s-p-live-updates"
+      }
+     ]
+    },
+    {
+     "text": "Bond yields just saw their biggest surge since 2022 as expectations grow for more Fed rate hikes (en anglais)",
      "sources": [
       {
        "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/your-holiday-credit-card-bills-are-going-up-what-you-can-do-to-ease-the-pain-5ddeb446?mod=mw_rss_topstories"
-      }
-     ]
-    },
-    {
-     "text": "CoreWeave wants to sit with the credit-market grown-ups (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/16d4593e-b9ce-4eab-90af-9835c79eb9f2?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "Fed's Goolsbee calls inflation report 'borderline disturbing' as central bank weighs more hikes (en anglais)",
-     "sources": [
-      {
-       "name": "CNBC Marchés",
-       "url": "https://www.cnbc.com/2026/11/11/goolsbee-october-inflation-fed-rates-disturbing-distressing.html"
-      }
-     ]
-    },
-    {
-     "text": "Turkey’s chief banking regulator offers to resign over $20bn fraud scandal (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/f22ce1c1-8de8-420a-b9f6-4dff0fc1f732?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "Immobilier : les transactions ralentissent sur fond de hausse des taux d’intérêt",
-     "sources": [
-      {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/economie/article/2026/11/11/immobilier-les-transactions-ralentissent-sur-fond-de-hausse-des-taux-d-interet_6808945_3234.html"
-      }
-     ]
-    },
-    {
-     "text": "France and Belgium fall foul of Eurozone bond market’s new divide (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/5263808c-e8ac-44b8-baa3-af7e8c788684?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "Japanese savers go on record government bond spree (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/d17e5179-59e2-4b8e-9a65-e985b99645df?syn-25a6b1a6=1"
+       "url": "https://www.marketwatch.com/story/bond-yields-just-saw-their-biggest-surge-since-2022-as-expectations-grow-for-more-fed-rate-hikes-d0a4f195?mod=mw_rss_topstories"
       }
      ]
     }
@@ -87,11 +87,56 @@
    "title": "Économie",
    "points": [
     {
-     "text": "Le contraste est frappant entre les deux pays: la croissance du Royaume-Uni bondit de 0,7% quand celle de la France est proche de la récession à -0,1%",
+     "text": "Au plus haut depuis près de 3 ans: l'Insee confirme que l'inflation a atteint 3,4% sur un an en octobre",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/international/le-contraste-est-frappant-entre-les-deux-pays-la-croissance-du-royaume-uni-bondit-de-0-7-quand-celle-de-la-france-est-proche-de-la-recession-a-0-1_AD-202611120356.html"
+       "url": "https://www.bfmtv.com/economie/economie-social/au-plus-haut-depuis-pres-de-3-ans-l-insee-confirme-que-l-inflation-a-atteint-3-4-sur-un-an-en-octobre_AD-202611130394.html"
+      }
+     ]
+    },
+    {
+     "text": "Une croissance sous la barre des 1%, une inflation à 7%... L'économie russe ralentit encore, freinée par les attaques de drones ukrainiennes",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/international/une-croissance-sous-la-barre-des-1-une-inflation-a-7-l-economie-russe-ralentit-encore-freinee-par-les-attaques-de-drones-ukrainiennes_AV-202611130368.html"
+      }
+     ]
+    },
+    {
+     "text": "Hong Kong Turns Even More Bullish on Economy With Growth Upgrade (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-13/hong-kong-lifts-gdp-growth-outlook-again-as-ai-boom-spurs-export"
+      }
+     ]
+    },
+    {
+     "text": "Ils vont peut-être poser tous les trois sur la photo: que vont se dire Trump, Poutine et Xi Jinping qui devraient se rencontrer la semaine prochaine?",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/ils-vont-peut-etre-poser-tous-les-trois-sur-la-photo-que-vont-se-dire-trump-poutine-et-xi-jinping-qui-devraient-se-rencontrer-la-semaine-prochaine_AV-202611130332.html"
+      }
+     ]
+    },
+    {
+     "text": "India’s Manufacturing Incentives Fall Short on Jobs, Report Says (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-13/india-s-manufacturing-incentives-fall-short-on-jobs-report-says"
+      }
+     ]
+    },
+    {
+     "text": "Hors de Londres, l’économie britannique est à bout de souffle",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/12/hors-de-londres-l-economie-britannique-est-a-bout-de-souffle_6809129_3234.html"
       }
      ]
     },
@@ -105,38 +150,11 @@
      ]
     },
     {
-     "text": "UK Economy Gets a Boost from AI, Posts Best Growth Since 2024 (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/newsletters/2026-11-12/uk-economy-gets-a-boost-from-ai-posts-best-growth-since-2024"
-      }
-     ]
-    },
-    {
      "text": "Growth investing or gambling? (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
        "url": "https://www.ft.com/content/92eb0eca-aee8-45af-b336-7a9a20da0a64?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "Comment les jobs d’appoint deviennent une nécessité pour des salariés ou chômeurs en quête de pouvoir d’achat",
-     "sources": [
-      {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/economie/article/2026/11/12/le-jobbing-ce-microtravail-qui-prend-de-plus-en-plus-de-poids-pour-boucler-les-fins-de-mois_6809052_3234.html"
-      }
-     ]
-    },
-    {
-     "text": "Oil traders give peace a chance (but should they?) (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/aa40cb43-4d0f-4f3c-a7aa-fbc2606f5719?syn-25a6b1a6=1"
       }
      ]
     }
@@ -146,20 +164,29 @@
    "title": "Entreprises et secteurs",
    "points": [
     {
-     "text": "Odd Lots: What Nvidia’s Megaspeed Scandal Is All About (Podcast) (en anglais)",
+     "text": "Odd Lots: Why a $2 Billion Law Firm Suddenly Collapsed (Podcast) (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/audio/2026-11-12/odd-lots-what-nvidia-s-megaspeed-scandal-is-all-about-podcast"
+       "url": "https://www.bloomberg.com/news/audio/2026-11-13/odd-lots-why-a-2-billion-law-firm-suddenly-collapsed-podcast"
       }
      ]
     },
     {
-     "text": "Persimmon Defies UK Housing Gloom with Rising Sales, Values (en anglais)",
+     "text": "AI boom will lift Nvidia even after Huang’s exit, investors say (en anglais)",
      "sources": [
       {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-12/persimmon-defies-uk-housing-gloom-with-rising-sales-values"
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/ecb2b4ed-1b61-4c8a-a2e7-a6f9c85a59ff?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "Who can replace Jensen Huang as Nvidia CEO? These four names are buzzing in AI circles. (en anglais)",
+     "sources": [
+      {
+       "name": "MarketWatch",
+       "url": "https://www.marketwatch.com/story/who-can-replace-jensen-huang-as-nvidia-ceo-these-four-names-are-buzzing-in-ai-circles-66c31ec2?mod=mw_rss_topstories"
       }
      ]
     },
@@ -180,33 +207,6 @@
        "url": "https://www.ft.com/content/b9ad2b19-4f2a-4f26-89b6-940985a0b9d4?syn-25a6b1a6=1"
       }
      ]
-    },
-    {
-     "text": "Nvidia’s stock drops as the board reportedly prepares to remove CEO Jensen Huang (en anglais)",
-     "sources": [
-      {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/nvidias-stock-drops-as-the-board-reportedly-prepares-to-remove-ceo-jensen-huang-9edee58d?mod=mw_rss_topstories"
-      }
-     ]
-    },
-    {
-     "text": "US tech stocks rally as AI trade revives (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/639de881-6017-454f-abfa-cfb191d1e7cd?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "Anthropic’s IPO is too important to fail (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/26fd23df-830e-481b-a3bc-19bcab48c5f6"
-      }
-     ]
     }
    ]
   },
@@ -214,74 +214,74 @@
    "title": "Marchés",
    "points": [
     {
-     "text": "Nvidia shares slide as board considers Huang’s future (en anglais)",
+     "text": "My wife has dementia and may outlive me. How do we prepare for long-term memory care? (en anglais)",
+     "sources": [
+      {
+       "name": "MarketWatch",
+       "url": "https://www.marketwatch.com/story/my-wife-has-dementia-and-may-outlive-me-how-do-we-prepare-for-long-term-memory-care-9c23efaa?mod=mw_rss_topstories"
+      }
+     ]
+    },
+    {
+     "text": "Chinese AI sell-off deepens over fears of tougher Nvidia chip restrictions (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/a93307a7-e2cd-4abd-bd89-c38832d8c40e?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/0d4e93e4-895e-4ae0-a01b-833a3ed440a8?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "L'intégrale de Good Morning Market du jeudi 12 novembre",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-jeudi-12-novembre_EN-202611120376.html"
-      }
-     ]
-    },
-    {
-     "text": "En portefeuille : Nvidia a perdu près de 30 % depuis début octobre - 12/11",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-nvidia-a-perdu-pres-de-30-depuis-debut-octobre-12-11_EN-202611120375.html"
-      }
-     ]
-    },
-    {
-     "text": "Jensen Huang Scandal: Investigating Nvidia's Relationship to Megaspeed (en anglais)",
+     "text": "Iraq October Oil Output Jumps to Highest Since 2019, IEA Says (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-12/jensen-huang-scandal-investigating-nvidia-s-relationship-to-megaspeed"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-13/iraq-october-oil-output-jumps-to-highest-since-2019-iea-says"
       }
      ]
     },
     {
-     "text": "\"Nous léguons à ceux qui arrivent dans la vie un sac à dos six fois plus lourd que quand j’avais 20 ans\": l'ancien gouverneur de la Banque de France met en garde contre \"l'illusion de l'endettement sans limite\"",
+     "text": "Global oil markets swing to surplus as Gulf shipments rebound (en anglais)",
      "sources": [
       {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/nous-leguons-a-ceux-qui-arrivent-dans-la-vie-un-sac-a-dos-six-fois-plus-lourd-que-quand-j-avais-20-ans-l-ancien-gouverneur-de-la-banque-de-france-met-en-garde-contre-l-illusion-de-l-endettement-sans-limite_AV-202611120364.html"
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/20b68fe2-9d60-4c0c-b714-1f3e03015823?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "Blackstone, Pimco Target Gulf’s Multibillion-Dollar Buildout (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-12/blackstone-pimco-target-gulf-s-multibillion-dollar-buildout"
-      }
-     ]
-    },
-    {
-     "text": "Morning Meeting : Nvidia trébuche de 8% en après-Bourse - 12/11",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/morning-meeting-nvidia-trebuche-de-8-en-apres-bourse-12-11_EN-202611120349.html"
-      }
-     ]
-    },
-    {
-     "text": "Santander Sweetens Offer for Brazil Unit Stake With 5% Increase (en anglais)",
+     "text": "Why a $2 Billion Law Firm Suddenly Collapsed (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-12/santander-sweetens-offer-for-brazil-unit-stake-with-5-increase"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-13/why-a-2-billion-law-firm-suddenly-collapsed"
+      }
+     ]
+    },
+    {
+     "text": "L'intégrale de Good Morning Market du vendredi 13 novembre",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-vendredi-13-novembre_EN-202611130383.html"
+      }
+     ]
+    },
+    {
+     "text": "En portefeuille : Nvidia perd désormais 27% en 1 mois - 13/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-nvidia-perd-desormais-27-en-1-mois-13-11_EN-202611130382.html"
+      }
+     ]
+    },
+    {
+     "text": "European Shares Pull Back From Record High After Four-Day Rally (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-13/european-shares-pull-back-from-record-high-after-four-day-rally"
       }
      ]
     }
