@@ -1,6 +1,6 @@
 {
- "date": "2026-11-16",
- "generated_at": "2026-11-16T11:19:15+01:00",
+ "date": "2026-11-17",
+ "generated_at": "2026-11-17T10:17:36+01:00",
  "mode": "press",
  "author": "Revue automatique (sans IA)",
  "headline": "Revue de presse du matin",
@@ -10,74 +10,47 @@
    "title": "Banques centrales et taux",
    "points": [
     {
-     "text": "Fed’s Barr Says AI Agents Could Fuel Future Bank Runs (en anglais)",
+     "text": "Analysis: The Fed's chairman sees an AI revolution coming. Now he has to figure out what it means (en anglais)",
      "sources": [
       {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-16/fed-s-barr-says-ai-agents-could-fuel-future-bank-runs"
+       "name": "CNBC Économie",
+       "url": "https://www.cnbc.com/2026/11/16/kevin-warsh-fed-ai-jobs-productivity-interest-rateshtml.html"
       }
      ]
     },
     {
-     "text": "Vujcic Says Bets on ECB Hike in 2027 Don’t Seem Unreasonable (en anglais)",
+     "text": "Fed Chairman Kevin Warsh stresses importance of AI to economy, but says it could ‘disappoint’ (en anglais)",
      "sources": [
       {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-16/vujcic-says-bets-on-ecb-hike-next-year-don-t-seem-unreasonable"
+       "name": "CNBC Marchés",
+       "url": "https://www.cnbc.com/2026/11/16/fed-ai-task-force-kevin-warsh.html"
       }
      ]
     },
     {
-     "text": "La Grèce multiplie les mesures pour attirer les grosses fortunes et les hedge funds",
-     "sources": [
-      {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/economie/article/2026/11/16/la-grece-multiplie-les-mesures-pour-attirer-les-grosses-fortunes-et-les-hedge-funds_6811670_3234.html"
-      }
-     ]
-    },
-    {
-     "text": "Roughed-Up Bond Traders Eye Fedspeak, Minutes for Next Move (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-15/roughed-up-bond-traders-look-to-fedspeak-minutes-for-next-move"
-      }
-     ]
-    },
-    {
-     "text": "Emerging-Market Bond Drought Lifts Prices as Sales Slump 41% (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-15/bond-drought-in-emerging-markets-lifts-prices-as-sales-slump-41"
-      }
-     ]
-    },
-    {
-     "text": "US Treasuries record worst week since Trump’s ‘liberation day’ (en anglais)",
+     "text": "UK short-term borrowing costs hit three-year high (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/7bebace2-dc87-410a-ae29-ffd9f3176def?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/aad29fc8-1b1b-4b7a-9e60-99989887ad89?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "AI risks are the biggest threat to the financial system, Fed survey finds (en anglais)",
+     "text": "Warsh, Opening Remarks (en anglais)",
      "sources": [
       {
-       "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/13/ai-risks-financial-system-federal-reserve.html"
+       "name": "Réserve fédérale (discours)",
+       "url": "https://www.federalreserve.gov/newsevents/speech/warsh20261116a.htm"
       }
      ]
     },
     {
-     "text": "Wholesale prices rose 0.3% in October, putting annual rate at 6.5%, the highest in nearly four years (en anglais)",
+     "text": "New bond revealed (en anglais)",
      "sources": [
       {
-       "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/13/ppi-inflation-report-october-2026.html"
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/4a6a3465-69b2-4c7b-ac77-fc9d7d6b862f"
       }
      ]
     }
@@ -87,29 +60,74 @@
    "title": "Économie",
    "points": [
     {
-     "text": "Copper Sinks to Four-Month Low on Tech Rout, China Growth Woes (en anglais)",
+     "text": "Pour la première fois, une étude établit un lien entre l'IA et les recrutements: 25.000 offres d'emploi ont disparu en seulement trois mois en France",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/emploi/pour-la-premiere-fois-une-etude-etablit-un-lien-entre-l-ia-et-les-recrutements-25-000-offres-d-emploi-ont-disparu-en-seulement-trois-mois-en-france_AD-202611170400.html"
+      }
+     ]
+    },
+    {
+     "text": "Les Experts : Les intentions de recrutement des cadres au plus bas - 17/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/les-experts/les-experts-les-intentions-de-recrutement-des-cadres-au-plus-bas-17-11_EN-202611170393.html"
+      }
+     ]
+    },
+    {
+     "text": "\"On voit les gens se précipiter au distributeur de billets au moment des allocations\": Leclerc n'a jamais vu autant de salariés demander à être payés en avance",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/consommation/on-voir-les-gens-se-precipiter-au-distributeur-de-billets-au-moment-des-allocation-leclerc-n-a-jamais-vu-autant-de-salaries-demander-a-etre-payes-en-avance_AV-202611170392.html"
+      }
+     ]
+    },
+    {
+     "text": "UK’s Latest Jobs Report Is a Mixed Bag With Wage Growth Slowing, Payrolls Cut (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-16/copper-sinks-to-four-month-low-on-tech-rout-china-growth-woes"
+       "url": "https://www.bloomberg.com/news/newsletters/2026-11-17/uk-s-latest-jobs-report-is-a-mixed-bag-with-wage-growth-slowing-payrolls-cut"
       }
      ]
     },
     {
-     "text": "Eric Trump-backed robot soldier startup can't pay staff after founder borrowed $4.6 million from company to buy home (en anglais)",
+     "text": "La Chine et le Canada s’accordent sur des nouvelles réductions des droits de douane",
      "sources": [
       {
-       "name": "CNBC Marchés",
-       "url": "https://www.cnbc.com/2026/11/14/foundation-payroll-ceo-loan.html"
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/international/article/2026/11/17/la-chine-et-le-canada-s-accordent-sur-des-nouvelles-reductions-des-droits-de-douane_6812924_3210.html"
       }
      ]
     },
     {
-     "text": "Hedge fund woes expose the dangers of hot money once again (en anglais)",
+     "text": "L’utilisation de l’IA a fait disparaître 100 000 offres d’emploi en 2026, et cela ne concerne pas forcément que les débutants, selon une étude",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/17/l-essor-de-l-ia-ralentit-les-recrutements-des-metiers-les-plus-automatisables-au-dela-des-postes-juniors_6812918_3234.html"
+      }
+     ]
+    },
+    {
+     "text": "Rothschild & Co anchors Italy at heart of European growth plan (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/7c60b026-23ff-4b50-8a2b-7e9614ef7970"
+       "url": "https://www.ft.com/content/f214db12-7c8a-4d54-8582-b57289513c29?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "« Quand le pain flambe, c’est le thermomètre du pays qui grimpe » : la baguette, un baromètre de l’inflation pour les Français",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/17/la-baguette-un-barometre-de-l-inflation-pour-les-francais-quand-le-pain-flambe-c-est-le-thermometre-du-pays-qui-grimpe_6812901_3234.html"
       }
      ]
     }
@@ -119,38 +137,56 @@
    "title": "Entreprises et secteurs",
    "points": [
     {
-     "text": "Denmark’s Leo Pharma Delays IPO Plans Beyond 2026, CEO Says (en anglais)",
+     "text": "Stocks slide as Nvidia results loom (en anglais)",
      "sources": [
       {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-16/denmark-s-leo-pharma-delays-ipo-plans-beyond-2026-ceo-says"
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/4a3b9892-67c6-4177-8503-80c0a5eb3b60?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "Europe’s Top Pork Producer Ousts CEO Amid Slump, Restructuring (en anglais)",
+     "text": "European Stocks Fall as US Chip Curbs Ignite Fresh AI Selloff (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-16/europe-s-top-pork-producer-ousts-ceo-amid-slump-restructuring"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-17/european-stocks-fall-as-us-chip-curbs-ignite-fresh-ai-selloff"
       }
      ]
     },
     {
-     "text": "\"Nous obtenons désormais des résultats pratiquement chaque jour\": Volodymyr Zelensky assure que 55% de la capacité russe de raffinage de pétrole a été \"mise hors service\"",
+     "text": "Tech Stock Selloff Eases in Countdown to Nvidia: Markets Wrap (en anglais)",
      "sources": [
       {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/entreprises/energie/nous-obtenons-desormais-des-resultats-pratiquement-chaque-jour-volodymyr-zelensky-assure-que-55-de-la-capacite-russe-de-raffinage-de-petrole-a-ete-mise-hors-service_AV-202611160288.html"
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-16/stock-market-today-dow-s-p-live-updates"
       }
      ]
     },
     {
-     "text": "Nvidia Fallout, Anthropic IPO Squeeze Asian Chip Stocks Anew (en anglais)",
+     "text": "Nvidia Earnings Are Sideshow as Huang’s Exit the Focus (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-16/nvidia-fallout-anthropic-listing-squeeze-asian-chip-stocks-anew"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-16/nvidia-earnings-are-sideshow-as-huang-s-ouster-looms-over-market"
+      }
+     ]
+    },
+    {
+     "text": "Diamondback strikes $5bn deal to expand drilling in oil-rich Permian Basin (en anglais)",
+     "sources": [
+      {
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/a56fc76f-af32-45b2-8ae1-d5e211cb9643?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "Lutnick faces questions over Nvidia spy scandal. His sons' firm has ties to the chipmaker (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Marchés",
+       "url": "https://www.cnbc.com/2026/11/13/howard-lutnick-nvidia-jensen-huang-china-cantor-fitzgerald.html"
       }
      ]
     },
@@ -162,33 +198,6 @@
        "url": "https://www.ft.com/content/a61f1fe9-55d9-498e-9ecc-c3a66980d63a?syn-25a6b1a6=1"
       }
      ]
-    },
-    {
-     "text": "Agriculture : la dépendance au maïs percutée par le dérèglement climatique",
-     "sources": [
-      {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/economie/article/2026/11/16/le-mais-indispensable-au-modele-agricole-francais-menace-par-le-dereglement-climatique_6811339_3234.html"
-      }
-     ]
-    },
-    {
-     "text": "Tech Stocks Slide as Nvidia, Anthropic Tests Await: Markets Wrap (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-15/stock-market-today-dow-s-p-live-updates"
-      }
-     ]
-    },
-    {
-     "text": "Nvidia is gearing up for one of Wall Street’s most anticipated earnings calls in years (en anglais)",
-     "sources": [
-      {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/nvidia-is-gearing-up-for-one-of-wall-streets-most-anticipated-earnings-calls-in-years-91855b1e?mod=mw_rss_topstories"
-      }
-     ]
     }
    ]
   },
@@ -196,74 +205,74 @@
    "title": "Marchés",
    "points": [
     {
-     "text": "I’m in my 40s. Should I accept a lower pension in exchange for naming my husband or child as a beneficiary? (en anglais)",
-     "sources": [
-      {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/im-in-my-40s-should-i-accept-a-lower-pension-in-exchange-for-naming-my-husband-or-child-as-a-beneficiary-b2352059?mod=mw_rss_topstories"
-      }
-     ]
-    },
-    {
-     "text": "Angelina Jolie reportedly buys a Connecticut mansion after selling L.A. estate (en anglais)",
-     "sources": [
-      {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/angelina-jolie-reportedly-buys-a-connecticut-mansion-after-selling-l-a-estate-049f914b?mod=mw_rss_topstories"
-      }
-     ]
-    },
-    {
-     "text": "Les Experts de l'immo : Faut-il investir dans un appartement ou dans une SCPI ? - 16/11",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/les-experts-de-l-immo/les-experts-de-l-immo-faut-il-investir-dans-un-appartement-ou-dans-une-scpi-16-11_EN-202611160401.html"
-      }
-     ]
-    },
-    {
-     "text": "Barr, Some Potential Financial Stability Implications of Artificial Intelligence (en anglais)",
-     "sources": [
-      {
-       "name": "Réserve fédérale (discours)",
-       "url": "https://www.federalreserve.gov/newsevents/speech/barr20261116a.htm"
-      }
-     ]
-    },
-    {
-     "text": "Former NFL star Chris Simms sells his 300-year-old Greenwich, Conn., home for $5.5 million (en anglais)",
-     "sources": [
-      {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/former-nfl-star-chris-simms-sells-his-300-year-old-greenwich-conn-home-for-5-5-million-0ae1fdc2?mod=mw_rss_topstories"
-      }
-     ]
-    },
-    {
-     "text": "Mitsui & Co. Said to Back J-Oil Mills in Battle Over Kadoya (en anglais)",
+     "text": "Turkey Fund Assets Shrink by $54 Billion Amid Manipulation Probe (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-16/mitsui-co-said-to-back-j-oil-mills-in-battle-over-kadoya"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-17/turkey-fund-assets-shrink-by-54-billion-amid-manipulation-probe"
       }
      ]
     },
     {
-     "text": "\"L'homme pourrait vivre jusqu'à 150 ans\": Poutine et Xi Jinping en parlent entre eux, les milliardaires de la tech investissent pour repousser la mort et le pape s'inquiète d'une humanité à deux vitesses",
+     "text": "L'intégrale de Good Morning Market du mardi 17 novembre",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/international/l-homme-pourrait-vivre-jusqu-a-150-ans-poutine-et-xi-jinping-en-parlent-entre-eux-les-milliardaires-de-la-tech-investissent-pour-repousser-la-mort-et-le-pape-s-inquiete-d-une-humanite-a-deux-vitesses_AN-202611160372.html"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-mardi-17-novembre_EN-202611170377.html"
       }
      ]
     },
     {
-     "text": "Diesel Falls Below $6 a Gallon, Easing Key Inflationary Pressure (en anglais)",
+     "text": "En portefeuille : Affaire Nvidia, une mauvaise nouvelle pour la Chine ? - 17/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-affaire-nvidia-une-mauvaise-nouvelle-pour-la-chine-17-11_EN-202611170370.html"
+      }
+     ]
+    },
+    {
+     "text": "Morning Meeting : Bourse, les géants de la tech chinoise souffrent - 17/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/morning-meeting-bourse-les-geants-de-la-tech-chinoise-souffrent-17-11_EN-202611170369.html"
+      }
+     ]
+    },
+    {
+     "text": "Old Mutual Sells $1 Billion of South Africa Malls to Vukile (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-16/diesel-falls-below-6-a-gallon-easing-key-inflationary-pressure"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-17/old-mutual-sells-1-billion-of-south-africa-malls-to-vukile"
+      }
+     ]
+    },
+    {
+     "text": "Turkish Stocks Raised to Overweight at JPMorgan on Rebound Bet (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-17/turkish-stocks-raised-to-overweight-at-jpmorgan-on-rebound-bet"
+      }
+     ]
+    },
+    {
+     "text": "Une coïncidence troublante: Trump a vendu jusqu'à un million de dollars d'actions Nvidia quelques jours après des alertes sur les liens de son patron avec une espionne chinoise présumée",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/international/une-coincidence-troublante-trump-a-vendu-jusqu-a-un-million-de-dollars-d-actions-nvidia-quelques-jours-apres-des-alertes-sur-les-liens-de-son-patron-avec-une-espionne-chinoise-presumee_AN-202611170353.html"
+      }
+     ]
+    },
+    {
+     "text": "Europe Gas Edges Higher on Middle East Tensions, Weather Outlook (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-17/europe-gas-edges-higher-on-middle-east-tensions-weather-outlook"
       }
      ]
     }
