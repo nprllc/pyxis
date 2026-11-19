@@ -1,6 +1,6 @@
 {
- "date": "2026-11-18",
- "generated_at": "2026-11-18T10:18:15+01:00",
+ "date": "2026-11-19",
+ "generated_at": "2026-11-19T10:21:46+01:00",
  "mode": "press",
  "author": "Revue automatique (sans IA)",
  "headline": "Revue de presse du matin",
@@ -9,6 +9,42 @@
   {
    "title": "Banques centrales et taux",
    "points": [
+    {
+     "text": "Fed officials expect more rate hikes, worry about AI impact on inflation, minutes show (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Marchés",
+       "url": "https://www.cnbc.com/2026/11/18/fed-minutes-october-2026.html"
+      }
+     ]
+    },
+    {
+     "text": "Barr, Investing in America’s Underserved Communities (en anglais)",
+     "sources": [
+      {
+       "name": "Réserve fédérale (discours)",
+       "url": "https://www.federalreserve.gov/newsevents/speech/barr20261118a.htm"
+      }
+     ]
+    },
+    {
+     "text": "JPMorgan seeks to revive stalled software debt sale with steep price cuts (en anglais)",
+     "sources": [
+      {
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/16a99ff4-6060-4c81-8c4f-7e43503e4a11?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "Fed’s Waller says central bank may need to ‘shock people’ with half-point rate hike (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Marchés",
+       "url": "https://www.cnbc.com/2026/11/18/federal-reserve-governor-christopher-waller.html"
+      }
+     ]
+    },
     {
      "text": "Record diesel prices drive UK inflation to 1-year high of 3.6% (en anglais)",
      "sources": [
@@ -26,60 +62,6 @@
        "url": "https://www.ft.com/content/38a2ce31-d7f5-48d0-a8b6-2b4f3ed45df6?syn-25a6b1a6=1"
       }
      ]
-    },
-    {
-     "text": "Gold Slumps Below $3,800 as Fed Officials Signal More Rate Hikes (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-17/gold-steadies-near-14-month-low-as-rate-hike-pressure-mounts"
-      }
-     ]
-    },
-    {
-     "text": "Want to earn 5% on shorter-term Treasurys again? Watch for this shift. (en anglais)",
-     "sources": [
-      {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/want-to-earn-5-on-shorter-term-treasurys-again-watch-for-this-shift-d6ff42f2?mod=mw_rss_topstories"
-      }
-     ]
-    },
-    {
-     "text": "Philip R. Lane: The practice and science of monetary policy communication: the ECB experience (en anglais)",
-     "sources": [
-      {
-       "name": "BCE",
-       "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261117~7f5d3b1a0e.en.pdf"
-      }
-     ]
-    },
-    {
-     "text": "BCE : l’Allemagne propose l’économiste Markus Brunnermeier au directoire, la présidence de Pablo Hernandez de Cos se profile",
-     "sources": [
-      {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/economie/article/2026/11/17/banque-centrale-europeenne-l-allemagne-propose-l-economiste-markus-brunnermeier-au-directoire-la-presidence-de-pablo-hernandez-de-cos-se-profile_6813020_3234.html"
-      }
-     ]
-    },
-    {
-     "text": "Trump Media investors learn the Truth about betting on bitcoin (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/2c686fe5-0a39-45ad-a26e-87c1f813ec7d?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "Analysis: The Fed's chairman sees an AI revolution coming. Now he has to figure out what it means (en anglais)",
-     "sources": [
-      {
-       "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/16/kevin-warsh-fed-ai-jobs-productivity-interest-rateshtml.html"
-      }
-     ]
     }
    ]
   },
@@ -87,29 +69,38 @@
    "title": "Économie",
    "points": [
     {
-     "text": "Copryce : faire du design un levier stratégique de croissance",
+     "text": "« L’impopularité des droits de douane révèle les limites de la politique économique de Donald Trump, fondée sur une illusion »",
      "sources": [
       {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/professionnels/focus-entreprises/copryce-faire-du-design-un-levier-strategique-de-croissance_AB-202611180076.html"
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/idees/article/2026/11/19/l-impopularite-des-droits-de-douane-revele-les-limites-de-la-politique-economique-de-donald-trump-fondee-sur-une-illusion_6813256_3232.html"
       }
      ]
     },
     {
-     "text": "UK Inflation Print at Fastest in a Year Comes With Few Surprises (en anglais)",
+     "text": "Emploi et handicap : le gouvernement souhaite supprimer les restrictions d’accès à 36 métiers",
      "sources": [
       {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/newsletters/2026-11-18/uk-inflation-print-at-fastest-in-a-year-comes-with-few-surprises"
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/societe/article/2026/11/19/emploi-et-handicap-le-gouvernement-souhaite-supprimer-les-restrictions-d-acces-a-36-metiers_6813253_3224.html"
       }
      ]
     },
     {
-     "text": "Gilts Rally After Benign Inflation Data (en anglais)",
+     "text": "Traders’ Relief on UK Inflation May Prove Short-Lived as Price Woes Mount (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/live-blog/2026-11-18/what-s-moving-uk-markets-right-now-markets-today"
+       "url": "https://www.bloomberg.com/news/newsletters/2026-11-19/traders-relief-on-uk-inflation-may-prove-short-lived-as-price-woes-mount"
+      }
+     ]
+    },
+    {
+     "text": "Aux Etats-Unis, Wall Street met fin à l’euphorie généralisée sur l’IA et cherche à trier les gagnants et les perdants de cette révolution",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/19/aux-etats-unis-wall-street-met-fin-a-l-euphorie-generalisee-sur-l-ia-et-cherche-a-trier-les-gagnants-et-les-perdants-de-cette-revolution_6813232_3234.html"
       }
      ]
     },
@@ -121,24 +112,6 @@
        "url": "https://www.ft.com/content/74fdac03-bd9b-4e68-9e6e-dc023eb47be9?syn-25a6b1a6=1"
       }
      ]
-    },
-    {
-     "text": "Nvidia’s stock rises as blowout numbers help ease CEO transition fears (en anglais)",
-     "sources": [
-      {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/nvidias-stock-rises-as-blowout-numbers-help-ease-ceo-transition-fears-2f20d38a?mod=mw_rss_topstories"
-      }
-     ]
-    },
-    {
-     "text": "Rothschild & Co anchors Italy at heart of European growth plan (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/f214db12-7c8a-4d54-8582-b57289513c29?syn-25a6b1a6=1"
-      }
-     ]
     }
    ]
   },
@@ -146,74 +119,74 @@
    "title": "Entreprises et secteurs",
    "points": [
     {
-     "text": "En portefeuille : Nvidia double encore ses profits au 3ème trimestre, le titre décolle en après-Bourse - 18/11",
+     "text": "Les Experts : IPO d'Anthropic, le jackpot pour Ashton Kutcher ! - 19/11",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-nvidia-double-encore-ses-profits-au-3eme-trimestre-le-titre-decolle-en-apres-bourse-18-11_EN-202611180423.html"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/les-experts/les-experts-ipo-d-anthropic-le-jackpot-pour-ashton-kutcher-19-11_EN-202611190398.html"
       }
      ]
     },
     {
-     "text": "Nvidia : l’affaire Jensen Huang révèle les failles de l’administration Trump sur la Chine",
-     "sources": [
-      {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/economie/article/2026/11/18/nvidia-l-affaire-jensen-huang-revele-les-failles-de-l-administration-trump-sur-la-chine_6813087_3234.html"
-      }
-     ]
-    },
-    {
-     "text": "India Weighs Tax Tweaks to Boost Stock Trading, Curb Derivatives (en anglais)",
+     "text": "Odd Lots: AI’s Credit Crunch Moment (Podcast) (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-18/india-weighs-tax-tweaks-to-boost-stock-trading-curb-derivatives"
+       "url": "https://www.bloomberg.com/news/audio/2026-11-19/odd-lots-ai-s-credit-crunch-moment-podcast"
       }
      ]
     },
     {
-     "text": "Nvidia’s big business in Singapore (en anglais)",
+     "text": "ÉDITO. Il a beaucoup baissé dans les sondages mais reste en tête à droite et au centre: Édouard Philippe est loin d'être enterré et pourrait bien être le seul vote utile des modérés fin janvier",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/economie-social/france/edito-il-a-beaucoup-baisse-dans-les-sondages-mais-reste-en-tete-a-droite-et-au-centre-edouard-philippe-est-loin-d-etre-enterre-et-pourrait-bien-etre-le-seul-vote-utile-des-moderes-fin-janvier_AN-202611190311.html"
+      }
+     ]
+    },
+    {
+     "text": "Investec Profit Climbs as South Africa Unit Offsets UK Weakness (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-19/investec-profit-climbs-as-south-africa-unit-offsets-uk-weakness"
+      }
+     ]
+    },
+    {
+     "text": "US Tech Stocks Are Set to Rally as Anthropic IPO Boosts AI Trade (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-19/us-stock-futures-jump-on-blockbuster-reception-to-anthropic-ipo"
+      }
+     ]
+    },
+    {
+     "text": "Anthropic raises $81bn in record IPO (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/fd1e1939-8a5c-47ac-bb38-47d147f8bc7a?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/62c0510b-ca65-441e-9baf-675b93903b9e?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "Low-profile VCs set for $100bn windfall from Anthropic IPO (en anglais)",
+     "text": "Tiger-Backed Razorpay Said to Near Public Filing for India IPO (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-19/tiger-backed-razorpay-said-to-near-public-filing-for-india-ipo"
+      }
+     ]
+    },
+    {
+     "text": "Anthropic revenue target: $600bn, soonish (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/a3430f0d-0080-4970-8eec-2c14c8438b3d?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "Nvidia board insists Huang won’t return as CEO (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/8946ec08-98b3-49c1-96b1-58539281519a?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "CoreWeave’s stock pops — even as Nvidia talks up a ‘disciplined’ approach to financing (en anglais)",
-     "sources": [
-      {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/coreweaves-stock-pops-even-as-nvidia-talks-up-a-disciplined-approach-to-financing-e7f00876?mod=mw_rss_topstories"
-      }
-     ]
-    },
-    {
-     "text": "US tech stocks slide ahead of Nvidia results (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/4a3b9892-67c6-4177-8503-80c0a5eb3b60?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/ea8434c7-59d9-42cf-afd4-97cf42544c59?syn-25a6b1a6=1"
       }
      ]
     }
@@ -223,74 +196,74 @@
    "title": "Marchés",
    "points": [
     {
-     "text": "L'intégrale de Good Morning Market du mercredi 18 novembre",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-mercredi-18-novembre_EN-202611180431.html"
-      }
-     ]
-    },
-    {
-     "text": "Boris Vujčić: Financial Stability Review - November 2026 (en anglais)",
-     "sources": [
-      {
-       "name": "BCE",
-       "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261118~86f1e8147e.en.pdf"
-      }
-     ]
-    },
-    {
-     "text": "Risks from AI valuations, fiscal imbalances and geoeconomic tensions weigh on financial stability outlook (en anglais)",
-     "sources": [
-      {
-       "name": "BCE",
-       "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261118~83c5c60158.en.html"
-      }
-     ]
-    },
-    {
-     "text": "The S&P 500 just broke a crucial support level. Here’s what history shows may happen now. (en anglais)",
+     "text": "Here’s the precise moment when cyberattacks started increasing exponentially (en anglais)",
      "sources": [
       {
        "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/the-s-p-500-just-broke-a-crucial-support-level-heres-what-history-shows-may-happen-now-776f6da2?mod=mw_rss_topstories"
+       "url": "https://www.marketwatch.com/story/heres-the-precise-moment-when-cyberattacks-started-increasing-exponentially-244a4294?mod=mw_rss_topstories"
       }
      ]
     },
     {
-     "text": "Alstom Falls After Expectations of Equity Raise to Reduce Debt (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-18/alstom-falls-after-expectations-of-equity-raise-to-reduce-debt"
-      }
-     ]
-    },
-    {
-     "text": "Morning Meeting : 4ème séance dans le rouge pour le S&P500, une première depuis septembre - 18/11",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/morning-meeting-4eme-seance-dans-le-rouge-pour-le-s-p500-une-premiere-depuis-septembre-18-11_EN-202611180407.html"
-      }
-     ]
-    },
-    {
-     "text": "Eurobank to Buy 65% of Bulgaria’s Fibank for €650 Million (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-18/eurobank-to-buy-65-stake-in-bulgaria-s-fibank-for-650-million"
-      }
-     ]
-    },
-    {
-     "text": "Putin says EU is losing industry, falling behind competition, ahead of meeting with Trump and Xi (en anglais)",
+     "text": "Trump praises ‘great relationship’ with Putin after meeting, as Ukraine war takes center stage (en anglais)",
      "sources": [
       {
        "name": "CNBC Marchés",
-       "url": "https://www.cnbc.com/2026/11/18/putin-apec-eu-trump-xi-meeting.html"
+       "url": "https://www.cnbc.com/2026/11/19/trump-xi-putin-china-apec-.html"
+      }
+     ]
+    },
+    {
+     "text": "This Is The Problem With AI's Most Bullish Chart (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-19/this-is-the-problem-with-ai-s-most-bullish-chart"
+      }
+     ]
+    },
+    {
+     "text": "L'intégrale de Good Morning Market du jeudi 19 novembre",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-jeudi-19-novembre_EN-202611190380.html"
+      }
+     ]
+    },
+    {
+     "text": "Morning Meeting : Anthropic fixe le prix de son action au-delà de la fourchette initiale, face à la demande faramineuse - 19/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/morning-meeting-anthropic-fixe-le-prix-de-son-action-au-dela-de-la-fourchette-initiale-face-a-la-demande-faramineuse-19-11_EN-202611190377.html"
+      }
+     ]
+    },
+    {
+     "text": "En portefeuille : 5e séance dans le rouge pour le S&P 500, qui tombe à un plus bas de juillet - 19/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-5e-seance-dans-le-rouge-pour-le-s-p-500-qui-tombe-a-un-plus-bas-de-juillet-19-11_EN-202611190373.html"
+      }
+     ]
+    },
+    {
+     "text": "L’extension des aéroports de Roissy-Charles-de-Gaulle et d’Orly validée, sous réserve, par le régulateur des transports",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/19/l-extension-des-aeroports-de-roissy-charles-de-gaulle-et-d-orly-validee-sous-reserve-par-le-regulateur-des-transports_6813252_3234.html"
+      }
+     ]
+    },
+    {
+     "text": "Modi Calls on Indian Companies to Expand Global Ambitions (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-19/modi-calls-on-indian-companies-to-expand-global-ambitions"
       }
      ]
     }
