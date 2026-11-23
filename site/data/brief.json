@@ -1,6 +1,6 @@
 {
- "date": "2026-11-20",
- "generated_at": "2026-11-20T10:17:39+01:00",
+ "date": "2026-11-23",
+ "generated_at": "2026-11-23T10:39:06+01:00",
  "mode": "press",
  "author": "Revue automatique (sans IA)",
  "headline": "Revue de presse du matin",
@@ -10,74 +10,74 @@
    "title": "Banques centrales et taux",
    "points": [
     {
-     "text": "Bond Sales Hit €2 Trillion Europe Record as AI Surge Takes Hold (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-20/bond-sales-hit-2-trillion-europe-record-as-ai-surge-takes-hold"
-      }
-     ]
-    },
-    {
-     "text": "Christine Lagarde: Acting in time (en anglais)",
-     "sources": [
-      {
-       "name": "BCE",
-       "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261120~e52bcc4db2.en.html"
-      }
-     ]
-    },
-    {
-     "text": "La valeur refuge ne protège plus: pourquoi l'or a perdu 37% de sa valeur en moins de 10 mois et continue de sombrer",
+     "text": "Les Experts : Zucman veut régulariser les impayés des milliardaires - 23/11",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/patrimoine/placements-epargne/la-valeur-refuge-ne-protege-plus-pourquoi-l-or-a-perdu-37-de-sa-valeur-en-moins-de-10-mois-et-continue-de-sombrer_AN-202611200352.html"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/les-experts/les-experts-zucman-veut-regulariser-les-impayes-des-milliardaires-23-11_EN-202611230403.html"
       }
      ]
     },
     {
-     "text": "Oil loses grip on bond markets as inflation ‘virus’ spreads (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/562e278e-1e12-49d2-b7f7-91a289ffd660?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "The rift between the US and EU on banks is widening (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/cf6e81b6-e3aa-4475-8d5b-04eb8809d5ce?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "Dollar Set for Fourth Weekly Advance Following Anthropic IPO (en anglais)",
+     "text": "India’s New Data Series to Aid RBI Policy, Gupta Says (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-20/dollar-heads-for-fourth-week-of-gains-following-anthropic-ipo"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-23/india-s-new-data-series-to-improve-rbi-forecasts-gupta-says"
       }
      ]
     },
     {
-     "text": "A CoreWeave co-founder just made an unconventional $30 million wager on its battered bonds (en anglais)",
+     "text": "The Federal Reserve’s balance sheet yo-yo (en anglais)",
      "sources": [
       {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/a-coreweave-co-founder-just-made-an-unconventional-30-million-wager-on-its-battered-bonds-5586b0e9?mod=mw_rss_topstories"
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/be4b5919-1d5a-4706-a942-800ccf157601"
       }
      ]
     },
     {
-     "text": "Peterson: Nvidia’s leadership crisis tests the chipmaker’s role as the ‘central bank of AI’ (en anglais)",
+     "text": "Gold Rebounds as Dip-Buyers Step In After Worst Week Since March (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-23/gold-rebounds-as-traders-pare-bets-on-near-term-fed-rate-hikes"
+      }
+     ]
+    },
+    {
+     "text": "Oil Shock Response Sets EM Bond-Market Winners and Losers (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-22/oil-shock-response-sets-emerging-market-bond-winners-and-losers"
+      }
+     ]
+    },
+    {
+     "text": "Warsh wants Fed officials to talk less. Instead, they’re talking more (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Marchés",
+       "url": "https://www.cnbc.com/2026/11/20/warsh-fed-forward-guidance-rate-hikes.html"
+      }
+     ]
+    },
+    {
+     "text": "Peterson: The Fed's chairman sees an AI revolution coming. Now he has to figure out what it means (en anglais)",
      "sources": [
       {
        "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/11/nvidia-jensen-huang-ai-financial-system-risk.html"
+       "url": "https://www.cnbc.com/2026/11/16/kevin-warsh-fed-ai-jobs-productivity-interest-rateshtml.html"
+      }
+     ]
+    },
+    {
+     "text": "Cook, The U.S. Economy in Global Context (en anglais)",
+     "sources": [
+      {
+       "name": "Réserve fédérale (discours)",
+       "url": "https://www.federalreserve.gov/newsevents/speech/cook20261120a.htm"
       }
      ]
     }
@@ -87,38 +87,38 @@
    "title": "Économie",
    "points": [
     {
-     "text": "Lufthansa to Eliminate 1,000 Jobs At Struggling Flagship Airline (en anglais)",
+     "text": "L'économie française n'en finit plus de ralentir: déjà bonnet d'âne de la zone euro, la France s'enfonce encore plus dans le ralentissement et risque désormais la récession",
      "sources": [
       {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-20/lufthansa-to-eliminate-1-000-jobs-at-struggling-flagship-airline"
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/l-economie-francaise-n-en-finit-plus-de-ralentir-deja-bonnet-d-ane-de-la-zone-euro-la-france-s-enfonce-encore-plus-dans-le-ralentissement-et-risque-desormais-la-recession_AV-202611230364.html"
       }
      ]
     },
     {
-     "text": "Japan core inflation soars to highest this year as energy subsidy expiry pushes up consumer prices (en anglais)",
-     "sources": [
-      {
-       "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/20/japan-inflation-cpi-october.html"
-      }
-     ]
-    },
-    {
-     "text": "Markets are sending troubling signals about the state of the economy (en anglais)",
+     "text": "Corporate America hunts for ‘generational’ growth in AI, trading cards and the L.A. airport (en anglais)",
      "sources": [
       {
        "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/markets-are-sending-troubling-signals-about-the-state-of-the-economy-8043f20e?mod=mw_rss_topstories"
+       "url": "https://www.marketwatch.com/story/corporate-america-hunts-for-generational-growth-in-ai-trading-cards-and-the-l-a-airport-3072eb1a?mod=mw_rss_topstories"
       }
      ]
     },
     {
-     "text": "Le dispositif « Territoires zéro chômeur de longue durée », expérimenté depuis dix ans, pérennisé par les députés",
+     "text": "Traders start to move US copper to China as Trump tariff fears ease (en anglais)",
      "sources": [
       {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/politique/article/2026/11/19/le-dispositif-territoires-zero-chomeur-de-longue-duree-experimente-depuis-dix-ans-perennise-par-les-deputes_6813347_823448.html"
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/b84dbcb1-f216-422e-89c7-f203e0ab2757?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "How can investors succeed in markets today? (en anglais)",
+     "sources": [
+      {
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/22b3765d-ff3d-4f07-8982-5a222dbb862e?syn-25a6b1a6=1"
       }
      ]
     }
@@ -128,74 +128,65 @@
    "title": "Entreprises et secteurs",
    "points": [
     {
-     "text": "Morning Meeting : Bourse, semaine difficile malgré l'IPO réussie d'Anthropic - 20/11",
+     "text": "Capita Dives 66% as CEO Quits Over Botched Pensions Contract (en anglais)",
      "sources": [
       {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/morning-meeting-le-s-p500-decroche-de-5-cette-semaine-20-11_EN-202611200378.html"
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-23/capita-plunges-57-as-ceo-quits-over-botched-pensions-contract"
       }
      ]
     },
     {
-     "text": "Tech stocks fall as Anthropic IPO fails to reignite AI trade (en anglais)",
+     "text": "Coca-Cola HBC Rises in JSE Debut Ahead of $2.6 Billion Deal (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-23/coca-cola-hbc-rises-in-jse-debut-ahead-of-2-6-billion-deal"
+      }
+     ]
+    },
+    {
+     "text": "La recomposition du marché des télécoms pour les entreprises, l’autre enjeu du rachat de SFR",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/23/la-recomposition-du-marche-des-telecoms-pour-les-entreprises-l-autre-enjeu-du-rachat-de-sfr_6814355_3234.html"
+      }
+     ]
+    },
+    {
+     "text": "Nscale slows hiring and curtails spending ahead of planned $35bn IPO (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/c7ad2e0c-efd1-40c2-a5a8-819ced8acf5b?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/98f5aa90-5581-45ed-8e9b-d72217c56df8"
       }
      ]
     },
     {
-     "text": "So, Anthropic is finally a public company. What now? (en anglais)",
+     "text": "Did Anthropic and its bankers get a key call wrong after IPO? (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/017044a9-76dc-4cb4-9259-a844a96f2757"
+       "url": "https://www.ft.com/content/d501198c-14a4-4b96-8880-c3997545902e"
       }
      ]
     },
     {
-     "text": "Worldline bolstered cash flow through delayed payments and early receipts (en anglais)",
+     "text": "Inside Anthropic’s historic IPO (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/81d9e216-c04f-43f2-a221-d1da2a53ee50?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/149d497e-0567-4467-bcfb-269b8b8eb157?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "After Anthropic’s ‘bittersweet’ IPO, here’s what lies ahead (en anglais)",
+     "text": "The bull market has a new problem. The 'smart money' is selling (en anglais)",
      "sources": [
       {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/after-anthropics-bittersweet-ipo-heres-what-lies-ahead-8c32fdb7?mod=mw_rss_topstories"
-      }
-     ]
-    },
-    {
-     "text": "Anthropic’s rocketing IPO (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/a7e598c1-90b2-41c8-917c-f6fca2dfe5ea?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "Nscale warns of its exposure to suppliers facing US blacklist (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/97912585-2412-496c-a224-78e69328bcdb?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "FirstFT: Anthropic’s blockbuster IPO raises record $81bn (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/5f8b63e0-aaf7-48d4-8695-c8195043c537?syn-25a6b1a6=1"
+       "name": "CNBC Marchés",
+       "url": "https://www.cnbc.com/2026/11/20/equity-issuance-bull-market-problem.html"
       }
      ]
     }
@@ -205,74 +196,74 @@
    "title": "Marchés",
    "points": [
     {
-     "text": "How an American AI Company Uses Chinese Open-Weight Models (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-20/how-an-american-ai-company-uses-chinese-open-weight-models"
-      }
-     ]
-    },
-    {
-     "text": "Odd Lots: How an AI Native Company Chooses Its Models (Podcast) (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/audio/2026-11-20/odd-lots-how-an-ai-native-company-chooses-its-models-podcast"
-      }
-     ]
-    },
-    {
-     "text": "Climate talks drop fossil fuel phaseout and pivot to carbon capture (en anglais)",
+     "text": "Wall Street set to rebound after AI stock sell-off (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/134dcef4-9453-48bd-bcbd-4180818d3aca?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/0f5a7285-fbf1-4120-86df-c9cca29644fc?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "En portefeuille : Vallourec et Soitec - 20/11",
+     "text": "« La chute des Bourses asiatiques ressemble plus à un krach qu’à une simple correction »",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/23/la-chute-des-bourses-asiatiques-ressemble-plus-a-un-krach-qu-a-une-simple-correction_6814369_3234.html"
+      }
+     ]
+    },
+    {
+     "text": "Dubai Said to Eye Consolidating Lenders in Islamic Banking Push (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-23/dubai-said-to-eye-consolidating-lenders-in-islamic-banking-push"
+      }
+     ]
+    },
+    {
+     "text": "Les Européens ont passé 10 ans à négocier un accord de libre-échange avec l'Indonésie, pendant ce temps la Chine s'est installée sur place et contrôle désormais 75% de la production de nickel",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-vallourec-et-soitec-20-11_EN-202611200393.html"
+       "url": "https://www.bfmtv.com/economie/international/les-europeens-ont-passe-10-ans-a-negocier-un-accord-de-libre-echange-avec-l-indonesie-pendant-ce-temps-la-chine-s-est-installee-sur-place-et-controle-desormais-75-de-la-production-de-nickel_AV-202611230366.html"
       }
      ]
     },
     {
-     "text": "L'intégrale de Good Morning Market du vendredi 20 novembre",
+     "text": "How Everyday Chinese People Are Adopting AI (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-23/how-everyday-chinese-people-are-adopting-ai"
+      }
+     ]
+    },
+    {
+     "text": "Odd Lots: How China’s Vibecoders Are Adopting AI (Podcast) (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/audio/2026-11-23/odd-lots-how-china-s-vibecoders-are-adopting-ai-podcast"
+      }
+     ]
+    },
+    {
+     "text": "L'intégrale de Good Morning Market du lundi 23 novembre",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-vendredi-20-novembre_EN-202611200391.html"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-lundi-23-novembre_EN-202611230351.html"
       }
      ]
     },
     {
-     "text": "South Africa’s Richards Bay Terminal Loads Record Chrome Cargo (en anglais)",
+     "text": "En portefeuille : Walmart et Palo Alto - 23/11",
      "sources": [
       {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-20/south-africa-s-richards-bay-terminal-loads-record-chrome-cargo"
-      }
-     ]
-    },
-    {
-     "text": "China Axes Palm Oil Purchases With Storage Space Running Out (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-20/china-axes-palm-oil-purchases-with-storage-space-running-out"
-      }
-     ]
-    },
-    {
-     "text": "US Stock Futures Fall as AI Selloff Spreads to Asia and Europe (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-20/us-stock-futures-fall-as-ai-selloff-spreads-to-asia-and-europe"
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-walmart-et-palo-alto-23-11_EN-202611230347.html"
       }
      ]
     }
