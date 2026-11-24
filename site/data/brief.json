@@ -1,6 +1,6 @@
 {
- "date": "2026-11-23",
- "generated_at": "2026-11-23T10:39:06+01:00",
+ "date": "2026-11-24",
+ "generated_at": "2026-11-24T10:24:37+01:00",
  "mode": "press",
  "author": "Revue automatique (sans IA)",
  "headline": "Revue de presse du matin",
@@ -10,74 +10,74 @@
    "title": "Banques centrales et taux",
    "points": [
     {
-     "text": "Les Experts : Zucman veut régulariser les impayés des milliardaires - 23/11",
+     "text": "Un mois après sa réélection sur un programme de gauche, le président brésilien Lula lance un plan d'économies de 9 milliards d'euros et espère calmer la fièvre des marchés financiers",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/les-experts/les-experts-zucman-veut-regulariser-les-impayes-des-milliardaires-23-11_EN-202611230403.html"
+       "url": "https://www.bfmtv.com/economie/economie-social/monde/un-mois-apres-sa-reelection-sur-un-programme-de-gauche-le-president-bresilien-lula-lance-un-plan-d-economies-de-9-milliards-d-euros-et-espere-calmer-la-fievre-des-marches-financiers_AD-202611240431.html"
       }
      ]
     },
     {
-     "text": "India’s New Data Series to Aid RBI Policy, Gupta Says (en anglais)",
+     "text": "Japan’s Top Life Insurers Book $7.5 Billion in Bond Sale Losses (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-23/india-s-new-data-series-to-improve-rbi-forecasts-gupta-says"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-24/japan-s-top-life-insurers-book-7-5-billion-in-bond-sale-losses"
       }
      ]
     },
     {
-     "text": "The Federal Reserve’s balance sheet yo-yo (en anglais)",
+     "text": "Jensen Huang réintégré chez Nvidia : ce qu’il faut en retenir",
      "sources": [
       {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/be4b5919-1d5a-4706-a942-800ccf157601"
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/international/live/2026/11/24/jensen-huang-reintegre-chez-nvidia-ce-qu-il-faut-en-retenir_6814407_3210.html"
       }
      ]
     },
     {
-     "text": "Gold Rebounds as Dip-Buyers Step In After Worst Week Since March (en anglais)",
+     "text": "Les épargnants ont retiré près de 10 milliards d’euros de leurs Livret A depuis janvier, un record depuis dix ans",
      "sources": [
       {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-23/gold-rebounds-as-traders-pare-bets-on-near-term-fed-rate-hikes"
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/argent/article/2026/11/24/les-epargnants-ont-retire-pres-de-10-milliards-d-euros-de-leurs-livret-a-depuis-janvier-un-record-depuis-dix-ans_6814708_1657007.html"
       }
      ]
     },
     {
-     "text": "Oil Shock Response Sets EM Bond-Market Winners and Losers (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-22/oil-shock-response-sets-emerging-market-bond-winners-and-losers"
-      }
-     ]
-    },
-    {
-     "text": "Warsh wants Fed officials to talk less. Instead, they’re talking more (en anglais)",
+     "text": "Fed's John Williams indicates higher interest rates likely 'over time' to address inflation (en anglais)",
      "sources": [
       {
        "name": "CNBC Marchés",
-       "url": "https://www.cnbc.com/2026/11/20/warsh-fed-forward-guidance-rate-hikes.html"
+       "url": "https://www.cnbc.com/2026/11/23/john-williams-fed-inflation-rate-hikes.html"
       }
      ]
     },
     {
-     "text": "Peterson: The Fed's chairman sees an AI revolution coming. Now he has to figure out what it means (en anglais)",
+     "text": "SpaceX’s big bad Black Friday bond hangover (en anglais)",
      "sources": [
       {
-       "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/16/kevin-warsh-fed-ai-jobs-productivity-interest-rateshtml.html"
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/5ddc1453-026e-4adb-a5eb-950e7d666abc"
       }
      ]
     },
     {
-     "text": "Cook, The U.S. Economy in Global Context (en anglais)",
+     "text": "Philip R. Lane: Climate change and monetary policy (en anglais)",
      "sources": [
       {
-       "name": "Réserve fédérale (discours)",
-       "url": "https://www.federalreserve.gov/newsevents/speech/cook20261120a.htm"
+       "name": "BCE",
+       "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261123~b5816801a0.en.pdf"
+      }
+     ]
+    },
+    {
+     "text": "ECB expands acceptance of DLT-based assets as eligible Eurosystem collateral (en anglais)",
+     "sources": [
+      {
+       "name": "BCE",
+       "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261123~76b6f57b74.en.html"
       }
      ]
     }
@@ -87,20 +87,38 @@
    "title": "Économie",
    "points": [
     {
-     "text": "L'économie française n'en finit plus de ralentir: déjà bonnet d'âne de la zone euro, la France s'enfonce encore plus dans le ralentissement et risque désormais la récession",
+     "text": "Why France is at risk of recession — and what could keep it out of one (en anglais)",
      "sources": [
       {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/l-economie-francaise-n-en-finit-plus-de-ralentir-deja-bonnet-d-ane-de-la-zone-euro-la-france-s-enfonce-encore-plus-dans-le-ralentissement-et-risque-desormais-la-recession_AV-202611230364.html"
+       "name": "CNBC Économie",
+       "url": "https://www.cnbc.com/2026/11/24/france-recession-risk-pmi.html"
       }
      ]
     },
     {
-     "text": "Corporate America hunts for ‘generational’ growth in AI, trading cards and the L.A. airport (en anglais)",
+     "text": "Inflation : pourquoi la hausse des cours de l’énergie tarde à se répercuter sur l’ensemble des prix en France",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/24/inflation-pourquoi-la-hausse-des-cours-de-l-energie-tarde-a-se-repercuter-sur-l-ensemble-des-prix-en-france_6814604_3234.html"
+      }
+     ]
+    },
+    {
+     "text": "HPE just posted its strongest growth ever — but its stock is sinking (en anglais)",
      "sources": [
       {
        "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/corporate-america-hunts-for-generational-growth-in-ai-trading-cards-and-the-l-a-airport-3072eb1a?mod=mw_rss_topstories"
+       "url": "https://www.marketwatch.com/story/hpe-just-posted-its-strongest-growth-ever-and-its-stock-is-tacking-on-more-big-gains-4421cebb?mod=mw_rss_topstories"
+      }
+     ]
+    },
+    {
+     "text": "« 60 millions de consommateurs » : l’offre de reprise par Xavier Niel validée par l’Etat",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/23/60-millions-de-consommateurs-l-offre-de-reprise-par-xavier-niel-validee-par-l-etat_6814438_3234.html"
       }
      ]
     },
@@ -112,15 +130,6 @@
        "url": "https://www.ft.com/content/b84dbcb1-f216-422e-89c7-f203e0ab2757?syn-25a6b1a6=1"
       }
      ]
-    },
-    {
-     "text": "How can investors succeed in markets today? (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/22b3765d-ff3d-4f07-8982-5a222dbb862e?syn-25a6b1a6=1"
-      }
-     ]
     }
    ]
   },
@@ -128,65 +137,65 @@
    "title": "Entreprises et secteurs",
    "points": [
     {
-     "text": "Capita Dives 66% as CEO Quits Over Botched Pensions Contract (en anglais)",
+     "text": "Odd Lots: What Huang’s Return Means for the AI Trade (Podcast) (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-23/capita-plunges-57-as-ceo-quits-over-botched-pensions-contract"
+       "url": "https://www.bloomberg.com/news/audio/2026-11-24/odd-lots-what-huang-s-return-means-for-the-ai-trade-podcast"
       }
      ]
     },
     {
-     "text": "Coca-Cola HBC Rises in JSE Debut Ahead of $2.6 Billion Deal (en anglais)",
+     "text": "En portefeuille : Sanofi rachète Insmed pour 37,6 milliards d'euros - 24/11",
      "sources": [
       {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-23/coca-cola-hbc-rises-in-jse-debut-ahead-of-2-6-billion-deal"
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-sanofi-rachete-insmed-pour-37-6-milliards-d-euros-24-11_EN-202611240368.html"
       }
      ]
     },
     {
-     "text": "La recomposition du marché des télécoms pour les entreprises, l’autre enjeu du rachat de SFR",
+     "text": "Sanofi, groupe pharmaceutique français, va racheter l’américain Insmed pour 37,6 milliards d’euros",
      "sources": [
       {
        "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/economie/article/2026/11/23/la-recomposition-du-marche-des-telecoms-pour-les-entreprises-l-autre-enjeu-du-rachat-de-sfr_6814355_3234.html"
+       "url": "https://www.lemonde.fr/economie/article/2026/11/24/sanofi-groupe-pharmaceutique-francais-va-racheter-l-americain-insmed-pour-37-6-milliards-d-euros_6814719_3234.html"
       }
      ]
     },
     {
-     "text": "Nscale slows hiring and curtails spending ahead of planned $35bn IPO (en anglais)",
+     "text": "Les brevets de son médicament \"blockbuster\" arrivent à expiration: le français Sanofi rachète la biotech américaine Insmed pour 37 milliards d'euros afin de trouver des alternatives",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/entreprises/les-brevets-de-son-medicament-blockbuster-arrivent-a-expiration-le-francais-sanofi-rachete-la-biotech-americaine-insmed-pour-37-milliards-d-euros-afin-de-trouver-des-alternatives_AD-202611240250.html"
+      }
+     ]
+    },
+    {
+     "text": "Philippe Bénacin (Interparfums) : Interparfums mise sur des lancements majeurs en 2027 - 24/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/philippe-benacin-interparfums-interparfums-mise-sur-des-lancements-majeurs-en-2027-24-11_EN-202611240241.html"
+      }
+     ]
+    },
+    {
+     "text": "Trump made up to $15mn on Nvidia shares after Huang’s return (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/98f5aa90-5581-45ed-8e9b-d72217c56df8"
+       "url": "https://www.ft.com/content/67b0a070-c2a9-4229-885a-383cca657763?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "Did Anthropic and its bankers get a key call wrong after IPO? (en anglais)",
+     "text": "U.S. stocks see best day in more than a year, as return of Jensen Huang revives AI enthusiasm (en anglais)",
      "sources": [
       {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/d501198c-14a4-4b96-8880-c3997545902e"
-      }
-     ]
-    },
-    {
-     "text": "Inside Anthropic’s historic IPO (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/149d497e-0567-4467-bcfb-269b8b8eb157?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "The bull market has a new problem. The 'smart money' is selling (en anglais)",
-     "sources": [
-      {
-       "name": "CNBC Marchés",
-       "url": "https://www.cnbc.com/2026/11/20/equity-issuance-bull-market-problem.html"
+       "name": "MarketWatch",
+       "url": "https://www.marketwatch.com/story/u-s-stocks-see-best-day-in-more-than-a-year-as-return-of-jensen-huang-revives-ai-enthusiasm-c3b9d274?mod=mw_rss_topstories"
       }
      ]
     }
@@ -196,74 +205,74 @@
    "title": "Marchés",
    "points": [
     {
-     "text": "Wall Street set to rebound after AI stock sell-off (en anglais)",
+     "text": "The biggest biotech deal in nearly three years carries a hefty $41 billion price tag (en anglais)",
+     "sources": [
+      {
+       "name": "MarketWatch",
+       "url": "https://www.marketwatch.com/story/the-biggest-biotech-deal-in-nearly-three-years-carries-a-hefty-41-billion-price-tag-dd7fa228?mod=mw_rss_topstories"
+      }
+     ]
+    },
+    {
+     "text": "Les Experts : Nvidia, retour fracassant de Jensen Huang - 24/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/les-experts/les-experts-nvidia-retour-fracassant-de-jensen-huang-24-11_EN-202611240427.html"
+      }
+     ]
+    },
+    {
+     "text": "Australia Aims to Sign Another Deal to Block China in Pacific (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-24/australia-aims-to-sign-another-deal-to-block-china-in-pacific"
+      }
+     ]
+    },
+    {
+     "text": "Tech stocks surge on Jensen Huang’s return (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/0f5a7285-fbf1-4120-86df-c9cca29644fc?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/c0cb932a-076e-4471-8009-91749fde5f47?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "« La chute des Bourses asiatiques ressemble plus à un krach qu’à une simple correction »",
-     "sources": [
-      {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/economie/article/2026/11/23/la-chute-des-bourses-asiatiques-ressemble-plus-a-un-krach-qu-a-une-simple-correction_6814369_3234.html"
-      }
-     ]
-    },
-    {
-     "text": "Dubai Said to Eye Consolidating Lenders in Islamic Banking Push (en anglais)",
+     "text": "What Jensen Huang's Stunning Return Means for the AI Trade (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-23/dubai-said-to-eye-consolidating-lenders-in-islamic-banking-push"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-24/what-jensen-huang-s-stunning-return-means-for-the-ai-trade"
       }
      ]
     },
     {
-     "text": "Les Européens ont passé 10 ans à négocier un accord de libre-échange avec l'Indonésie, pendant ce temps la Chine s'est installée sur place et contrôle désormais 75% de la production de nickel",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/international/les-europeens-ont-passe-10-ans-a-negocier-un-accord-de-libre-echange-avec-l-indonesie-pendant-ce-temps-la-chine-s-est-installee-sur-place-et-controle-desormais-75-de-la-production-de-nickel_AV-202611230366.html"
-      }
-     ]
-    },
-    {
-     "text": "How Everyday Chinese People Are Adopting AI (en anglais)",
+     "text": "China Extends Pause on US Minerals Ban to Maintain Truce (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-23/how-everyday-chinese-people-are-adopting-ai"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-24/china-halts-critical-minerals-ban-to-maintain-truce-with-us"
       }
      ]
     },
     {
-     "text": "Odd Lots: How China’s Vibecoders Are Adopting AI (Podcast) (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/audio/2026-11-23/odd-lots-how-china-s-vibecoders-are-adopting-ai-podcast"
-      }
-     ]
-    },
-    {
-     "text": "L'intégrale de Good Morning Market du lundi 23 novembre",
+     "text": "L'intégrale de Good Morning Market du mardi 24 novembre",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-lundi-23-novembre_EN-202611230351.html"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-mardi-24-novembre_EN-202611240381.html"
       }
      ]
     },
     {
-     "text": "En portefeuille : Walmart et Palo Alto - 23/11",
+     "text": "En portefeuille : Pétrole, le baril américain repasse sous les 80 dollars, son niveau le plus bas depuis la fin août - 24/11",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-walmart-et-palo-alto-23-11_EN-202611230347.html"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-petrole-le-baril-americain-repasse-sous-les-80-dollars-son-niveau-le-plus-bas-depuis-la-fin-aout-24-11_EN-202611240374.html"
       }
      ]
     }
