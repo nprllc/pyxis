@@ -1,6 +1,6 @@
 {
- "date": "2026-11-25",
- "generated_at": "2026-11-25T10:29:04+01:00",
+ "date": "2026-11-26",
+ "generated_at": "2026-11-26T10:26:23+01:00",
  "mode": "press",
  "author": "Revue automatique (sans IA)",
  "headline": "Revue de presse du matin",
@@ -10,38 +10,74 @@
    "title": "Banques centrales et taux",
    "points": [
     {
-     "text": "Metals Rout Deepens as AI, Fed Worries Fuel Bearish Sentiment (en anglais)",
+     "text": "U.S. tariff-hike threats pile pressure on partners to sign trade deals (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Économie",
+       "url": "https://www.cnbc.com/2026/11/26/us-tariffs-hike-trade-agreement.html"
+      }
+     ]
+    },
+    {
+     "text": "Banks Seek RBI FX Swaps After Record Inflows Into Indian Stocks (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-25/metals-mixed-after-major-selloff-as-traders-await-us-inflation"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-26/banks-seek-rbi-fx-swaps-after-record-inflows-into-indian-stocks"
       }
      ]
     },
     {
-     "text": "Gold Declines as AI Doubts and Rate-Hike Bets Rattle Stocks (en anglais)",
+     "text": "Gold Wavers After Battering as Traders Assess Fed Path, AI Angst (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-24/gold-holds-decline-as-us-tariff-plans-reinforce-rate-hike-bets"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-26/gold-edges-lower-as-us-inflation-data-fuels-bets-for-rate-hikes"
       }
      ]
     },
     {
-     "text": "Minutes of the Board's discount rate meetings on October 19 and October 28, 2026 (en anglais)",
+     "text": "Liesman: Why Greenspan could bet on productivity — and Warsh needs to hike (en anglais)",
      "sources": [
       {
-       "name": "Réserve fédérale",
-       "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261124a.htm"
+       "name": "CNBC Économie",
+       "url": "https://www.cnbc.com/2026/11/25/kevin-warsh-greenspan-fed-rates-ai-inflation.html"
       }
      ]
     },
     {
-     "text": "Fed's John Williams indicates higher interest rates likely 'over time' to address inflation (en anglais)",
+     "text": "ECB and Sveriges Riksbank conclude agreement for Sweden to join T2 (en anglais)",
+     "sources": [
+      {
+       "name": "BCE",
+       "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261125_1~6333a90f3a.en.html"
+      }
+     ]
+    },
+    {
+     "text": "L’Allemagne prête à adopter un endettement historique, un tournant soutenu par une figure de l’orthodoxie économique",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/25/l-allemagne-prete-a-adopter-un-endettement-historique-un-tournant-soutenu-par-une-figure-de-l-orthodoxie-economique_6815144_3234.html"
+      }
+     ]
+    },
+    {
+     "text": "Fed’s preferred inflation gauge accelerated to 3.8% in October, raising the 2027 stakes for the central bank (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Économie",
+       "url": "https://www.cnbc.com/2026/11/25/pce-inflation-report-october-2026.html"
+      }
+     ]
+    },
+    {
+     "text": "Liesman: Nvidia whiplash tests Kevin Warsh’s push to read market signals (en anglais)",
      "sources": [
       {
        "name": "CNBC Marchés",
-       "url": "https://www.cnbc.com/2026/11/23/john-williams-fed-inflation-rate-hikes.html"
+       "url": "https://www.cnbc.com/2026/11/25/nvidia-kevin-warsh-fed-market-signals.html"
       }
      ]
     }
@@ -51,74 +87,74 @@
    "title": "Économie",
    "points": [
     {
-     "text": "\"Je peux comprendre que les Français délaissent le livret A\": avec l'inflation, les épargnants se tournent vers des placements plus \"attractifs\" comme les assurances vie ou les ETF",
+     "text": "Les Experts : Guerre commerciale, quels impacts pour les Européens ? - 26/11",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/patrimoine/je-peux-comprendre-que-les-francais-delaissent-le-livret-a-avec-l-inflation-les-epargnants-se-tournent-vers-des-placements-plus-attractifs-comme-les-assurances-vie-ou-les-etf_AV-202611250442.html"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/les-experts/les-experts-guerre-commerciale-quels-impacts-pour-les-europeens-26-11_EN-202611260445.html"
       }
      ]
     },
     {
-     "text": "IA et travail : « On peut se borner à remplacer les emplois existants, mais on peut aussi repenser le travail et la formation professionnelle »",
+     "text": "La trêve commerciale entre Pékin et Washington enterrée pour de bon? La Chine se dit prête à \"prendre les mesures nécessaires\" pour répondre aux nouveaux droits de douane de Trump",
      "sources": [
       {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/idees/article/2026/11/25/ia-et-travail-on-peut-se-borner-a-remplacer-les-emplois-existants-mais-on-peut-aussi-repenser-le-travail-et-la-formation-professionnelle_6815063_3232.html"
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/la-treve-commerciale-entre-pekin-et-washington-enterree-pour-de-bon-la-chine-se-dit-prete-a-prendre-les-mesures-necessaires-pour-repondre-aux-nouveaux-droits-de-douane-de-trump_AD-202611260427.html"
       }
      ]
     },
     {
-     "text": "UK Heating Bills Surge 26%, Adding to Inflation Pressure (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/newsletters/2026-11-25/uk-heating-bills-surge-26-adding-to-inflation-pressure"
-      }
-     ]
-    },
-    {
-     "text": "AUD/USD: Aussie Set for Biggest Monthly Drop in Four Years as Stocks Fall (en anglais)",
+     "text": "Trump’s Tariffs Blunt Appeal of Moving Production Out of China (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-25/aud-usd-aussie-set-for-biggest-monthly-drop-in-four-years-as-stocks-fall"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-26/trump-riles-trade-partners-with-tariffs-that-undercut-china-1"
       }
      ]
     },
     {
-     "text": "Plans d’épargne-retraite : une économie d’impôt à soupeser",
+     "text": "Bruno Colmant (Académie Royale de Belgique) : Comment se défendre des droits de douane américains ? - 26/11",
      "sources": [
       {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/argent/article/2026/11/25/plans-d-epargne-retraite-une-economie-d-impot-a-soupeser_6815042_1657007.html"
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/bruno-colmant-academie-royale-de-belgique-comment-se-defendre-des-droits-de-douane-americains-26-11_EN-202611260312.html"
       }
      ]
     },
     {
-     "text": "‘Ready for any storm’: UAE minister optimistic on economy as IMF lifts forecast (en anglais)",
+     "text": "Droits de douane de Trump, promesses fiscales de Le Pen... Le journal de l'éco du 26 novembre",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/droits-de-douane-de-trump-promesses-fiscales-de-le-pen-le-journal-de-l-eco-du-26-novembre_EN-202611260319.html"
+      }
+     ]
+    },
+    {
+     "text": "Beware higher correlation but nab high U.S. credit yields, fund managers say (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Marchés",
+       "url": "https://www.cnbc.com/2026/11/26/mispricing-risk-fund-managers-ai-volatility.html"
+      }
+     ]
+    },
+    {
+     "text": "Even the price of toys is on the rise. How Americans are scaling back holiday plans (en anglais)",
      "sources": [
       {
        "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/25/uae-iran-war-economy-oil.html"
+       "url": "https://www.cnbc.com/2026/11/25/holiday-inflation-thanksgiving-travel-food-gifts.html"
       }
      ]
     },
     {
-     "text": "HPE just posted its strongest growth ever — but its stock is sinking (en anglais)",
-     "sources": [
-      {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/hpe-just-posted-its-strongest-growth-ever-and-its-stock-is-tacking-on-more-big-gains-4421cebb?mod=mw_rss_topstories"
-      }
-     ]
-    },
-    {
-     "text": "Le constructeur automobile chinois BYD va s’implanter en France",
+     "text": "Droits de douane : l’UE « conteste fermement » le bien-fondé des nouvelles sanctions américaines",
      "sources": [
       {
        "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/economie/article/2026/11/24/le-constructeur-automobile-chinois-byd-va-s-implanter-en-france_6814850_3234.html"
+       "url": "https://www.lemonde.fr/international/article/2026/11/25/droits-de-douane-l-ue-conteste-fermement-le-bien-fonde-des-nouvelles-sanctions-americaines_6815121_3210.html"
       }
      ]
     }
@@ -128,47 +164,29 @@
    "title": "Entreprises et secteurs",
    "points": [
     {
-     "text": "Murdoch-Backed Allen Career Is Said to Pick Banks for India IPO (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-25/murdoch-backed-allen-career-is-said-to-pick-banks-for-india-ipo"
-      }
-     ]
-    },
-    {
-     "text": "CATL Tumbles 12% on Fears Over Weak Earnings, Forced Selling (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-25/catl-tumbles-12-on-fears-over-weak-earnings-forced-selling"
-      }
-     ]
-    },
-    {
-     "text": "Emmanuel Lechypre face à Hedwige Chevrillon : BYD s'implante en France, faut-il s'inquiéter ? - 25/11",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/emmanuel-lechypre-face-a-hedwige-chevrillon-byd-s-implante-en-france-faut-il-s-inquieter-25-11_EN-202611250361.html"
-      }
-     ]
-    },
-    {
-     "text": "EasyJet Profit Hit By Iran War as Apollo Takeover Looms (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-25/easyjet-profit-hit-by-middle-east-war-as-apollo-takeover-looms"
-      }
-     ]
-    },
-    {
-     "text": "‘Anflopic’ bodes badly for OpenAI’s IPO prospects (en anglais)",
+     "text": "It’s an earnings bubble, not a valuation bubble (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/1c62dcfe-826f-4638-a9ee-c3b3009bc45d"
+       "url": "https://www.ft.com/content/511cf4f3-36ea-47a8-9c0b-96e0f8137a9f?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "Elon Musk and SpaceX to donate roughly $17.8 billion to ‘Trump accounts’ (en anglais)",
+     "sources": [
+      {
+       "name": "MarketWatch",
+       "url": "https://www.marketwatch.com/story/elon-musk-and-spacex-to-donate-roughly-17-8-billion-to-trump-accounts-071c12e1?mod=mw_rss_topstories"
+      }
+     ]
+    },
+    {
+     "text": "Prediction markets push OpenAI IPO expectations later into 2027 (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Marchés",
+       "url": "https://www.cnbc.com/2026/11/25/openai-ipo-odds-2027-prediction-markets.html"
       }
      ]
     },
@@ -182,20 +200,20 @@
      ]
     },
     {
-     "text": "Micron boosted CEO Sanjay Mehrotra’s security budget by 2,000%, new filing shows (en anglais)",
+     "text": "Under the hood of Global Auto Holdings (en anglais)",
      "sources": [
       {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/micron-boosted-ceo-sanjay-mehrotras-security-budget-by-2-000-new-filing-shows-d6202acc?mod=mw_rss_topstories"
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/bdbeeeff-d7d9-4062-bf9f-b37f180485d5?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "Nscale says it has option to stay private as tech sell-off threatens $35bn IPO (en anglais)",
+     "text": "‘Anflopic’ bodes badly for OpenAI’s IPO prospects (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/189d0c46-3c66-420b-af7d-a1d0b78d68ac?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/1c62dcfe-826f-4638-a9ee-c3b3009bc45d"
       }
      ]
     }
@@ -205,74 +223,74 @@
    "title": "Marchés",
    "points": [
     {
-     "text": "L'intégrale de Good Morning Market du mercredi 25 novembre",
+     "text": "Marc Levinson on How UPS Created Modern Logistics (en anglais)",
      "sources": [
       {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-mercredi-25-novembre_EN-202611250427.html"
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-26/marc-levinson-on-how-ups-created-modern-logistics"
       }
      ]
     },
     {
-     "text": "En portefeuille : Rémy Cointreau et Edenred - 25/11",
+     "text": "L'intégrale de Good Morning Market du jeudi 26 novembre",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-remy-cointreau-et-edenred-25-11_EN-202611250423.html"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-jeudi-26-novembre_EN-202611260439.html"
       }
      ]
     },
     {
-     "text": "Shein to pay $100mn to resolve US allegations that it deceived customers (en anglais)",
+     "text": "En portefeuille : L'Europe rebondit après un coup de mou - 26/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-le-cac40-en-hausse-a-l-ouverture-26-11_EN-202611260437.html"
+      }
+     ]
+    },
+    {
+     "text": "Turkey’s Defense Chief to Meet Hegseth to Discuss Russian S-400s (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-26/turkey-s-defense-chief-to-meet-hegseth-to-discuss-russian-s-400s"
+      }
+     ]
+    },
+    {
+     "text": "Odd Lots: Levinson on How UPS Created Modern Logistics (Podcast) (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/audio/2026-11-26/odd-lots-levinson-on-how-ups-created-modern-logistics-podcast"
+      }
+     ]
+    },
+    {
+     "text": "Morning Meeting : Bourse, focus sur les marchés asiatiques - 26/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/morning-meeting-marches-chinois-les-causes-de-la-sous-performance-26-11_EN-202611260418.html"
+      }
+     ]
+    },
+    {
+     "text": "Global stocks steady after volatile US trading over AI risks (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/0128d44e-8ca1-49b8-868b-b8fe0e4824c6?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/6e217409-9fbb-456c-b405-2eb15bb69679?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "China’s Surprise Soyoil Export Boom Cools as India Turns to Palm (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-25/china-s-surprise-soyoil-export-boom-cools-as-india-turns-to-palm"
-      }
-     ]
-    },
-    {
-     "text": "India Extends Duty-Free Sugar Imports as Dry Weather Hits Crop (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-25/india-extends-duty-free-sugar-imports-as-dry-weather-hits-crop"
-      }
-     ]
-    },
-    {
-     "text": "Morning Meeting : IA, le marché de crédit envoie des signes de stress - 25/11",
+     "text": "Frédéric Simottel face à Jean-Marc Daniel : Le fonds européen pour la tech, un bon investissement ? - 26/11",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/morning-meeting-ia-le-marche-de-credit-envoie-des-signes-de-stress-25-11_EN-202611250378.html"
-      }
-     ]
-    },
-    {
-     "text": "Asia Finds a Surprise Currency Haven in AI-Defying Rupee (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-25/asia-finds-a-surprise-currency-haven-in-ai-defying-rupee"
-      }
-     ]
-    },
-    {
-     "text": "British household energy bills to soar 26% from January (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/e9dea6f2-dcf8-4ec5-96ec-0415694bf897?syn-25a6b1a6=1"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/frederic-simottel-face-a-jean-marc-daniel-le-fonds-europeen-pour-la-tech-un-bon-investissement-26-11_EN-202611260387.html"
       }
      ]
     }
