@@ -1,6 +1,6 @@
 {
- "date": "2026-11-26",
- "generated_at": "2026-11-26T10:26:23+01:00",
+ "date": "2026-11-27",
+ "generated_at": "2026-11-27T10:26:07+01:00",
  "mode": "press",
  "author": "Revue automatique (sans IA)",
  "headline": "Revue de presse du matin",
@@ -10,74 +10,74 @@
    "title": "Banques centrales et taux",
    "points": [
     {
-     "text": "U.S. tariff-hike threats pile pressure on partners to sign trade deals (en anglais)",
-     "sources": [
-      {
-       "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/26/us-tariffs-hike-trade-agreement.html"
-      }
-     ]
-    },
-    {
-     "text": "Banks Seek RBI FX Swaps After Record Inflows Into Indian Stocks (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-26/banks-seek-rbi-fx-swaps-after-record-inflows-into-indian-stocks"
-      }
-     ]
-    },
-    {
-     "text": "Gold Wavers After Battering as Traders Assess Fed Path, AI Angst (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-26/gold-edges-lower-as-us-inflation-data-fuels-bets-for-rate-hikes"
-      }
-     ]
-    },
-    {
-     "text": "Liesman: Why Greenspan could bet on productivity — and Warsh needs to hike (en anglais)",
-     "sources": [
-      {
-       "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/25/kevin-warsh-greenspan-fed-rates-ai-inflation.html"
-      }
-     ]
-    },
-    {
-     "text": "ECB and Sveriges Riksbank conclude agreement for Sweden to join T2 (en anglais)",
+     "text": "ECB Consumer Expectations Survey results – October 2026 (en anglais)",
      "sources": [
       {
        "name": "BCE",
-       "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261125_1~6333a90f3a.en.html"
+       "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261127~2e53af695e.en.html"
       }
      ]
     },
     {
-     "text": "L’Allemagne prête à adopter un endettement historique, un tournant soutenu par une figure de l’orthodoxie économique",
+     "text": "China Bank Bond Spreads Head for Biggest Jump in Over Two Years (en anglais)",
      "sources": [
       {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/economie/article/2026/11/25/l-allemagne-prete-a-adopter-un-endettement-historique-un-tournant-soutenu-par-une-figure-de-l-orthodoxie-economique_6815144_3234.html"
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-27/china-bank-bond-spreads-head-for-biggest-jump-in-over-two-years"
       }
      ]
     },
     {
-     "text": "Fed’s preferred inflation gauge accelerated to 3.8% in October, raising the 2027 stakes for the central bank (en anglais)",
+     "text": "Macron s'agace à Bruxelles, data centers dans l'espace... Le journal de l'éco du 27 novembre",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/macron-s-agace-a-bruxelles-data-centers-dans-l-espace-le-journal-de-l-eco-du-27-novembre_EN-202611270299.html"
+      }
+     ]
+    },
+    {
+     "text": "Spain’s Pablo Hernández de Cos set to lead European Central Bank (en anglais)",
      "sources": [
       {
        "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/25/pce-inflation-report-october-2026.html"
+       "url": "https://www.cnbc.com/2026/11/26/pablo-hernandez-de-cos-ecb-president.html"
       }
      ]
     },
     {
-     "text": "Liesman: Nvidia whiplash tests Kevin Warsh’s push to read market signals (en anglais)",
+     "text": "Jézabel Couppey-Soubeyran, économiste : « Pour mettre la politique monétaire au service de la transition écologique, c’est un “pic-vert” qu’il faut à la tête de la BCE »",
      "sources": [
       {
-       "name": "CNBC Marchés",
-       "url": "https://www.cnbc.com/2026/11/25/nvidia-kevin-warsh-fed-market-signals.html"
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/idees/article/2026/11/27/jezabel-couppey-soubeyran-economiste-pour-mettre-la-politique-monetaire-au-service-de-la-transition-ecologique-c-est-un-pic-vert-qu-il-faut-a-la-tete-de-la-bce_6815809_3232.html"
+      }
+     ]
+    },
+    {
+     "text": "Ghana Buys Back $1.1 Billion Domestic Bonds to Boost Confidence (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-26/ghana-buys-back-1-1-billion-domestic-bonds-to-boost-confidence"
+      }
+     ]
+    },
+    {
+     "text": "Présidentielle 2027 : Marine Le Pen courtise les PME avec un nouveau projet de réforme fiscale",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/politique/article/2026/11/26/presidentielle-2027-marine-le-pen-courtise-les-pme-avec-un-nouveau-projet-de-reforme-fiscale_6815572_823448.html"
+      }
+     ]
+    },
+    {
+     "text": "A la tête de la BCE, un trio fraîchement nommé pour protéger l’Europe de l’inflation… et peut-être la France d’une attaque sur les marchés",
+     "sources": [
+      {
+       "name": "Le Monde Économie",
+       "url": "https://www.lemonde.fr/economie/article/2026/11/26/a-la-tete-de-la-bce-un-trio-fraichement-nomme-pour-proteger-l-europe-de-l-inflation-et-peut-etre-la-france-d-une-attaque-sur-les-marches_6815550_3234.html"
       }
      ]
     }
@@ -87,74 +87,74 @@
    "title": "Économie",
    "points": [
     {
-     "text": "Les Experts : Guerre commerciale, quels impacts pour les Européens ? - 26/11",
+     "text": "Les Experts : Quels sont les enjeux économiques de la présidentielle de 2027 ? - 27/11",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/les-experts/les-experts-guerre-commerciale-quels-impacts-pour-les-europeens-26-11_EN-202611260445.html"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/les-experts/les-experts-quels-sont-les-enjeux-economiques-de-la-presidentielle-de-2027-27-11_EN-202611270417.html"
       }
      ]
     },
     {
-     "text": "La trêve commerciale entre Pékin et Washington enterrée pour de bon? La Chine se dit prête à \"prendre les mesures nécessaires\" pour répondre aux nouveaux droits de douane de Trump",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/la-treve-commerciale-entre-pekin-et-washington-enterree-pour-de-bon-la-chine-se-dit-prete-a-prendre-les-mesures-necessaires-pour-repondre-aux-nouveaux-droits-de-douane-de-trump_AD-202611260427.html"
-      }
-     ]
-    },
-    {
-     "text": "Trump’s Tariffs Blunt Appeal of Moving Production Out of China (en anglais)",
+     "text": "Odd Lots: Weber’s Vision for an Affordability Agenda (Podcast) (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-26/trump-riles-trade-partners-with-tariffs-that-undercut-china-1"
+       "url": "https://www.bloomberg.com/news/audio/2026-11-27/odd-lots-weber-s-vision-for-an-affordability-agenda-podcast"
       }
      ]
     },
     {
-     "text": "Bruno Colmant (Académie Royale de Belgique) : Comment se défendre des droits de douane américains ? - 26/11",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/bruno-colmant-academie-royale-de-belgique-comment-se-defendre-des-droits-de-douane-americains-26-11_EN-202611260312.html"
-      }
-     ]
-    },
-    {
-     "text": "Droits de douane de Trump, promesses fiscales de Le Pen... Le journal de l'éco du 26 novembre",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/droits-de-douane-de-trump-promesses-fiscales-de-le-pen-le-journal-de-l-eco-du-26-novembre_EN-202611260319.html"
-      }
-     ]
-    },
-    {
-     "text": "Beware higher correlation but nab high U.S. credit yields, fund managers say (en anglais)",
-     "sources": [
-      {
-       "name": "CNBC Marchés",
-       "url": "https://www.cnbc.com/2026/11/26/mispricing-risk-fund-managers-ai-volatility.html"
-      }
-     ]
-    },
-    {
-     "text": "Even the price of toys is on the rise. How Americans are scaling back holiday plans (en anglais)",
+     "text": "‘Ready for any storm’: UAE minister optimistic on economy as IMF lifts forecast (en anglais)",
      "sources": [
       {
        "name": "CNBC Économie",
-       "url": "https://www.cnbc.com/2026/11/25/holiday-inflation-thanksgiving-travel-food-gifts.html"
+       "url": "https://www.cnbc.com/2026/11/25/uae-iran-war-economy-oil.html"
       }
      ]
     },
     {
-     "text": "Droits de douane : l’UE « conteste fermement » le bien-fondé des nouvelles sanctions américaines",
+     "text": "L'emploi salarié se stabilise au troisième trimestre mais reste en recul sur un an pour le septième trimestre consécutif",
      "sources": [
       {
-       "name": "Le Monde Économie",
-       "url": "https://www.lemonde.fr/international/article/2026/11/25/droits-de-douane-l-ue-conteste-fermement-le-bien-fonde-des-nouvelles-sanctions-americaines_6815121_3210.html"
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/emploi/l-emploi-salarie-se-stabilise-au-troisieme-trimestre-mais-reste-en-recul-sur-un-an-pour-le-septieme-trimestre-consecutif_AD-202611270397.html"
+      }
+     ]
+    },
+    {
+     "text": "Emmanuel Lechypre face à Marc Fiorentino : Droits de douane, bonne ou mauvaise nouvelle ? - 27/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/emmanuel-lechypre-face-a-marc-fiorentino-droits-de-douane-bonne-ou-mauvaise-nouvelle-27-11_EN-202611270370.html"
+      }
+     ]
+    },
+    {
+     "text": "L'inflation ralentit à 2,9 % sur un an en novembre: les prix ont baissé de 0,7% par rapport à octobre",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/l-inflation-ralentit-a-2-9-sur-un-an-en-novembre-les-prix-ont-baisse-de-0-7-par-rapport-a-octobre_AD-202611270367.html"
+      }
+     ]
+    },
+    {
+     "text": "L'économie française va encore plus mal que prévu: le PIB a finalement reculé de 0,2% au troisième trimestre et la menace d'une récession se précise",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/economie-social/france/l-economie-francaise-va-encore-plus-mal-que-prevu-le-pib-a-finalement-recule-de-0-2-au-troisieme-trimestre-et-la-menace-d-une-recession-se-precise_AD-202611270343.html"
+      }
+     ]
+    },
+    {
+     "text": "Éric Hémar (ID Logistics) : ID Logistics s'affiche en forte croissance - 27/11",
+     "sources": [
+      {
+       "name": "BFM Business",
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/eric-hemar-id-logistics-id-logistics-s-affiche-en-forte-croissance-27-11_EN-202611270277.html"
       }
      ]
     }
@@ -164,56 +164,47 @@
    "title": "Entreprises et secteurs",
    "points": [
     {
+     "text": "US tech stocks set to jump at open as volatile trading continues (en anglais)",
+     "sources": [
+      {
+       "name": "Financial Times",
+       "url": "https://www.ft.com/content/b80e6259-dca8-4da3-962d-402106a3cd81?syn-25a6b1a6=1"
+      }
+     ]
+    },
+    {
+     "text": "We are living in perilous times if Nvidia CEO Jensen Huang dictates your 401(k) balance (en anglais)",
+     "sources": [
+      {
+       "name": "MarketWatch",
+       "url": "https://www.marketwatch.com/story/we-are-living-in-perilous-times-if-nvidias-jensen-huang-dictates-your-401-k-balance-e0942d1e?mod=mw_rss_topstories"
+      }
+     ]
+    },
+    {
+     "text": "Japan Tobacco Climbs on Potential Imperial Brands Takeover (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-27/japan-tobacco-shares-climb-on-potential-imperial-brands-takeover"
+      }
+     ]
+    },
+    {
+     "text": "Buyer beware? Nvidia's volatile swings expose risks of single-stock ETFs (en anglais)",
+     "sources": [
+      {
+       "name": "CNBC Marchés",
+       "url": "https://www.cnbc.com/2026/11/26/nvidias-volatile-swings-expose-risks-of-single-stock-etfs.html"
+      }
+     ]
+    },
+    {
      "text": "It’s an earnings bubble, not a valuation bubble (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
        "url": "https://www.ft.com/content/511cf4f3-36ea-47a8-9c0b-96e0f8137a9f?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "Elon Musk and SpaceX to donate roughly $17.8 billion to ‘Trump accounts’ (en anglais)",
-     "sources": [
-      {
-       "name": "MarketWatch",
-       "url": "https://www.marketwatch.com/story/elon-musk-and-spacex-to-donate-roughly-17-8-billion-to-trump-accounts-071c12e1?mod=mw_rss_topstories"
-      }
-     ]
-    },
-    {
-     "text": "Prediction markets push OpenAI IPO expectations later into 2027 (en anglais)",
-     "sources": [
-      {
-       "name": "CNBC Marchés",
-       "url": "https://www.cnbc.com/2026/11/25/openai-ipo-odds-2027-prediction-markets.html"
-      }
-     ]
-    },
-    {
-     "text": "Jensen Huang's Nvidia return shows the U.S.-China AI race is about more than chips (en anglais)",
-     "sources": [
-      {
-       "name": "CNBC Marchés",
-       "url": "https://www.cnbc.com/2026/11/25/jensen-huang-nvidia-ai-talent-race.html"
-      }
-     ]
-    },
-    {
-     "text": "Under the hood of Global Auto Holdings (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/bdbeeeff-d7d9-4062-bf9f-b37f180485d5?syn-25a6b1a6=1"
-      }
-     ]
-    },
-    {
-     "text": "‘Anflopic’ bodes badly for OpenAI’s IPO prospects (en anglais)",
-     "sources": [
-      {
-       "name": "Financial Times",
-       "url": "https://www.ft.com/content/1c62dcfe-826f-4638-a9ee-c3b3009bc45d"
       }
      ]
     }
@@ -223,74 +214,74 @@
    "title": "Marchés",
    "points": [
     {
-     "text": "Marc Levinson on How UPS Created Modern Logistics (en anglais)",
+     "text": "Isabella Weber’s Vision for an Affordability Agenda (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-26/marc-levinson-on-how-ups-created-modern-logistics"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-27/isabella-weber-s-vision-for-an-affordability-agenda"
       }
      ]
     },
     {
-     "text": "L'intégrale de Good Morning Market du jeudi 26 novembre",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-jeudi-26-novembre_EN-202611260439.html"
-      }
-     ]
-    },
-    {
-     "text": "En portefeuille : L'Europe rebondit après un coup de mou - 26/11",
-     "sources": [
-      {
-       "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/en-portefeuille-le-cac40-en-hausse-a-l-ouverture-26-11_EN-202611260437.html"
-      }
-     ]
-    },
-    {
-     "text": "Turkey’s Defense Chief to Meet Hegseth to Discuss Russian S-400s (en anglais)",
+     "text": "Dubai Stocks Erase Wartime Losses to Become a Top Gulf Performer (en anglais)",
      "sources": [
       {
        "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/articles/2026-11-26/turkey-s-defense-chief-to-meet-hegseth-to-discuss-russian-s-400s"
+       "url": "https://www.bloomberg.com/news/articles/2026-11-27/dubai-stocks-erase-wartime-losses-to-become-a-top-gulf-performer"
       }
      ]
     },
     {
-     "text": "Odd Lots: Levinson on How UPS Created Modern Logistics (Podcast) (en anglais)",
-     "sources": [
-      {
-       "name": "Bloomberg",
-       "url": "https://www.bloomberg.com/news/audio/2026-11-26/odd-lots-levinson-on-how-ups-created-modern-logistics-podcast"
-      }
-     ]
-    },
-    {
-     "text": "Morning Meeting : Bourse, focus sur les marchés asiatiques - 26/11",
+     "text": "L'intégrale de Good Morning Market du vendredi 27 novembre",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/morning-meeting-marches-chinois-les-causes-de-la-sous-performance-26-11_EN-202611260418.html"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/l-integrale-de-good-morning-market-du-vendredi-27-novembre_EN-202611270387.html"
       }
      ]
     },
     {
-     "text": "Global stocks steady after volatile US trading over AI risks (en anglais)",
+     "text": "Chinese shares soar after Beijing signals more support (en anglais)",
      "sources": [
       {
        "name": "Financial Times",
-       "url": "https://www.ft.com/content/6e217409-9fbb-456c-b405-2eb15bb69679?syn-25a6b1a6=1"
+       "url": "https://www.ft.com/content/fedc6392-ad25-43e4-9d9f-20216cbf331e?syn-25a6b1a6=1"
       }
      ]
     },
     {
-     "text": "Frédéric Simottel face à Jean-Marc Daniel : Le fonds européen pour la tech, un bon investissement ? - 26/11",
+     "text": "Morning Meeting : Bourse, le portefeuille idéal pour la fin d'année - 27/11",
      "sources": [
       {
        "name": "BFM Business",
-       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-business/frederic-simottel-face-a-jean-marc-daniel-le-fonds-europeen-pour-la-tech-un-bon-investissement-26-11_EN-202611260387.html"
+       "url": "https://www.bfmtv.com/economie/replay-emissions/good-morning-market/morning-meeting-bourse-le-portefeuille-ideal-pour-la-fin-d-annee-27-11_EN-202611270386.html"
+      }
+     ]
+    },
+    {
+     "text": "Hong Kong Dollar Hits Six-Month High as Funding Costs Climb (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-27/hong-kong-dollar-hits-six-month-high-as-funding-costs-climb"
+      }
+     ]
+    },
+    {
+     "text": "Qatar’s LNG Export Push Provides Lifeline to South Asian Buyers (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-27/qatar-s-lng-export-push-provides-lifeline-to-south-asian-buyers"
+      }
+     ]
+    },
+    {
+     "text": "China’s CNGR Weighs Building an Aluminum Smelter in Indonesia (en anglais)",
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-27/china-s-cngr-weighs-building-an-aluminum-smelter-in-indonesia"
       }
      ]
     }
